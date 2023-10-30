@@ -1,12 +1,22 @@
-Package: causens
 Type: Package
-Title: Perform causal sensitivity analyses using various statistical methods
+Package: causens
+Title: Perform causal sensitivity analyses using various statistical
+    methods
 Version: 0.0.1
-Authors@R: person("Larry", "Dong", email = "larry.dong@mail.utoronto.ca", role = c("aut", "cre"))
-Description: This package provides functionality to perform causal sensitivity analyses using
-    recently developed statistical methods.
+Authors@R: 
+    person("Larry", "Dong", , "larry.dong@mail.utoronto.ca", role = c("aut", "cre"))
+Description: This package provides functionality to perform causal
+    sensitivity analyses using recently developed statistical methods.
 License: MIT
+URL: https://github.com/Kuan-Liu-Lab/causens/,
+    https://kuan-liu-lab.github.io/causens/
+Imports: 
+    knitr,
+    rmarkdown,
+    roxygen2,
+    usethis
+Suggests: 
+    pkgdown
 Encoding: UTF-8
 LazyData: true
-URL: https://github.com/Kuan-Liu-Lab/causens/
 RoxygenNote: 7.2.3

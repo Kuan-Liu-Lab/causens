@@ -4,12 +4,20 @@
 \alias{causens}
 \title{Causal sensitivity analysis}
 \usage{
-causens(out.model, trt.model, data, exposure, outcome, sf)
+causens(out.model, trt.model, data, exposure, outcome, sf = "increasing")
 }
 \arguments{
 \item{out.model}{The outcome model object on which we wish to perform a sensitivity analysis}
 
 \item{trt.model}{The treatment model object}
+
+\item{data}{A data frame containing all variables used in the outcome and treatment models}
+
+\item{exposure}{The name of the exposure variable}
+
+\item{outcome}{The name of the outcome variable}
+
+\item{sf}{The sensitivity function c(z, e)}
 }
 \value{
 NA
