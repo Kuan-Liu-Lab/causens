@@ -4,10 +4,10 @@
 \alias{corrected_outcomes}
 \title{Outcomes Corrected via Sensitivity Function}
 \usage{
-corrected_outcomes(trt.model, data, exposure, outcome, sf)
+corrected_outcomes(trt_model, data, exposure, outcome, sf)
 }
 \arguments{
-\item{trt.model}{The treatment model object.}
+\item{trt_model}{The treatment model object.}
 
 \item{data}{A data frame containing the variables of interest.}
 
@@ -23,13 +23,17 @@ corrected_outcomes(trt.model, data, exposure, outcome, sf)
 A vector corresponding with corrected outcomes.
 }
 \description{
-This function provides corrected outcomes corrected using a sensitivity function c(z, e).
+This function provides corrected outcomes corrected using a sensitivity
+function c(z, e).
 }
 \examples{
-data <- data.frame(exposure = c(0, 1, 0, 1),
-                   outcome = c(0, 1, 0, 1),
-                   confounder1 = c(1, 0, 1, 0),
-                   confounder2 = c(0, 1, 0, 1))
-corrected_outcomes(data, "exposure", "outcome", c("confounder1", "confounder2"), 0.5)
+data <- data.frame(
+  exposure = c(0, 1, 0, 1),
+  outcome = c(0, 1, 0, 1),
+  confounder1 = c(1, 0, 1, 0),
+  confounder2 = c(0, 1, 0, 1)
+)
+corrected_outcomes(data, "exposure", "outcome", c("confounder1",
+"confounder2"), 0.5)
 
 }

@@ -11,13 +11,20 @@ sf(z, e, form = "increasing")
 
 \item{e}{Propensity score value (numeric)}
 
-\item{form}{Form of the sensitivity function (character: "increasing" or "decreasing")}
+\item{form}{Form of the sensitivity function (character: "increasing" or
+"decreasing")}
 }
 \value{
-Sensitivity of treatment effect estimate to unmeasured confounding (numeric)
+Sensitivity of treatment effect estimate to unmeasured confounding
+(numeric)
 
 sf(z, e, form)
 }
 \description{
-This function calculates the sensitivity of a treatment effect estimate to unmeasured confounding, as described in Rosenbaum (2002). The sensitivity is defined as the maximum strength of association between the unmeasured confounder and the treatment assignment that would be needed to explain away the observed treatment effect estimate. This function assumes that the treatment assignment is binary and that the outcome is continuous.
+This function calculates the sensitivity of a treatment effect estimate to
+unmeasured confounding, as described in Rosenbaum (2002). The sensitivity is
+defined as the maximum strength of association between the unmeasured
+confounder and the treatment assignment that would be needed to explain away
+the observed treatment effect estimate. This function assumes that the
+treatment assignment is binary and that the outcome is continuous.
 }

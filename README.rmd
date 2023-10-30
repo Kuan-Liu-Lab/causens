@@ -31,8 +31,6 @@ library(causens)
 
 ```{r, eval = FALSE}
 library(causens)
-
-
 ```
 
 ## Citing
