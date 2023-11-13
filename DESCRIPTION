@@ -1,10 +1,10 @@
 Type: Package
 Package: causens
-Title: Perform causal sensitivity analyses using various statistical
-    methods
+Title: Perform causal sensitivity analyses using various statistical methods
 Version: 0.0.1
 Authors@R: 
-    person("Larry", "Dong", , "larry.dong@mail.utoronto.ca", role = c("aut", "cre"))
+    c(person("Larry", "Dong", NULL, "larry.dong@mail.utoronto.ca", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-7775-7798")), 
+    person("Kuan", "Liu", NULL, "kuan.liu@utoronto.ca", role = c("aut"), comment = c(ORCID = "0000-0002-5017-1276")))
 Description: This package provides functionality to perform causal
     sensitivity analyses using recently developed statistical methods.
 License: MIT

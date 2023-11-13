@@ -1,5 +1,3 @@
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
 # causens
 
 <!-- badges: start -->
@@ -7,8 +5,8 @@
 
 ## Overview
 
-causens is an R package that will allow to truly infer on causal
-relationships.
+causens is an R package that will allow to perform various sensitivity
+analysis methods within the context of causal inference.
 
 ## Installation
 
@@ -29,7 +27,15 @@ relationships.
 
 Please cite our software using:
 
-*insert bibtex citation*
+    @Manual{,
+      title = {causens: Perform causal sensitivity analyses using various statistical
+    methods},
+      author = {Larry Dong, Kuan Liu},
+      year = {2023},
+      note = {R package version 0.0.1, 
+    https://kuan-liu-lab.github.io/causens/},
+      url = {https://github.com/Kuan-Liu-Lab/causens/},
+    }
 
 ## Getting help
 
