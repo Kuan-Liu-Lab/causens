@@ -73,7 +73,7 @@ function c(z, e).</p>
 
 
 <dt>sf</dt>
-<dd><p>The sensitivity function c(z, e).</p></dd>
+<dd><p>The R sensitivity function for c(z, e).</p></dd>
 
 
 <dt>confounders</dt>
@@ -95,9 +95,11 @@ function c(z, e).</p>
 <span class="r-in"><span>  confounder1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  confounder2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">corrected_outcomes</span><span class="op">(</span><span class="va">data</span>, <span class="st">"exposure"</span>, <span class="st">"outcome"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"confounder1"</span>,</span></span>
-<span class="r-in"><span><span class="st">"confounder2"</span><span class="op">)</span>, <span class="fl">0.5</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in UseMethod("predict"):</span> no applicable method for 'predict' applied to an object of class "data.frame"</span>
+<span class="r-in"><span><span class="fu">corrected_outcomes</span><span class="op">(</span><span class="va">data</span>, <span class="st">"exposure"</span>, <span class="st">"outcome"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="st">"confounder1"</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"confounder2"</span></span></span>
+<span class="r-in"><span><span class="op">)</span>, <span class="fl">0.5</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in corrected_outcomes(data, "exposure", "outcome", c("confounder1",     "confounder2"), 0.5):</span> sf must be a function.</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

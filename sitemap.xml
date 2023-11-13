@@ -13,18 +13,27 @@
     <loc>https://kuan-liu-lab.github.io/causens/index.html</loc>
   </url>
   <url>
-    <loc>https://kuan-liu-lab.github.io/causens/reference/causens.html</loc>
-  </url>
-  <url>
     <loc>https://kuan-liu-lab.github.io/causens/reference/corrected_outcomes.html</loc>
   </url>
   <url>
-    <loc>https://kuan-liu-lab.github.io/causens/reference/hello.html</loc>
+    <loc>https://kuan-liu-lab.github.io/causens/reference/gData_U_binary_Y_binary.html</loc>
+  </url>
+  <url>
+    <loc>https://kuan-liu-lab.github.io/causens/reference/gData_U_binary_Y_cont.html</loc>
+  </url>
+  <url>
+    <loc>https://kuan-liu-lab.github.io/causens/reference/gData_U_cont_Y_binary.html</loc>
+  </url>
+  <url>
+    <loc>https://kuan-liu-lab.github.io/causens/reference/gData_U_cont_Y_cont.html</loc>
   </url>
   <url>
     <loc>https://kuan-liu-lab.github.io/causens/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://kuan-liu-lab.github.io/causens/reference/sf.html</loc>
+    <loc>https://kuan-liu-lab.github.io/causens/reference/sensitivity_function.html</loc>
+  </url>
+  <url>
+    <loc>https://kuan-liu-lab.github.io/causens/reference/simulate_data.html</loc>
   </url>
 </urlset>
