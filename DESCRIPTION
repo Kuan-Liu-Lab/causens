@@ -10,13 +10,11 @@ Description: This package provides functionality to perform causal
 License: MIT
 URL: https://github.com/Kuan-Liu-Lab/causens/,
     https://kuan-liu-lab.github.io/causens/
-Imports: 
+Suggests: 
     knitr,
+    pkgdown,
     rmarkdown,
     roxygen2,
     usethis
-Suggests: 
-    pkgdown
 Encoding: UTF-8
-LazyData: true
 RoxygenNote: 7.2.3
