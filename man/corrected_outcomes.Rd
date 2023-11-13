@@ -15,7 +15,7 @@ corrected_outcomes(trt_model, data, exposure, outcome, sf)
 
 \item{outcome}{The name of the outcome variable.}
 
-\item{sf}{The sensitivity function c(z, e).}
+\item{sf}{The R sensitivity function for c(z, e).}
 
 \item{confounders}{A vector of names of confounding variables.}
 }
@@ -33,7 +33,9 @@ data <- data.frame(
   confounder1 = c(1, 0, 1, 0),
   confounder2 = c(0, 1, 0, 1)
 )
-corrected_outcomes(data, "exposure", "outcome", c("confounder1",
-"confounder2"), 0.5)
+corrected_outcomes(data, "exposure", "outcome", c(
+  "confounder1",
+  "confounder2"
+), 0.5)
 
 }

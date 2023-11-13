@@ -8,7 +8,7 @@
 #' @param exposure The name of the exposure variable.
 #' @param outcome The name of the outcome variable.
 #' @param confounders A vector of names of confounding variables.
-#' @param sf The sensitivity function c(z, e).
+#' @param sf The R sensitivity function for c(z, e).
 #'
 #' @return A vector corresponding with corrected outcomes.
 #'
@@ -27,12 +27,17 @@
 #' @export
 corrected_outcomes <- function(trt_model, data, exposure, outcome, sf) {
   # TODO: allow exposure and outcome to be strings rather than vectors
+
+  if (is.function(sf) == FALSE) {
+    stop("sf must be a function.")
+  }
+
   y_sf <- c()
   predicted_exposure <- predict(trt_model, data, type = "response")
 
   for (z in exposure) {
-    c <- sf(z, predicted_exposure)
-    y_sf <- c(y_sf, outcome - abs(exposure - predicted_exposure) * c)
+    c_value <- sf(z, predicted_exposure) # not to confuse with c() function
+    y_sf <- c(y_sf, outcome - abs(exposure - predicted_exposure) * c_value)
   }
   return(y_sf)
 }

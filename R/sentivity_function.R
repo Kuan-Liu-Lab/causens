@@ -16,7 +16,7 @@
 #'
 #' sf(z, e, form)
 #' @export
-sf <- function(z, e, form = "increasing") {
+sensitivity_function <- function(z, e, form = "increasing") {
   if (form == "increasing") {
     return(0.05 + 0.05 * e)
   } else if (form == "decreasing") {
