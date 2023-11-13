@@ -1,5 +1,4 @@
 library(testthat)
-library(causens)
 
 test_cases_increasing <- list(
   z = c(1, 0, 1, 1, 0),
