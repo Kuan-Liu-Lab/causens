@@ -35,9 +35,9 @@ corrected_outcomes <- function(trt_model, data, exposure, outcome, sf) {
   y_sf <- c()
   predicted_exposure <- predict(trt_model, data, type = "response")
 
-  for (z in exposure) {
-    c_value <- sf(z, predicted_exposure) # not to confuse with c() function
-    y_sf <- c(y_sf, outcome - abs(exposure - predicted_exposure) * c_value)
+  for (i in seq_along(exposure)) {
+    c_value <- sf(exposure[i], predicted_exposure[i]) # not to confuse with c() function
+    y_sf <- c(y_sf, (outcome[i] - predicted_exposure[i]) * c_value)
   }
   return(y_sf)
 }
