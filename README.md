@@ -10,32 +10,38 @@ analysis methods within the context of causal inference.
 
 ## Installation
 
-    # The easiest way is to install from CRAN via:
-    install.packages("causens")
+```{r}
+# The easiest way is to install from CRAN via:
+install.packages("causens")
 
-    # Alternatively, you can install the latest version directly from GitHub
-    install.packages("devtools")
-    library(devtools)
-    devtools::install_github("Kuan-Liu-Lab/causens")
-    library(causens)
+# Alternatively, you can install the latest version directly from GitHub
+install.packages("devtools")
+library(devtools)
+devtools::install_github("Kuan-Liu-Lab/causens")
+library(causens)
+```
 
 ## Usage
 
-    library(causens)
+```{r}
+library(causens)
+```
 
 ## Citing
 
 Please cite our software using:
 
-    @Manual{,
-      title = {causens: Perform causal sensitivity analyses using various statistical
-    methods},
-      author = {Larry Dong, Kuan Liu},
-      year = {2023},
-      note = {R package version 0.0.1, 
-    https://kuan-liu-lab.github.io/causens/},
-      url = {https://github.com/Kuan-Liu-Lab/causens/},
-    }
+```
+@Manual{,
+  title = {causens: Perform causal sensitivity analyses using various statistical
+methods},
+  author = {Larry Dong, Kuan Liu},
+  year = {2023},
+  note = {R package version 0.0.1, 
+https://kuan-liu-lab.github.io/causens/},
+  url = {https://github.com/Kuan-Liu-Lab/causens/},
+}
+```
 
 ## Getting help
 
