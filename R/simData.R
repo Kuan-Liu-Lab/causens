@@ -76,7 +76,7 @@ simulate_data <- function(ymodel = "linear",
 gData_U_binary_Y_cont <- function(ymodel = "linear",
                                   N = 500,
                                   alpha_uz = 0.2,
-                                  beta_uz = 0.5,
+                                  beta_uy = 0.5,
                                   treatment_effects = 1,
                                   seed = 123) {
   return(simulate_data(
@@ -86,7 +86,7 @@ gData_U_binary_Y_cont <- function(ymodel = "linear",
     y_type = "continuous",
     seed = seed,
     alpha_uz = alpha_uz,
-    beta_uy = beta_uz,
+    beta_uy = beta_uy,
     treatment_effects = treatment_effects
   ))
 }
@@ -104,7 +104,7 @@ gData_U_binary_Y_cont <- function(ymodel = "linear",
 gData_U_cont_Y_cont <- function(ymodel = "linear",
                                 N = 500,
                                 alpha_uz = 0.2,
-                                beta_uz = 0.5,
+                                beta_uy = 0.5,
                                 treatment_effects = 1,
                                 seed = 123) {
   return(simulate_data(
@@ -114,7 +114,7 @@ gData_U_cont_Y_cont <- function(ymodel = "linear",
     y_type = "continuous",
     seed = seed,
     alpha_uz = alpha_uz,
-    beta_uy = beta_uz,
+    beta_uy = beta_uy,
     treatment_effects = treatment_effects
   ))
 }
@@ -132,7 +132,7 @@ gData_U_cont_Y_cont <- function(ymodel = "linear",
 gData_U_cont_Y_binary <- function(ymodel = "linear",
                                   N = 500,
                                   alpha_uz = 0.2,
-                                  beta_uz = 0.5,
+                                  beta_uy = 0.5,
                                   treatment_effects = 1,
                                   seed = 123) {
   return(simulate_data(
@@ -142,7 +142,7 @@ gData_U_cont_Y_binary <- function(ymodel = "linear",
     y_type = "binary",
     seed = seed,
     alpha_uz = alpha_uz,
-    beta_uy = beta_uz,
+    beta_uy = beta_uy,
     treatment_effects = treatment_effects
   ))
 }
@@ -160,7 +160,7 @@ gData_U_cont_Y_binary <- function(ymodel = "linear",
 gData_U_binary_Y_binary <- function(ymodel = "linear",
                                     N = 500,
                                     alpha_uz = 0.2,
-                                    beta_uz = 0.5,
+                                    beta_uy = 0.5,
                                     treatment_effects = 1,
                                     seed = 123) {
   return(simulate_data(
@@ -170,7 +170,7 @@ gData_U_binary_Y_binary <- function(ymodel = "linear",
     y_type = "binary",
     seed = seed,
     alpha_uz = alpha_uz,
-    beta_uy = beta_uz,
+    beta_uy = beta_uy,
     treatment_effects = treatment_effects
   ))
 }
