@@ -25,19 +25,40 @@
 #' ), 0.5)
 #'
 #' @export
-corrected_outcomes <- function(trt_model, data, exposure, outcome, sf) {
+corrected_outcomes <- function(trt_model, data, exposure, outcome, sf = "constant", ...) {
   # TODO: allow exposure and outcome to be strings rather than vectors
+  args <- list(...)
 
-  if (is.function(sf) == FALSE) {
-    stop("sf must be a function.")
+  if (!all(exposure) %in% c(0, 1)){
+    stop("Non-binary exposures are not yet supported in causens.")
   }
 
-  y_sf <- c()
+  if (is.character(sf)){
+    if (sf == "constant") {
+      if (!"c1" %in% names(args) || !"c0" %in% names(args)) {
+        stop("c1 and c0 must be provided when sf is 'constant'")
+      }
+      c1 <- args$c1
+      c0 <- args$c0
+
+      if (length(c1) != 1 || length(c0) != 1) {
+        stop("c1 and c0 must be numeric scalars.")
+      }
+    } else {
+      stop("Invalid sensitivity function.")
+    }
+  }
+
+  if (is.function(sf) == FALSE) {
+    stop("sf must be a function or specified to be one of 'constant', 'linear' or 'quadratic'.")
+  }
+
+  y_corrected <- c()
   predicted_exposure <- predict(trt_model, data, type = "response")
 
   for (i in seq_along(exposure)) {
-    c_value <- sf(exposure[i], predicted_exposure[i]) # not to confuse with c() function
-    y_sf <- c(y_sf, (outcome[i] - predicted_exposure[i]) * c_value)
+    c_value <- ifelse(exposure[i] == 1, c1, c0)
+    y_corrected <- c(y_corrected, (outcome[i] - predicted_exposure[i]) * c_value)
   }
-  return(y_sf)
+  return(y_corrected)
 }
