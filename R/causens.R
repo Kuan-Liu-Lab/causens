@@ -23,7 +23,7 @@ causens <- function(trt_model, data, exposure, outcome, sf = "constant", c1 = 0.
 
   # Calculate the Average Treatment Effect
   ATE <- (
-    mean(y_corrected[exposure == 1] / (sum(exposure == 1))) 
+    mean(y_corrected[exposure == 1] / (sum(exposure == 1)))
     - mean(y_corrected[exposure == 0] / (sum(exposure == 0)))
   )
 
