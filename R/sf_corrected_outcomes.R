@@ -1,6 +1,6 @@
 #' @title Outcomes Corrected via Sensitivity Function
 #'
-#' This function provides corrected outcomes corrected using a sensitivity
+#' @description This function provides corrected outcomes corrected using a sensitivity
 #' function c(z, e).
 #'
 #' @param trt_model The treatment model object.
@@ -25,9 +25,8 @@
 #' ), 0.5)
 #'
 #' @export
-corrected_outcomes <- function(trt_model, data, exposure, outcome, sf = "constant", ...) {
+corrected_outcomes <- function(trt_model, data, exposure, outcome, sf = "constant", c1 = 0.5, c0 = 0.3) {
   # TODO: allow exposure and outcome to be strings rather than vectors
-  args <- list(...)
 
   if (!all(exposure) %in% c(0, 1)) {
     stop("Non-binary exposures are not yet supported in causens.")

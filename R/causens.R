@@ -1,6 +1,6 @@
 #' @title Estimate Corrected Average Treatment Effect
 #'
-#' This function provides an estimate of the Average Treatment Effect (ATE) using
+#' @description This function provides an estimate of the Average Treatment Effect (ATE) using
 #' outcomes corrected for unmeasured confounding via a sensitivity function.
 #'
 #' @param trt_model The treatment model object.
@@ -13,13 +13,13 @@
 #' @return A point estimate of the corrected ATE.
 #'
 #' @export
-causens <- function(trt_model, data, exposure, outcome, sf = "constant", ...) {
+causens <- function(trt_model, data, exposure, outcome, sf = "constant", c1 = 0.5, c0 = 0.3) {
   # Check if the necessary columns exist
   if (!all(c("treatment", "outcome") %in% names(data))) {
     stop("Dataframe does not have the necessary columns: 'treatment' and 'outcome'")
   }
 
-  y_corrected <- corrected_outcomes(trt_model, data, exposure, outcome, sf = "constant", ...)
+  y_corrected <- corrected_outcomes(trt_model, data, exposure, outcome, sf = "constant", c1 = 0.5, c0 = 0.3)
 
   # Calculate the Average Treatment Effect
   ATE <- (

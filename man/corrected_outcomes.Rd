@@ -4,7 +4,15 @@
 \alias{corrected_outcomes}
 \title{Outcomes Corrected via Sensitivity Function}
 \usage{
-corrected_outcomes(trt_model, data, exposure, outcome, sf)
+corrected_outcomes(
+  trt_model,
+  data,
+  exposure,
+  outcome,
+  sf = "constant",
+  c1 = 0.5,
+  c0 = 0.3
+)
 }
 \arguments{
 \item{trt_model}{The treatment model object.}

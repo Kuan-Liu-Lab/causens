@@ -8,7 +8,7 @@ gData_U_binary_Y_cont(
   ymodel = "linear",
   N = 500,
   alpha_uz = 0.2,
-  beta_uz = 0.5,
+  beta_uy = 0.5,
   treatment_effects = 1,
   seed = 123
 )
@@ -20,11 +20,11 @@ gData_U_binary_Y_cont(
 
 \item{alpha_uz}{The coefficient of the unmeasured confounder in the propensity score model.}
 
+\item{beta_uy}{The coefficient of the unmeasured confounder in the outcome model.}
+
 \item{treatment_effects}{The treatment effect.}
 
 \item{seed}{The seed for the random number generator.}
-
-\item{beta_uy}{The coefficient of the unmeasured confounder in the outcome model.}
 }
 \description{
 Generate data with a binary unmeasured confounder and continuous outcome
