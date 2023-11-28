@@ -1,4 +1,4 @@
-#' Outcomes Corrected via Sensitivity Function
+#' @title Outcomes Corrected via Sensitivity Function
 #'
 #' This function provides corrected outcomes corrected using a sensitivity
 #' function c(z, e).
@@ -29,11 +29,11 @@ corrected_outcomes <- function(trt_model, data, exposure, outcome, sf = "constan
   # TODO: allow exposure and outcome to be strings rather than vectors
   args <- list(...)
 
-  if (!all(exposure) %in% c(0, 1)){
+  if (!all(exposure) %in% c(0, 1)) {
     stop("Non-binary exposures are not yet supported in causens.")
   }
 
-  if (is.character(sf)){
+  if (is.character(sf)) {
     if (sf == "constant") {
       if (!"c1" %in% names(args) || !"c0" %in% names(args)) {
         stop("c1 and c0 must be provided when sf is 'constant'")
