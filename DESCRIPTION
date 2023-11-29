@@ -8,11 +8,10 @@ Authors@R:
 Description: This package provides functionality to perform causal
     sensitivity analyses using recently developed statistical methods.
 License: MIT
-URL: https://github.com/Kuan-Liu-Lab/causens/,
-    https://kuan-liu-lab.github.io/causens/
+URL: https://kuan-liu-lab.github.io/causens/, https://github.com/Kuan-Liu-Lab/causens
 Collate:
     "sensitivity_function.R"
-    "sf_corrected_outcomes.R"
+    "corrected_outcomes.R"
     "simData.R"
     "causens.R"
 Suggests:
@@ -24,3 +23,4 @@ Suggests:
     usethis
 Encoding: UTF-8
 RoxygenNote: 7.2.3
+BugReports: https://github.com/Kuan-Liu-Lab/causens/issues
