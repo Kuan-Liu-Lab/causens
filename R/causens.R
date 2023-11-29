@@ -13,6 +13,7 @@
 #' @return A point estimate of the corrected ATE.
 #'
 #' @export
+#' @inheritParams corrected_outcomes
 causens <- function(trt_model, data, exposure, outcome, sf = "constant", c1 = 0.5, c0 = 0.3) {
   # Check if the necessary columns exist
   if (!all(c("treatment", "outcome") %in% names(data))) {
