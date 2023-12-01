@@ -9,6 +9,11 @@
 #' @param treatment_effects The treatment effect.
 #' @param seed The seed for the random number generator.
 #'
+#' @importFrom stats predict
+#' @importFrom stats rnorm
+#' @importFrom stats rbinom
+#' @importFrom stats plogis
+#'
 #' @return A data frame with the simulated dataset.
 #'
 #' @export
