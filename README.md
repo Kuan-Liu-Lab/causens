@@ -1,6 +1,8 @@
 # causens
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/Kuan-Liu-Lab/causens/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Kuan-Liu-Lab/causens/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/Kuan-Liu-Lab/causens/branch/main/graph/badge.svg)](https://app.codecov.io/gh/Kuan-Liu-Lab/causens?branch=main)
 <!-- badges: end -->
 
 ## Overview
