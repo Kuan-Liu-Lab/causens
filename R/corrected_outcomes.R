@@ -25,8 +25,11 @@
 #' ), 0.5)
 #'
 #' @export
-corrected_outcomes <- function(trt_model, data, exposure, outcome, sf = "constant", c1 = 0.5, c0 = 0.3) {
+#' @inheritParams sf
+corrected_outcomes <- function(trt_model, data, exposure, outcome, form = "constant", ...) {
   # TODO: allow exposure and outcome to be strings rather than vectors
+
+  args <- list(...)
 
   if (!all(exposure) %in% c(0, 1)) {
     stop("Non-binary exposures are not yet supported in causens.")
@@ -47,6 +50,13 @@ corrected_outcomes <- function(trt_model, data, exposure, outcome, sf = "constan
       if (length(c1) != 1 || length(c0) != 1) {
         stop("c1 and c0 must be numeric scalars.")
       }
+    } else if (sf == "linear") {
+      # c1, c0, s1, s2 all carry a value of NULL if unspecified
+      c1 <- args$c1
+      c0 <- args$c0
+
+      s1 <- args$s1
+      s0 <- args$s0
     } else {
       stop("Invalid sensitivity function.")
     }
@@ -56,7 +66,7 @@ corrected_outcomes <- function(trt_model, data, exposure, outcome, sf = "constan
   predicted_exposure <- predict(trt_model, data, type = "response")
 
   for (i in seq_along(exposure)) {
-    c_value <- ifelse(exposure[i] == 1, c1, c0)
+    c_value <- sf(exposure[i], predicted_exposure[i], form, c1, c0, s1, s0)
     y_corrected <- c(y_corrected, (outcome[i] - predicted_exposure[i]) * c_value)
   }
   return(y_corrected)
