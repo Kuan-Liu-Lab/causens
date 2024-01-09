@@ -21,11 +21,13 @@ jobs:
           use-public-rspm: true
 
       - name: Install lintr
-        run: install.packages("lintr")
+        run: install.packages(c("devtools", "lintr"))
         shell: Rscript {0}
 
       - name: Lint root directory
-        run: lintr::lint_dir()
+        run: |
+          devtools::load_all()  # load all functions from your package
+          lintr::lint_dir()
         shell: Rscript {0}
         env:
           LINTR_ERROR_ON_LINT: true
