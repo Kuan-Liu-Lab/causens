@@ -2,10 +2,14 @@
 #'
 #' @param ymodel A string indicating the functional form of the outcome model.
 #' @param N The number of observations to be generated.
-#' @param u_type A string indicating the type of the unmeasured confounder: "binary" or "continuous".
-#' @param y_type A string indicating the type of the outcome: "binary" or "continuous".
-#' @param alpha_uz The coefficient of the unmeasured confounder in the propensity score model.
-#' @param beta_uy The coefficient of the unmeasured confounder in the outcome model.
+#' @param u_type A string indicating the type of the unmeasured confounder:
+#' "binary" or "continuous".
+#' @param y_type A string indicating the type of the outcome: "binary" or
+#' "continuous".
+#' @param alpha_uz The coefficient of the unmeasured confounder in the
+#' propensity score model.
+#' @param beta_uy The coefficient of the unmeasured confounder in the
+#' outcome model.
 #' @param treatment_effects The treatment effect.
 #' @param seed The seed for the random number generator.
 #'
@@ -17,14 +21,16 @@
 #' @return A data frame with the simulated dataset.
 #'
 #' @export
-simulate_data <- function(ymodel = "linear",
-                          N = 500,
-                          u_type = "binary",
-                          y_type = "continuous",
-                          seed = 123,
-                          alpha_uz = 0.2,
-                          beta_uy = 0.5,
-                          treatment_effects = 1) {
+simulate_data <- function(
+  ymodel = "linear",
+  N = 500,
+  u_type = "binary",
+  y_type = "continuous",
+  seed = 123,
+  alpha_uz = 0.2,
+  beta_uy = 0.5,
+  treatment_effects = 1
+) {
   set.seed(seed)
 
   alpha_xz <- c(.1, -.5, .2) # coefficients of X in the treatment model;

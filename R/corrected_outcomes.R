@@ -1,7 +1,7 @@
 #' @title Outcomes Corrected via Sensitivity Function
 #'
-#' @description This function provides corrected outcomes corrected using a sensitivity
-#' function c(z, e).
+#' @description This function provides corrected outcomes corrected using a
+#' sensitivity function c(z, e).
 #'
 #' @param trt_model The treatment model object.
 #' @param data A data frame containing the variables of interest.
@@ -25,7 +25,15 @@
 #' ), 0.5)
 #'
 #' @export
-corrected_outcomes <- function(trt_model, data, exposure, outcome, sf = "constant", c1 = 0.5, c0 = 0.3) {
+corrected_outcomes <- function(
+  trt_model,
+  data,
+  exposure,
+  outcome,
+  sf = "constant",
+  c1 = 0.5,
+  c0 = 0.3
+) {
   # TODO: allow exposure and outcome to be strings rather than vectors
 
   if (!all(exposure) %in% c(0, 1)) {
@@ -49,7 +57,8 @@ corrected_outcomes <- function(trt_model, data, exposure, outcome, sf = "constan
   }
 
   if (is.function(sf) == FALSE) {
-    stop("sf must be a function or specified to be one of 'constant', 'linear' or 'quadratic'.")
+    stop(paste("sf must be a function or specified to be one of 'constant'",
+               "'linear' or 'quadratic'."))
   }
 
   y_corrected <- c()
@@ -57,7 +66,10 @@ corrected_outcomes <- function(trt_model, data, exposure, outcome, sf = "constan
 
   for (i in seq_along(exposure)) {
     c_value <- ifelse(exposure[i] == 1, c1, c0)
-    y_corrected <- c(y_corrected, (outcome[i] - predicted_exposure[i]) * c_value)
+    y_corrected <- c(
+      y_corrected,
+      (outcome[i] - predicted_exposure[i]) * c_value
+    )
   }
   return(y_corrected)
 }
