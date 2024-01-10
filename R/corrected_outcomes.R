@@ -32,6 +32,10 @@ corrected_outcomes <- function(trt_model, data, exposure, outcome, sf = "constan
     stop("Non-binary exposures are not yet supported in causens.")
   }
 
+  if (is.function(sf) == FALSE) {
+    stop("sf must be a function or specified to be one of 'constant', 'linear' or 'quadratic'.")
+  }
+
   if (is.character(sf)) {
     if (sf == "constant") {
       if (!"c1" %in% names(args) || !"c0" %in% names(args)) {
@@ -46,10 +50,6 @@ corrected_outcomes <- function(trt_model, data, exposure, outcome, sf = "constan
     } else {
       stop("Invalid sensitivity function.")
     }
-  }
-
-  if (is.function(sf) == FALSE) {
-    stop("sf must be a function or specified to be one of 'constant', 'linear' or 'quadratic'.")
   }
 
   y_corrected <- c()
