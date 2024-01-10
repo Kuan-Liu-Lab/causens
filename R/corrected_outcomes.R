@@ -35,14 +35,14 @@ corrected_outcomes <- function(trt_model, data, exposure, outcome, form = "const
     stop("Non-binary exposures are not yet supported in causens.")
   }
 
-  if (is.function(sf) == FALSE) {
-    stop("sf must be a function or specified to be one of 'constant', 'linear' or 'quadratic'.")
+  if (is.function(form) == FALSE) {
+    stop("form must be a function or specified to be one of 'constant', 'linear' or 'quadratic'.")
   }
 
-  if (is.character(sf)) {
-    if (sf == "constant") {
+  if (is.character(form)) {
+    if (form == "constant") {
       if (!"c1" %in% names(args) || !"c0" %in% names(args)) {
-        stop("c1 and c0 must be provided when sf is 'constant'")
+        stop("c1 and c0 must be provided when form is 'constant'")
       }
       c1 <- args$c1
       c0 <- args$c0
@@ -50,7 +50,7 @@ corrected_outcomes <- function(trt_model, data, exposure, outcome, form = "const
       if (length(c1) != 1 || length(c0) != 1) {
         stop("c1 and c0 must be numeric scalars.")
       }
-    } else if (sf == "linear") {
+    } else if (form == "linear") {
       # c1, c0, s1, s2 all carry a value of NULL if unspecified
       c1 <- args$c1
       c0 <- args$c0
