@@ -20,7 +20,7 @@ causens <- function(trt_model, data, exposure, outcome, sf = "constant", c1 = 0.
     stop("Dataframe does not have the necessary columns: 'treatment' and 'outcome'")
   }
 
-  y_corrected <- corrected_outcomes(trt_model, data, exposure, outcome, sf = "constant", c1 = 0.5, c0 = 0.3)
+  y_corrected <- corrected_outcomes(trt_model, data, exposure, outcome, sf = "constant",  c1 = 0.5, c0 = 0.3)
 
   # Calculate the Average Treatment Effect
   ATE <- (
