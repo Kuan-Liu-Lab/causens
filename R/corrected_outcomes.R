@@ -31,7 +31,7 @@ corrected_outcomes <- function(trt_model, data, exposure, outcome, form = "const
 
   args <- list(...)
 
-  if (!all(exposure) %in% c(0, 1)) {
+  if (!all(exposure %in% c(0, 1))) {
     stop("Non-binary exposures are not yet supported in causens.")
   }
 

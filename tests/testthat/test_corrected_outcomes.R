@@ -10,25 +10,16 @@ test_data <- data.frame(
 
 # create a test for the corrected_outcomes function
 test_that("corrected_outcomes returns the correct output", {
-  # define the sensitivity function
-  sf <- function(z, e) {
-    if (z == 0) {
-      return(0.5)
-    } else {
-      return(1.5)
-    }
-  }
 
   # call the function
   corrected <- corrected_outcomes(
-    lm(
-      outcome ~ confounder1 + confounder2,
-      data = test_data,
-    ),
+    lm(outcome ~ exposure + confounder1 + confounder2, data = test_data),
     test_data,
     test_data$exposure,
     test_data$outcome,
-    sf
+    form = "constant",
+    c1 = 0.5,
+    c0 = 0.3
   )
 
   # TODO: Temporary "test" for checking GitHub Actions

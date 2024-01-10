@@ -18,11 +18,19 @@
 #' @export
 sf <- function(z, e, form = "constant", c1 = 0, c0 = 0, s1 = 0, s0 = 0) {
   if (form == "constant") {
-    return(ifelse(e == 1, c1, c0))
+    if (e == 1) {
+      return(c1)
+    } else {
+      return(c0)
+    }
   } else if (form == "linear") {
     if (is.null(s1) || is.null(s0)) {
       stop("s1 and s0 must be provided when sf is 'linear'")
     }
-    return(ifelse(e == 1, c1 + s1 * z, c0 + s0 * z))
+    if (e == 1) {
+      return(c1 + s1 * z)
+    } else {
+      return(c0 + s0 * z)
+    }
   }
 }
