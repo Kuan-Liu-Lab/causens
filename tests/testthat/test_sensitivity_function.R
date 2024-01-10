@@ -1,26 +1,36 @@
 library(testthat)
 
-test_cases_increasing <- list(
+test_cases_constant <- list(
   z = c(1, 0, 1, 1, 0),
-  e = c(0.1, 0.3, 0.5, 0.6, 0.95),
-  form = "increasing",
-  expected = c(0.0550, 0.0650, 0.0750, 0.0800, 0.0975)
+  e = c(1, 0, 1, 1, 0),
+  form = "constant",
+  c1 = 0.5,
+  c0 = 0.3,
+  expected = c(0.5, 0.3, 0.5, 0.5, 0.3)
 )
 
-test_cases_decreasing <- list(
+test_cases_linear <- list(
   z = c(1, 0, 1, 1, 0),
-  e = c(0.1, 0.3, 0.5, 0.6, 0.95),
-  form = "decreasing",
-  expected = c(0.0950, 0.0850, 0.0750, 0.0700, 0.0525)
+  e = c(1, 0, 1, 1, 0),
+  form = "linear",
+  c1 = 0.5,
+  c0 = 0.3,
+  s1 = 0.1,
+  s0 = 0.2,
+  expected = c(0.6, 0.3, 0.6, 0.6, 0.3)
 )
 
-for (test_cases in list(test_cases_increasing, test_cases_decreasing)) {
-  test_that("sensitivity_function works", {
+for (test_cases in list(test_cases_constant, test_cases_linear)) {
+  test_that("sf works", {
     expect_equal(
-      sensitivity_function(
+      sf(
         z = test_cases$z,
         e = test_cases$e,
-        form = test_cases$form
+        form = test_cases$form,
+        c1 = test_cases$c1,
+        c0 = test_cases$c0,
+        s1 = test_cases$s1,
+        s0 = test_cases$s0
       ),
       test_cases$expected
     )
