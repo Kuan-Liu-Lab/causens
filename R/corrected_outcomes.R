@@ -35,7 +35,7 @@ corrected_outcomes <- function(trt_model, data, exposure, outcome, form = "const
     stop("Non-binary exposures are not yet supported in causens.")
   }
 
-  if (is.function(form) == FALSE) {
+  if (is.function(form)) {
     stop("form must be a function or specified to be one of 'constant', 'linear' or 'quadratic'.")
   }
 
