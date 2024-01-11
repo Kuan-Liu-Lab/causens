@@ -9,19 +9,28 @@
 #'
 #' @param z Treatment assignment (binary: 0 or 1)
 #' @param e Propensity score value (numeric)
-#' @param form Form of the sensitivity function (character: "increasing" or
-#' "decreasing")
+#' @param form Form of the sensitivity function (character: "constant" or
+#' "linear")
 #' @return Sensitivity of treatment effect estimate to unmeasured confounding
 #' (numeric)
 #'
 #' sf(z, e, form)
 #' @export
-sensitivity_function <- function(z, e, form = "increasing") {
-  if (form == "increasing") {
-    return(0.05 + 0.05 * e)
-  } else if (form == "decreasing") {
-    return(0.1 - 0.05 * e)
-  } else {
-    stop("Invalid sensitivity function form.")
+sf <- function(z, e, form = "constant", c1 = 0, c0 = 0, s1 = 0, s0 = 0) {
+  if (form == "constant") {
+    if (e == 1) {
+      return(c1)
+    } else {
+      return(c0)
+    }
+  } else if (form == "linear") {
+    if (is.null(s1) || is.null(s0)) {
+      stop("s1 and s0 must be provided when sf is 'linear'")
+    }
+    if (e == 1) {
+      return(c1 + s1 * z)
+    } else {
+      return(c0 + s0 * z)
+    }
   }
 }

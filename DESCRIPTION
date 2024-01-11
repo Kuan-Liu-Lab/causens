@@ -20,7 +20,9 @@ Suggests:
     pkgdown,
     rmarkdown,
     roxygen2,
+    testthat (>= 3.0.0),
     usethis
 Encoding: UTF-8
 RoxygenNote: 7.2.3
 BugReports: https://github.com/Kuan-Liu-Lab/causens/issues
+Config/testthat/edition: 3

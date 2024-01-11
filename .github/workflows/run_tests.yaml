@@ -18,11 +18,10 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Install dependencies and run tests
-      env:
-        GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
       run: |
         Rscript -e "install.packages('remotes')"
         Rscript -e "remotes::install_deps()"
-        Rscript -e "install.packages('testthat')"
-        Rscript -e "remotes::install_local('.', dependencies = TRUE)"
+        Rscript -e "install.packages(c('devtools', 'testthat'))"
+        Rscript -e "devtools::install('.')"  # Install local package
+        Rscript -e "devtools::load_all()"
         Rscript -e "testthat::test_dir('tests')"

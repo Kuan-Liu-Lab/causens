@@ -10,27 +10,15 @@ test_data <- data.frame(
 
 # create a test for the corrected_outcomes function
 test_that("corrected_outcomes returns the correct output", {
-  # define the sensitivity function
-  sf <- function(z, e) {
-    if (z == 0) {
-      return(0.5)
-    } else {
-      return(1.5)
-    }
-  }
-
+  trt_model <- glm(exposure ~ confounder1 + confounder2, data = test_data, family = binomial())
   # call the function
   corrected <- corrected_outcomes(
-    lm(
-      outcome ~ confounder1 + confounder2,
-      data = test_data,
-    ),
+    trt_model,
     test_data,
     test_data$exposure,
     test_data$outcome,
-    sf
+    form = "constant",
+    c1 = 0.5,
+    c0 = 0.3
   )
-
-  # TODO: Temporary "test" for checking GitHub Actions
-  expect_equal(c(1e-4, 1e-5, 1e-6, 1e-7), c(0, 0, 0, 0), tolerance = 1e-3)
 })

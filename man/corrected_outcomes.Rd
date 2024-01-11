@@ -4,15 +4,7 @@
 \alias{corrected_outcomes}
 \title{Outcomes Corrected via Sensitivity Function}
 \usage{
-corrected_outcomes(
-  trt_model,
-  data,
-  exposure,
-  outcome,
-  sf = "constant",
-  c1 = 0.5,
-  c0 = 0.3
-)
+corrected_outcomes(trt_model, data, exposure, outcome, form = "constant", ...)
 }
 \arguments{
 \item{trt_model}{The treatment model object.}
@@ -23,9 +15,12 @@ corrected_outcomes(
 
 \item{outcome}{The name of the outcome variable.}
 
-\item{sf}{The R sensitivity function for c(z, e).}
+\item{form}{Form of the sensitivity function (character: "constant" or
+"linear")}
 
 \item{confounders}{A vector of names of confounding variables.}
+
+\item{sf}{The R sensitivity function for c(z, e).}
 }
 \value{
 A vector corresponding with corrected outcomes.
