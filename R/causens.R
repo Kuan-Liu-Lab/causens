@@ -15,10 +15,6 @@
 #' @export
 #' @inheritParams corrected_outcomes
 causens <- function(trt_model, data, exposure, outcome, sf = "constant", c1 = 0.5, c0 = 0.3) {
-  # Check if the necessary columns exist
-  if (!all(c("treatment", "outcome") %in% names(data))) {
-    stop("Dataframe does not have the necessary columns: 'treatment' and 'outcome'")
-  }
 
   y_corrected <- corrected_outcomes(trt_model, data, exposure, outcome, sf = "constant",  c1 = 0.5, c0 = 0.3)
 
