@@ -47,6 +47,10 @@ corrected_outcomes <- function(trt_model, data, exposure, outcome, form = "const
       if (length(c1) != 1 || length(c0) != 1) {
         stop("c1 and c0 must be numeric scalars.")
       }
+
+      s1 <- 0
+      s0 <- 0
+
     } else if (form == "linear") {
       # c1, c0, s1, s2 all carry a value of NULL if unspecified
       c1 <- args$c1
