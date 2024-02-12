@@ -2,8 +2,10 @@
 # U could be missing.
 
 trt_effect <- 1
-data <- simulate_data(N = 10000, alpha_uz = 1, beta_uy = 1,
-                      treatment_effects = trt_effect)
+data <- simulate_data(
+  N = 10000, alpha_uz = 1, beta_uy = 1,
+  treatment_effects = trt_effect
+)
 
 # Implementing PSweight's utility from scratch...
 
@@ -50,10 +52,29 @@ test_that("Not adjusting for U yields incorrect ATE estimates", {
 # First, consider that we have potential outcomes Y(1) and Y(0)
 # which, by the fundamental problem of causal inference, we don't
 
-run_simulation <- function(seed, c1, c0) {
+run_simulation <- function(seed) {
+  data <- simulate_data(
+    N = 1000, alpha_uz = 1, beta_uy = 1,
+    seed = seed, treatment_effects = trt_effect
+  )
 
-  data <- simulate_data(N = 1000, alpha_uz = 1, beta_uy = 1,
-                        seed = seed, treatment_effects = trt_effect)
+  # On retrieving c1, c0 according to our data-generating mechanisms
+
+  u_model <- lm(U ~ Z + X.1 + X.2 + X.3, data = data)
+  X <- data[, c("X.1", "X.2", "X.3")] # measured confounders
+
+  y1_model <- lm(Y1 ~ U + X.1 + X.2 + X.3, data = subset(data, data$Z == 1))
+  Y1_Z1 <- predict(u_model, newdata = data.frame(subset(X, data$Z == 1), Z = 1))
+  Y1_Z0 <- predict(u_model, newdata = data.frame(subset(X, data$Z == 1), Z = 0))
+  c1 <- y1_model$coefficients["U"] * (mean(Y1_Z1) - mean(Y1_Z0))
+
+  y0_model <- lm(Y0 ~ U + X.1 + X.2 + X.3, data = subset(data, data$Z == 1))
+  Y0_Z1 <- predict(u_model, newdata = data.frame(subset(X, data$Z == 1), Z = 1))
+  Y0_Z0 <- predict(u_model, newdata = data.frame(subset(X, data$Z == 1), Z = 0))
+  c0 <- y0_model$coefficients["U"] * (mean(Y0_Z1) - mean(Y0_Z0))
+
+  # Below, we conduct the data analysis assuming U is unmeasured
+  # but we have values of c1, c0 such that our ATE estimate is consistent.
 
   trt_model <- glm(Z ~ X.1 + X.2 + X.3, family = binomial(), data = data)
 
@@ -77,8 +98,8 @@ run_simulation <- function(seed, c1, c0) {
 # determine the exact numerical value of c1 and c0, but their magnitude can be.
 simulated_ates <- c()
 
-for (iter in 1:1000){
-  simulated_ates <- c(simulated_ates, run_simulation(iter, 0.25, 0.25))
+for (iter in 1:1000) {
+  simulated_ates <- c(simulated_ates, run_simulation(iter))
 }
 
 test_that("Simulation retrieves ATE with 'correct' c1, c0 values", {
