@@ -88,6 +88,18 @@ run_simulation <- function(seed) {
 
   estimated_ate <- Y1_sf - Y0_sf
 
+  expect_equal(
+    estimated_ate,
+    causens(
+      glm(Z ~ X.1 + X.2 + X.3, family = binomial(), data = data),
+      data = data,
+      exposure = "Z",
+      outcome = "Y",
+      c1 = c1,
+      c0 = c0
+    )
+  )
+
   return(estimated_ate)
 }
 

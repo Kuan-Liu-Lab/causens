@@ -13,16 +13,21 @@
 #' @return A point estimate of the corrected ATE.
 #'
 #' @export
-#' @inheritParams corrected_outcomes
-causens <- function(trt_model, data, exposure, outcome, sf = "constant", c1 = 0.5, c0 = 0.3) {
+causens <- function(trt_model, data, exposure, outcome, c1 = 0.5, c0 = 0.3, s1 = 0, s0 = 0) {
+  z <- data[[exposure]]
+  y <- data[[outcome]]
 
-  y_corrected <- corrected_outcomes(trt_model, data, exposure, outcome, sf = "constant",  c1 = 0.5, c0 = 0.3)
+  e <- predict(trt_model, type = "response")
 
   # Calculate the Average Treatment Effect
-  ATE <- (
-    mean(y_corrected[data[[exposure]] == 1])
-    - mean(y_corrected[data[[exposure]] == 0])
-  )
+  weights <- 1 / ifelse(data$Z, e, 1 - e)
+  Y_sf <- data$Y + (-1)**(data$Z == 1) * abs(data$Z - e) * ifelse(data$Z, c1, c0)
 
-  return(ATE)
+  # Potential outcomes corrected w.r.t. sensitivity function
+  Y1_sf <- sum((Y_sf * weights)[data$Z == 1]) / sum(weights[data$Z == 1])
+  Y0_sf <- sum((Y_sf * weights)[data$Z == 0]) / sum(weights[data$Z == 0])
+
+  estimated_ate <- Y1_sf - Y0_sf
+
+  return(estimated_ate)
 }
