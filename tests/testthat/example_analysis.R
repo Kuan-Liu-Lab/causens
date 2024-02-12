@@ -2,15 +2,10 @@
 # U could be missing.
 
 trt_effect <- 1
-<<<<<<< HEAD
 data <- simulate_data(
   N = 10000, alpha_uz = 1, beta_uy = 1,
   treatment_effects = trt_effect
 )
-=======
-data <- simulate_data(N = 10000, alpha_uz = 1, beta_uy = 1,
-                      treatment_effects = trt_effect)
->>>>>>> 9718988 (Justifying c1, c0 choices in simulation)
 
 # Implementing PSweight's utility from scratch...
 
