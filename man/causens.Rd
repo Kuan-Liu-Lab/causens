@@ -4,15 +4,7 @@
 \alias{causens}
 \title{Estimate Corrected Average Treatment Effect}
 \usage{
-causens(
-  trt_model,
-  data,
-  exposure,
-  outcome,
-  sf = "constant",
-  c1 = 0.5,
-  c0 = 0.3
-)
+causens(trt_model, data, exposure, outcome, c1 = 0.5, c0 = 0.3, s1 = 0, s0 = 0)
 }
 \arguments{
 \item{trt_model}{The treatment model object.}
@@ -23,9 +15,9 @@ causens(
 
 \item{outcome}{The name of the outcome variable.}
 
-\item{sf}{The R sensitivity function for c(z, e).}
-
 \item{confounders}{A vector of names of confounding variables.}
+
+\item{sf}{The R sensitivity function for c(z, e).}
 }
 \value{
 A point estimate of the corrected ATE.
