@@ -73,6 +73,7 @@ corrected_outcomes <- function(trt_model, data, exposure, outcome, form = "const
     MoreArgs = list(form = form, c1 = c1, c0 = c0, s1 = s1, s0 = s0)
   )
   if (all(y %in% c(0, 1))) {
+    # binary outcome
     y_corrected <- y * (abs(1 - z - e) + exp(- sf(z, e)) * abs(z - e))
   } else {
     y_corrected <- (y - e) * c_values
