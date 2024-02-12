@@ -56,6 +56,7 @@ run_simulation <- function(seed, c1, c0) {
                         seed = seed, treatment_effects = trt_effect)
 
   trt_model <- glm(Z ~ X.1 + X.2 + X.3, family = binomial(), data = data)
+
   e <- predict(trt_model, type = "response") # propensity score
 
   weights <- 1 / ifelse(data$Z, e, 1 - e)
