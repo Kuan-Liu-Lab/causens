@@ -27,13 +27,10 @@
 #' @export
 #' @inheritParams sf
 corrected_outcomes <- function(trt_model, data, exposure, outcome, form = "constant", ...) {
-  # TODO: allow exposure and outcome to be strings rather than vectors
+  z <- handle_argument(exposure, data)
+  y <- handle_argument(outcome, data)
 
   args <- list(...)
-
-  if (!all(exposure %in% c(0, 1))) {
-    stop("Non-binary exposures are not yet supported in causens.")
-  }
 
   if (is.function(form)) {
     stop("form must be a function or specified to be one of 'constant', 'linear' or 'quadratic'.")
@@ -50,6 +47,10 @@ corrected_outcomes <- function(trt_model, data, exposure, outcome, form = "const
       if (length(c1) != 1 || length(c0) != 1) {
         stop("c1 and c0 must be numeric scalars.")
       }
+
+      s1 <- 0
+      s0 <- 0
+
     } else if (form == "linear") {
       # c1, c0, s1, s2 all carry a value of NULL if unspecified
       c1 <- args$c1
@@ -63,11 +64,39 @@ corrected_outcomes <- function(trt_model, data, exposure, outcome, form = "const
   }
 
   y_corrected <- c()
-  predicted_exposure <- predict(trt_model, data, type = "response")
+  e <- predict(trt_model, data, type = "response")
 
-  for (i in seq_along(exposure)) {
-    c_value <- sf(exposure[i], predicted_exposure[i], form, c1, c0, s1, s0)
-    y_corrected <- c(y_corrected, (outcome[i] - predicted_exposure[i]) * c_value)
+  c_values <- mapply(
+    sf,
+    z,
+    e,
+    MoreArgs = list(form = form, c1 = c1, c0 = c0, s1 = s1, s0 = s0)
+  )
+  if (all(y %in% c(0, 1))) {
+    y_corrected <- y * (abs(1 - z - e) + exp(- sf(z, e)) * abs(z - e))
+  } else {
+    y_corrected <- (y - e) * c_values
   }
+
   return(y_corrected)
+}
+
+
+#' @title Handle Argument
+#' @description This function handles arguments passed to other functions.
+#' @param arg The argument to be handled.
+#' @param data The data frame containing the argument.
+#' @return The corresponding vector in the data frame or the vector itself if
+#' it was originally passed into the function.
+#' @export
+handle_argument <- function(arg, data) {
+  arg_name <- deparse(substitute(arg))
+
+  if (arg_name %in% names(data)) {
+    return(data[[arg_name]])
+  } else if (!is.vector(arg)) {
+    stop(paste(arg_name, "must be a vector or the name of a column in data."))
+  }
+
+  return(arg)
 }
