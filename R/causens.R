@@ -1,23 +1,35 @@
-#' @title Estimate Corrected Average Treatment Effect
+#' @title Causal Effect Estimation with Sensitivity Analysis
 #'
-#' @description This function provides an estimate of the Average Treatment Effect (ATE) using
-#' outcomes corrected for unmeasured confounding via a sensitivity function.
+#' @description This function provides an estimate of the Average Treatment
+#' Effect (ATE) using outcomes corrected for unmeasured confounding via a
+#' sensitivity function.
+#'
+#' Arguments in the ellipsis are 'keyword arguments' and are passed
+#' to the sensitivity function `sf`.
 #'
 #' @param trt_model The treatment model object.
 #' @param data A data frame containing the variables of interest.
 #' @param exposure The name of the exposure variable.
 #' @param outcome The name of the outcome variable.
 #' @param confounders A vector of names of confounding variables.
-#' @param sf The R sensitivity function for c(z, e).
+#' @param method The method to use for sensitivity analysis. Currently, only
+#' "Li" is supported.
 #'
 #' @return A point estimate of the corrected ATE.
 #'
 #' @export
-causens <- function(trt_model, data, exposure, outcome, c1 = 0.5, c0 = 0.3, s1 = 0, s0 = 0) {
+causens <- function(trt_model, data, exposure, outcome, method, ...) {
   z <- data[[exposure]]
   y <- data[[outcome]]
 
   e <- predict(trt_model, type = "response")
+
+  if (method == "Li") {
+    c1 <- sf(z = 1, e = e, ...)
+    c0 <- sf(z = 0, e = 1 - e, ...)
+  } else {
+    stop("Method not recognized or not implemented yet.")
+  }
 
   # Calculate the Average Treatment Effect
   weights <- 1 / ifelse(z == 1, e, 1 - e)
