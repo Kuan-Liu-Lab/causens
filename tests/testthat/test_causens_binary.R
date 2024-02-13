@@ -6,6 +6,13 @@ parameters <- list(
   list(trt_effect = 1, alpha_uz = -0.5, beta_uy = -0.2)
 )
 
+data <- simulate_data(
+  N = 1e7, y_type = "binary", alpha_uz = 1, beta_uy = 1,
+  seed = seed, treatment_effects = trt_effect
+)
+
+true_ate <- mean(data$Y1) - mean(data$Y0)
+
 for (params in parameters) {
   trt_effect <- params$trt_effect
   alpha_uz <- params$alpha_uz
@@ -13,7 +20,7 @@ for (params in parameters) {
 
   run_simulation <- function(seed) {
     data <- simulate_data(
-      N = 1000, alpha_uz = 1, beta_uy = 1,
+      N = 10000, y_type = "binary", alpha_uz = 1, beta_uy = 1,
       seed = seed, treatment_effects = trt_effect
     )
 
@@ -22,15 +29,15 @@ for (params in parameters) {
     u_model <- lm(U ~ Z + X.1 + X.2 + X.3, data = data)
     X <- data[, c("X.1", "X.2", "X.3")] # measured confounders
 
-    y1_model <- lm(Y1 ~ U + X.1 + X.2 + X.3, data = subset(data, data$Z == 1))
+    y1_model <- glm(Y1 ~ U + X.1 + X.2 + X.3, data = subset(data, data$Z == 1), family = binomial())
     Y1_Z1 <- predict(u_model, newdata = data.frame(subset(X, data$Z == 1), Z = 1))
     Y1_Z0 <- predict(u_model, newdata = data.frame(subset(X, data$Z == 1), Z = 0))
-    c1 <- y1_model$coefficients["U"] * (mean(Y1_Z1) - mean(Y1_Z0))
+    c1 <- log(mean(Y1_Z1) / mean(Y1_Z0))
 
-    y0_model <- lm(Y0 ~ U + X.1 + X.2 + X.3, data = subset(data, data$Z == 1))
+    y0_model <- glm(Y0 ~ U + X.1 + X.2 + X.3, data = subset(data, data$Z == 1), family = binomial())
     Y0_Z1 <- predict(u_model, newdata = data.frame(subset(X, data$Z == 0), Z = 1))
     Y0_Z0 <- predict(u_model, newdata = data.frame(subset(X, data$Z == 0), Z = 0))
-    c0 <- y0_model$coefficients["U"] * (mean(Y0_Z1) - mean(Y0_Z0))
+    c0 <- log(mean(Y0_Z1) / mean(Y0_Z0))
 
     # Below, we conduct the data analysis assuming U is unmeasured
     # but we have values of c1, c0 such that our ATE estimate is consistent.
@@ -50,6 +57,6 @@ for (params in parameters) {
   simulated_ates <- unlist(lapply(1:1000, run_simulation))
 
   test_that("Simulation retrieves ATE with 'correct' c1, c0 values", {
-    expect_equal(mean(simulated_ates), trt_effect, tolerance = 0.01)
+    expect_equal(mean(simulated_ates), true_ate, tolerance = 0.01)
   })
 }
