@@ -33,7 +33,12 @@ causens <- function(trt_model, data, exposure, outcome, method, ...) {
 
   # Calculate the Average Treatment Effect
   weights <- 1 / ifelse(z == 1, e, 1 - e)
-  Y_sf <- y + (-1)**(z == 1) * abs(z - e) * ifelse(z, c1, c0)
+
+  if (all(y %in% c(0, 1))) {
+    Y_sf <- y * (abs(1 - z - e) + exp((-1)**(z == 1) * ifelse(z, c1, c0) * abs(z - e)))
+  } else {
+    Y_sf <- y + (-1)**(z == 1) * abs(z - e) * ifelse(z, c1, c0)
+  }
 
   # Potential outcomes corrected w.r.t. sensitivity function
   Y1_sf <- sum((Y_sf * weights)[z == 1]) / sum(weights[z == 1])
