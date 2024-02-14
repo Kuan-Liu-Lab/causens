@@ -38,17 +38,25 @@ simulate_data <- function(ymodel = "linear",
 
   ps <- plogis(-0.1 + X %*% alpha_xz + alpha_uz * (U)) # true propensity score;
   Z <- rbinom(N, 1, ps) # treatment variable;
-  epsilon <- rnorm(N, 0, 1) # error term;
 
   if (ymodel == "linear") {
-    Y0 <- X %*% beta_xy + beta_uy * (U) + epsilon # Y(Z=0)
-    Y1 <- X %*% beta_xy + beta_uy * (U) + tau + epsilon # Y(Z=1)
-    Y <- Y0 * (1 - Z) + Y1 * Z
+    linear_predictor <- X %*% beta_xy + beta_uy * (U)
   } else if (ymodel == "nonlinear") {
-    Y0 <- X^2 %*% beta_xy + beta_uy * (U)^2 + epsilon # Y(Z=0)
-    Y1 <- X^2 %*% beta_xy + beta_uy * (U)^2 + tau + epsilon # Y(Z=1)
-    Y <- Y0 * (1 - Z) + Y1 * Z
+    linear_predictor <- X^2 %*% beta_xy + beta_uy * (U)^2
   }
+
+  if (y_type == "binary") {
+    Y0 <- rbinom(N, 1, plogis(linear_predictor)) # Y(Z=0)
+    Y1 <- rbinom(N, 1, plogis(linear_predictor + tau)) # Y(Z=1)
+  } else if (y_type == "continuous") {
+    epsilon <- rnorm(N, 0, 1) # error term;
+    Y0 <- linear_predictor + epsilon # Y(Z=0)
+    Y1 <- linear_predictor + tau + epsilon # Y(Z=1)
+  } else {
+    stop("Invalid outcome type.")
+  }
+
+  Y <- Y0 * (1 - Z) + Y1 * Z
 
   return(as.data.frame(list(X = X, Z = Z, Y = Y, Y0 = Y0, Y1 = Y1, U = U)))
 }
