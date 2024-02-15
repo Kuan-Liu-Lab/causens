@@ -62,42 +62,44 @@
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="causens">causens<a class="anchor" aria-label="anchor" href="#causens"></a>
 </h1></div>
-<!-- badges: start -->
-<!-- badges: end -->
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
-<p>causens is an R package that will allow to perform various sensitivity analysis methods within the context of causal inference.</p>
+<p>causens is an R package that will allow to perform various sensitivity analysis methods to adjust for unmeasured confounding within the context of causal inference.</p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<pre class="{r}"><code><span><span class="co"># The easiest way is to install from CRAN via:</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"causens"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Alternatively, you can install the latest version directly from GitHub</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
+<pre class="{r}"><code><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"Kuan-Liu-Lab/causens"</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://kuan-liu-lab.github.io/causens/">causens</a></span><span class="op">)</span></span></code></pre>
 </div>
 <div class="section level2">
-<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+<h2 id="quickstart">Quickstart<a class="anchor" aria-label="anchor" href="#quickstart"></a>
 </h2>
-<pre class="{r}"><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://kuan-liu-lab.github.io/causens/">causens</a></span><span class="op">)</span></span></code></pre>
+<pre class="{r}"><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://kuan-liu-lab.github.io/causens/">causens</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Simulate data</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/simulate_data.html">simulate_data</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">1000</span>, seed <span class="op">=</span> <span class="fl">123</span>,alpha_uz <span class="op">=</span> <span class="fl">0.2</span>,</span>
+<span>                      beta_uy <span class="op">=</span> <span class="fl">0.5</span>, treatment_effects <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Posit treatment model</span></span>
+<span><span class="va">trt_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">Z</span> <span class="op">~</span> <span class="va">X.1</span> <span class="op">+</span> <span class="va">X.2</span> <span class="op">+</span> <span class="va">X.3</span>, data <span class="op">=</span> <span class="va">data</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Frequentist sensitivity analysis</span></span>
+<span><span class="fu"><a href="reference/causens.html">causens</a></span><span class="op">(</span><span class="va">trt_model</span>, <span class="va">data</span>, <span class="st">"Z"</span>, <span class="st">"Y"</span>, method <span class="op">=</span> <span class="st">"Li"</span>, c1 <span class="op">=</span> <span class="va">c1</span>, c0 <span class="op">=</span> <span class="va">c0</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="citing">Citing<a class="anchor" aria-label="anchor" href="#citing"></a>
 </h2>
 <p>Please cite our software using:</p>
 <pre><code>@Manual{,
-  title = {causens: Perform causal sensitivity analyses using various statistical
-methods},
-  author = {Larry Dong, Kuan Liu},
-  year = {2023},
-  note = {R package version 0.0.1, 
-https://kuan-liu-lab.github.io/causens/},
-  url = {https://github.com/Kuan-Liu-Lab/causens/},
+  title = {causens: Perform causal sensitivity analyses using various statistical methods},
+  author = {Larry Dong and Kuan Liu},
+  year = {2024},
+  note = {R package version 0.0.1, https://github.com/Kuan-Liu-Lab/causens},
+  url = {https://kuan-liu-lab.github.io/causens/},
 }</code></pre>
 </div>
 <div class="section level2">
@@ -133,6 +135,7 @@ https://kuan-liu-lab.github.io/causens/},
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Larry Dong <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-7775-7798" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Yushu Zou <br><small class="roles"> Author </small> <a href="https://orcid.org/0009-0004-1133-4724" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Kuan Liu <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-5017-1276" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
@@ -145,7 +148,7 @@ https://kuan-liu-lab.github.io/causens/},
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Larry Dong, Kuan Liu.</p>
+<p>Developed by Larry Dong, Yushu Zou, Kuan Liu.</p>
 </div>
 
 <div class="pkgdown-footer-right">
