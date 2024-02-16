@@ -30,7 +30,7 @@ simulate_data <- function(ymodel = "linear",
 
   if (u_type == "binary") {
     U <- rbinom(N, 1, .5) # unmeasured confounder;
-  } else if (u_type == "continuous") {
+  } else if (u_type == "cont" || u_type == "continuous") {
     U <- rnorm(N, 0, 1) # unmeasured confounder;
   } else {
     stop("Invalid unmeasured confounder type.")
@@ -38,17 +38,27 @@ simulate_data <- function(ymodel = "linear",
 
   ps <- plogis(-0.1 + X %*% alpha_xz + alpha_uz * (U)) # true propensity score;
   Z <- rbinom(N, 1, ps) # treatment variable;
-  epsilon <- rnorm(N, 0, 1) # error term;
 
   if (ymodel == "linear") {
-    Y0 <- X %*% beta_xy + beta_uy * (U) + epsilon # Y(Z=0)
-    Y1 <- X %*% beta_xy + beta_uy * (U) + tau + epsilon # Y(Z=1)
-    Y <- Y0 * (1 - Z) + Y1 * Z
+    linear_predictor <- X %*% beta_xy + beta_uy * (U)
   } else if (ymodel == "nonlinear") {
-    Y0 <- X^2 %*% beta_xy + beta_uy * (U)^2 + epsilon # Y(Z=0)
-    Y1 <- X^2 %*% beta_xy + beta_uy * (U)^2 + tau + epsilon # Y(Z=1)
-    Y <- Y0 * (1 - Z) + Y1 * Z
+    linear_predictor <- X^2 %*% beta_xy + beta_uy * (U)^2
+  } else {
+    stop("Invalid outcome model.")
   }
+
+  if (y_type == "binary") {
+    Y0 <- rbinom(N, 1, plogis(linear_predictor))
+    Y1 <- rbinom(N, 1, plogis(linear_predictor + tau))
+  } else if (y_type == "cont" || y_type == "continuous") {
+    epsilon <- rnorm(N, 0, 1) # error term;
+    Y0 <- linear_predictor + epsilon
+    Y1 <- linear_predictor + tau + epsilon
+  } else {
+    stop("Invalid outcome type.")
+  }
+
+  Y <- Y0 * (1 - Z) + Y1 * Z
 
   return(as.data.frame(list(X = X, Z = Z, Y = Y, Y0 = Y0, Y1 = Y1, U = U)))
 }
