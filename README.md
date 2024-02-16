@@ -1,9 +1,11 @@
-# causens
+# causens <a href="https://kuan-liu-lab.github.io/causens/"> <img src="man/figures/logo.png" align="right" height="160" /> </a>
 
 <!-- badges: start -->
   [![R-CMD-check](https://github.com/Kuan-Liu-Lab/causens/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Kuan-Liu-Lab/causens/actions/workflows/R-CMD-check.yaml)
   [![codecov](https://codecov.io/gh/Kuan-Liu-Lab/causens/branch/main/graph/badge.svg)](https://codecov.io/gh/Kuan-Liu-Lab/causens?branch=main)
 <!-- badges: end -->
+
+_Why is it that more shark attacks occur when more ice cream is sold? The answer: both are related to the weather, here an unmeasured confounder._
 
 ## Overview
 
