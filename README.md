@@ -1,5 +1,7 @@
 # causens
 
+[![codecov](https://codecov.io/gh/Kuan-Liu-Lab/causens/branch/main/graph/badge.svg)](https://codecov.io/gh/Kuan-Liu-Lab/causens?branch=main)
+
 ## Overview
 
 causens is an R package that will allow to perform various sensitivity
