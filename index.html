@@ -78,17 +78,18 @@
 <div class="section level2">
 <h2 id="quickstart">Quickstart<a class="anchor" aria-label="anchor" href="#quickstart"></a>
 </h2>
-<pre class="{r}"><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://kuan-liu-lab.github.io/causens/">causens</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://kuan-liu-lab.github.io/causens/">causens</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Simulate data</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/simulate_data.html">simulate_data</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">1000</span>, seed <span class="op">=</span> <span class="fl">123</span>,alpha_uz <span class="op">=</span> <span class="fl">0.2</span>,</span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/simulate_data.html">simulate_data</a></span><span class="op">(</span>N <span class="op">=</span> <span class="fl">1000</span>, seed <span class="op">=</span> <span class="fl">123</span>,alpha_uz <span class="op">=</span> <span class="fl">0.2</span>,</span>
 <span>                      beta_uy <span class="op">=</span> <span class="fl">0.5</span>, treatment_effects <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Posit treatment model</span></span>
+<span><span class="co"># Posit incorrect treatment model since U is "missing"</span></span>
 <span><span class="va">trt_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">Z</span> <span class="op">~</span> <span class="va">X.1</span> <span class="op">+</span> <span class="va">X.2</span> <span class="op">+</span> <span class="va">X.3</span>, data <span class="op">=</span> <span class="va">data</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Frequentist sensitivity analysis</span></span>
-<span><span class="fu"><a href="reference/causens.html">causens</a></span><span class="op">(</span><span class="va">trt_model</span>, <span class="va">data</span>, <span class="st">"Z"</span>, <span class="st">"Y"</span>, method <span class="op">=</span> <span class="st">"Li"</span>, c1 <span class="op">=</span> <span class="va">c1</span>, c0 <span class="op">=</span> <span class="va">c0</span><span class="op">)</span></span></code></pre>
+<span><span class="fu"><a href="reference/causens.html">causens</a></span><span class="op">(</span><span class="va">trt_model</span>, <span class="va">data</span>, <span class="st">"Z"</span>, <span class="st">"Y"</span>, method <span class="op">=</span> <span class="st">"Li"</span>, c1 <span class="op">=</span> <span class="va">c1</span>, c0 <span class="op">=</span> <span class="va">c0</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="citing">Citing<a class="anchor" aria-label="anchor" href="#citing"></a>
@@ -96,7 +97,7 @@
 <p>Please cite our software using:</p>
 <pre><code>@Manual{,
   title = {causens: Perform causal sensitivity analyses using various statistical methods},
-  author = {Larry Dong and Kuan Liu},
+  author = {Larry Dong and Yushu Zou and Kuan Liu},
   year = {2024},
   note = {R package version 0.0.1, https://github.com/Kuan-Liu-Lab/causens},
   url = {https://kuan-liu-lab.github.io/causens/},
