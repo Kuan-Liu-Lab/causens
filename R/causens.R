@@ -11,9 +11,9 @@
 #' @param data A data frame containing the variables of interest.
 #' @param exposure The name of the exposure variable.
 #' @param outcome The name of the outcome variable.
-#' @param confounders A vector of names of confounding variables.
 #' @param method The method to use for sensitivity analysis. Currently, only
 #' "Li" is supported.
+#' @param ... Additional arguments to be passed to the sensitivity function.
 #'
 #' @return A point estimate of the corrected ATE.
 #'

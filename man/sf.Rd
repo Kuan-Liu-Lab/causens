@@ -13,6 +13,14 @@ sf(z, e, form = "constant", c1 = 0, c0 = 0, s1 = 0, s0 = 0)
 
 \item{form}{Form of the sensitivity function (character: "constant" or
 "linear")}
+
+\item{c1}{Value of the sensitivity function when z = 1 (numeric)}
+
+\item{c0}{Value of the sensitivity function when z = 0 (numeric)}
+
+\item{s1}{Slope of the sensitivity function when z = 1 (numeric)}
+
+\item{s0}{Slope of the sensitivity function when z = 0 (numeric)}
 }
 \value{
 Sensitivity of treatment effect estimate to unmeasured confounding
