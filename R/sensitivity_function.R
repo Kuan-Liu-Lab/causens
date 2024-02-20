@@ -11,6 +11,11 @@
 #' @param e Propensity score value (numeric)
 #' @param form Form of the sensitivity function (character: "constant" or
 #' "linear")
+#' @param c1 Value of the sensitivity function when z = 1 (numeric)
+#' @param c0 Value of the sensitivity function when z = 0 (numeric)
+#' @param s1 Slope of the sensitivity function when z = 1 (numeric)
+#' @param s0 Slope of the sensitivity function when z = 0 (numeric)
+#'
 #' @return Sensitivity of treatment effect estimate to unmeasured confounding
 #' (numeric)
 #'

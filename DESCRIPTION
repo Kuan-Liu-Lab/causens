@@ -18,6 +18,7 @@ Suggests:
     devtools,
     knitr,
     pkgdown,
+    PSweight,
     rmarkdown,
     roxygen2,
     testthat (>= 3.0.0),

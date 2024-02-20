@@ -11,6 +11,7 @@
 #'
 #' @return A data frame with the simulated dataset.
 #'
+#' @importFrom stats plogis predict rbinom rnorm
 #' @export
 simulate_data <- function(ymodel = "linear",
                           N = 500,

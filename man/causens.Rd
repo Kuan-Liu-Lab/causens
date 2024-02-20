@@ -2,9 +2,9 @@
 % Please edit documentation in R/causens.R
 \name{causens}
 \alias{causens}
-\title{Estimate Corrected Average Treatment Effect}
+\title{Causal Effect Estimation with Sensitivity Analysis}
 \usage{
-causens(trt_model, data, exposure, outcome, c1 = 0.5, c0 = 0.3, s1 = 0, s0 = 0)
+causens(trt_model, data, exposure, outcome, method, ...)
 }
 \arguments{
 \item{trt_model}{The treatment model object.}
@@ -15,14 +15,19 @@ causens(trt_model, data, exposure, outcome, c1 = 0.5, c0 = 0.3, s1 = 0, s0 = 0)
 
 \item{outcome}{The name of the outcome variable.}
 
-\item{confounders}{A vector of names of confounding variables.}
+\item{method}{The method to use for sensitivity analysis. Currently, only
+"Li" is supported.}
 
-\item{sf}{The R sensitivity function for c(z, e).}
+\item{...}{Additional arguments to be passed to the sensitivity function.}
 }
 \value{
 A point estimate of the corrected ATE.
 }
 \description{
-This function provides an estimate of the Average Treatment Effect (ATE) using
-outcomes corrected for unmeasured confounding via a sensitivity function.
+This function provides an estimate of the Average Treatment
+Effect (ATE) using outcomes corrected for unmeasured confounding via a
+sensitivity function.
+
+Arguments in the ellipsis are 'keyword arguments' and are passed
+to the sensitivity function `sf`.
 }
