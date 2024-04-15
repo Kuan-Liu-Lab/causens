@@ -18,7 +18,7 @@ causens(trt_model, data, exposure, outcome, method, ...)
 \item{method}{The method to use for sensitivity analysis. Currently, only
 "Li" is supported.}
 
-\item{...}{Additional arguments to be passed to the sensitivity function.}
+\item{confounders}{A vector of names of confounding variables.}
 }
 \value{
 A point estimate of the corrected ATE.
