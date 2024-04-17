@@ -92,12 +92,6 @@ parse_args <- function(...) {
 #' is provided in jags.model() during model initialization.
 create_jags_model <- function() {
   priors <- "
-  # Outcome model parameters
-
-  for (o in 1:p_outcome) {
-    beta[o] ~ dunif(-2, 2)
-  }
-
   # Unmeasured Confounder parameters
 
   gamma_0 ~ dunif(-5, 5)
@@ -120,6 +114,17 @@ create_jags_model <- function() {
   beta_U ~ dunif(-2, 2)
 
   tau_Y ~ dgamma(0.1, 0.1)
+
+  # Treatment model parameters
+
+  alpha_0 ~ dunif(-2, 2)
+  alpha_X ~ dnorm(0, 0.5)
+
+  for (z in 1:p_treatment) {
+    alpha_C[z] ~ dunif(-2, 2)
+  }
+
+  alpha_U ~ dunif(-2, 2)
   "
 
   # including modelling of unmeasured binary confounder (`eta` is the linear predictor)
@@ -134,6 +139,13 @@ create_jags_model <- function() {
   for (i in 1:N) {
     logit(p_U[i]) <- gamma_0 + sum(C[i, 1:p_unmeasured_confounder] * gamma_C[1:p_unmeasured_confounder])
     U[i] ~ dbern(p_U[i])
+  }
+  "
+
+  treatment_model <- "
+  for (i in 1:N) {
+    logit(p_Z[i]) <- alpha_0 + sum(C[i, 1:p_treatment] * alpha_C[1:p_unmeasured_confounder]) + alpha_U * U[i]
+    Z[i] ~ dbern(p_Z[i])
   }
   "
 

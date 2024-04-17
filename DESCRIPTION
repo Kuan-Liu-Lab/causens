@@ -11,9 +11,10 @@ Description: This package provides functionality to perform causal
 License: MIT
 URL: https://kuan-liu-lab.github.io/causens/, https://github.com/Kuan-Liu-Lab/causens
 Collate:
+    "bayesian_causens.R"
+    "causens.R"
     "sensitivity_function.R"
     "simData.R"
-    "causens.R"
 Suggests:
     devtools,
     knitr,
