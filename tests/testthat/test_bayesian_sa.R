@@ -17,8 +17,8 @@ for (params in parameters) {
       seed = seed, treatment_effects = 1
     )
 
-    return(bayesian_causens(data, "Z", "Y", c("X.1", "X.2", "X.3")))
+    return(bayesian_causens(data, "Z", "Y", c("X.1", "X.2", "X.3"), output_trace = TRUE))
   }
 
-  simulated_ates <- unlist(lapply(1:2, run_simulation))
+  simulated_ates <- unlist(lapply(1:10, run_simulation))
 }
