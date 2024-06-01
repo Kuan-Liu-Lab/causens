@@ -1,8 +1,3 @@
-#' Tasks
-#' 1. correct parameter naming
-#' 2. make sure it doesn't crash
-#' 3. run on simulated data
-
 #' @title Bayesian parametric sensitivity analysis for causal inference
 #' @description This function runs a Bayesian sensitivity analysis for causal
 #' inference using JAGS or Stan as a backend.

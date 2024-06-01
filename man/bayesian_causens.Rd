@@ -4,7 +4,15 @@
 \alias{bayesian_causens}
 \title{Bayesian parametric sensitivity analysis for causal inference}
 \usage{
-bayesian_causens(data, exposure, outcome, confounders, backend = "jags", ...)
+bayesian_causens(
+  data,
+  exposure,
+  outcome,
+  confounders,
+  backend = "jags",
+  output_trace = FALSE,
+  ...
+)
 }
 \arguments{
 \item{data}{A data frame containing the exposure, outcome, and confounders.}
@@ -27,10 +35,4 @@ variable on the outcome, as well as the confounder-adjusted causal effect.
 \description{
 This function runs a Bayesian sensitivity analysis for causal
 inference using JAGS or Stan as a backend.
-}
-\details{
-Tasks
-1. correct parameter naming
-2. make sure it doesn't crash
-3. run on simulated data
 }
