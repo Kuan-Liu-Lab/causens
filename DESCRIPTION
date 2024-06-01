@@ -11,9 +11,10 @@ Description: This package provides functionality to perform causal
 License: MIT
 URL: https://kuan-liu-lab.github.io/causens/, https://github.com/Kuan-Liu-Lab/causens
 Collate:
+    "bayesian_causens.R"
+    "causens.R"
     "sensitivity_function.R"
     "simData.R"
-    "causens.R"
 Suggests:
     devtools,
     knitr,
@@ -23,7 +24,9 @@ Suggests:
     roxygen2,
     testthat (>= 3.0.0),
     usethis
+Imports:
+    rjags
 Encoding: UTF-8
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 BugReports: https://github.com/Kuan-Liu-Lab/causens/issues
 Config/testthat/edition: 3

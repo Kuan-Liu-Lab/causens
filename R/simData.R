@@ -20,7 +20,8 @@ simulate_data <- function(ymodel = "linear",
                           seed = 123,
                           alpha_uz = 0.2,
                           beta_uy = 0.5,
-                          treatment_effects = 1) {
+                          treatment_effects = 1,
+                          informative_u = TRUE) {
   set.seed(seed)
 
   alpha_xz <- c(.1, -.5, .2) # coefficients of X in the treatment model;
@@ -28,6 +29,19 @@ simulate_data <- function(ymodel = "linear",
   tau <- treatment_effects
 
   X <- matrix(rnorm(3 * N), nrow = N, ncol = 3) # covariates iid from N(0,1);
+
+  if (informative_u) {
+    gamma_uz <- c(0.5, -0.2, -0.25)
+    eta_u <- X %*% gamma_uz
+
+    if (u_type == "binary") {
+      U <- rbinom(N, 1, plogis(eta_u)) # unmeasured confounder;
+    } else if (u_type == "cont" || u_type == "continuous") {
+      U <- rnorm(N, eta_u, 1) # unmeasured confounder;
+    } else {
+      stop("Invalid unmeasured confounder type.")
+    }
+  }
 
   if (u_type == "binary") {
     U <- rbinom(N, 1, .5) # unmeasured confounder;
