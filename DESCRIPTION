@@ -20,10 +20,13 @@ Suggests:
     knitr,
     pkgdown,
     PSweight,
+    rjags,
     rmarkdown,
     roxygen2,
     testthat (>= 3.0.0),
     usethis
+Imports:
+    rjags
 Encoding: UTF-8
 RoxygenNote: 7.3.1
 BugReports: https://github.com/Kuan-Liu-Lab/causens/issues
