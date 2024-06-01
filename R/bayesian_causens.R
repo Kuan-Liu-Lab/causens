@@ -7,12 +7,13 @@
 #' @param confounders The name of the confounders in the data frame.
 #' @param backend The backend to use for the sensitivity analysis. Currently
 #' only "jags" is supported.
+#' @param output_trace Whether to output the full trace of the MCMC sampler.
 #' @param ... Additional arguments to be passed to the backend.
 #' @return A list of posterior samples for the causal effect of the exposure
 #' variable on the outcome, as well as the confounder-adjusted causal effect.
 bayesian_causens <- function(data, exposure, outcome, confounders, backend = "jags", output_trace = FALSE, ...) {
   if (backend == "rjags" || backend == "jags") {
-    library(rjags)
+    require(rjags)
   } else if (backend == "stan" || backend == "rstan") {
     stop("Stan backend will be implemented soon.")
   } else {
@@ -41,7 +42,7 @@ bayesian_causens <- function(data, exposure, outcome, confounders, backend = "ja
   )
 
   # Run the Bayesian sensitivity analysis
-  model <- jags.model(
+  model <- rjags::jags.model(
     textConnection(jags_model),
     data = list(
       Z = Z,
@@ -58,7 +59,7 @@ bayesian_causens <- function(data, exposure, outcome, confounders, backend = "ja
   update(model, sampler_args$burn_in)
 
   # Extract the posterior samples
-  samples <- coda.samples(
+  samples <- rjags::coda.samples(
     model,
     variable.names = c("beta_Z", "beta_C", "beta_0", "gamma_C", "gamma_0", "alpha_C", "alpha_U", "alpha_0"),
     n.iter = sampler_args$n_samples,
