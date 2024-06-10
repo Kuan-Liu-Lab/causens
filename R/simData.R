@@ -30,23 +30,13 @@ simulate_data <- function(ymodel = "linear",
 
   X <- matrix(rnorm(3 * N), nrow = N, ncol = 3) # covariates iid from N(0,1);
 
-  if (informative_u) {
-    gamma_uz <- c(0.5, -0.2, -0.25)
-    eta_u <- X %*% gamma_uz
-
-    if (u_type == "binary") {
-      U <- rbinom(N, 1, plogis(eta_u)) # unmeasured confounder;
-    } else if (u_type == "cont" || u_type == "continuous") {
-      U <- rnorm(N, eta_u, 1) # unmeasured confounder;
-    } else {
-      stop("Invalid unmeasured confounder type.")
-    }
-  }
+  gamma_uz <- c(0.5, -0.2, -0.25)
+  eta_u <- X %*% gamma_uz
 
   if (u_type == "binary") {
-    U <- rbinom(N, 1, .5) # unmeasured confounder;
+    U <- rbinom(N, 1, ifelse(informative_u, plogis(eta_u), .5)) # unmeasured confounder;
   } else if (u_type == "cont" || u_type == "continuous") {
-    U <- rnorm(N, 0, 1) # unmeasured confounder;
+    U <- rnorm(N, ifelse(informative_u, eta_u, 0), 1) # unmeasured confounder;
   } else {
     stop("Invalid unmeasured confounder type.")
   }
