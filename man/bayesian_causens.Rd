@@ -26,6 +26,8 @@ bayesian_causens(
 \item{backend}{The backend to use for the sensitivity analysis. Currently
 only "jags" is supported.}
 
+\item{output_trace}{Whether to output the full trace of the MCMC sampler.}
+
 \item{...}{Additional arguments to be passed to the backend.}
 }
 \value{
