@@ -32,6 +32,8 @@ simulate_data(
 \item{beta_uy}{The coefficient of the unmeasured confounder in the outcome model.}
 
 \item{treatment_effects}{The treatment effect.}
+
+\item{informative_u}{A boolean indicating whether the unmeasured confounder is driven by covariates.}
 }
 \value{
 A data frame with the simulated dataset.

@@ -4,10 +4,11 @@
 #' @param N The number of observations to be generated.
 #' @param u_type A string indicating the type of the unmeasured confounder: "binary" or "continuous".
 #' @param y_type A string indicating the type of the outcome: "binary" or "continuous".
+#' @param seed The seed for the random number generator.
 #' @param alpha_uz The coefficient of the unmeasured confounder in the propensity score model.
 #' @param beta_uy The coefficient of the unmeasured confounder in the outcome model.
 #' @param treatment_effects The treatment effect.
-#' @param seed The seed for the random number generator.
+#' @param informative_u A boolean indicating whether the unmeasured confounder is driven by covariates.
 #'
 #' @return A data frame with the simulated dataset.
 #'
