@@ -1,4 +1,4 @@
-name: Tests
+name: Bayesian Tests
 
 on:
   push:
@@ -9,24 +9,20 @@ jobs:
   test:
     runs-on: ubuntu-latest
     container:
-      image: rocker/r-ver:4.3.2
+      image: mavelli/rocker-bayesian
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      SKIP_BAYESIAN_SA_TESTS: false
 
     steps:
     - uses: actions/checkout@v4
-
-    - name: Install JAGS
-      run: |
-        apt-get update
-        apt-get install -y jags
 
     - name: Install dependencies and run tests
       run: |
         Rscript -e "install.packages('remotes')"
         Rscript -e "remotes::install_deps()"
-        Rscript -e "install.packages(c('devtools', 'PSweight', 'rjags', 'testthat'))"
+        Rscript -e "install.packages(c('devtools', 'testthat'))"
         Rscript -e "devtools::install('.')"  # Install local package
         Rscript -e "devtools::load_all()"
-        Rscript -e "testthat::test_dir('tests')"
+        Rscript -e "testthat::test_file('tests/testthat/test_bayesian_sa.R')"
