@@ -13,6 +13,7 @@ URL: https://kuan-liu-lab.github.io/causens/, https://github.com/Kuan-Liu-Lab/ca
 Collate:
     "bayesian_causens.R"
     "causens.R"
+    "plot.R"
     "sensitivity_function.R"
     "simData.R"
 Suggests:
