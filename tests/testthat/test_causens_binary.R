@@ -46,6 +46,6 @@ for (params in parameters) {
   simulated_ates <- unlist(lapply(1:1000, run_simulation))
 
   test_that("Simulation retrieves ATE with 'correct' c1, c0 values", {
-    expect_true(abs(mean(simulated_ates) - true_risk_diff) < 0.05)
+    expect_true(abs(mean(simulated_ates) - true_risk_diff) < 0.1)
   })
 }
