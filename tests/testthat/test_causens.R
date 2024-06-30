@@ -13,7 +13,7 @@ for (params in parameters) {
 
   run_simulation <- function(seed) {
     data <- simulate_data(
-      N = 1000, alpha_uz = 1, beta_uy = 1,
+      N = 1000, alpha_uz = alpha_uz, beta_uy = beta_uy,
       seed = seed, treatment_effects = trt_effect
     )
 
@@ -28,8 +28,8 @@ for (params in parameters) {
     c1 <- y1_model$coefficients["U"] * (mean(Y1_Z1) - mean(Y1_Z0))
 
     y0_model <- lm(Y0 ~ U + X.1 + X.2 + X.3, data = subset(data, data$Z == 1))
-    Y0_Z1 <- predict(u_model, newdata = data.frame(subset(X, data$Z == 1), Z = 1))
-    Y0_Z0 <- predict(u_model, newdata = data.frame(subset(X, data$Z == 1), Z = 0))
+    Y0_Z1 <- predict(u_model, newdata = data.frame(subset(X, data$Z == 0), Z = 1))
+    Y0_Z0 <- predict(u_model, newdata = data.frame(subset(X, data$Z == 0), Z = 0))
     c0 <- y0_model$coefficients["U"] * (mean(Y0_Z1) - mean(Y0_Z0))
 
     # Below, we conduct the data analysis assuming U is unmeasured
