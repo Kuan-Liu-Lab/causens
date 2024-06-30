@@ -13,7 +13,7 @@ for (params in parameters) {
 
   run_simulation <- function(seed) {
     data <- simulate_data(
-      N = 1000, alpha_uz = 1, beta_uy = 1,
+      N = 1000, alpha_uz = alpha_uz, beta_uy = beta_uy,
       seed = seed, treatment_effects = trt_effect
     )
 
