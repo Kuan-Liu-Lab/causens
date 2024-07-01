@@ -5,12 +5,11 @@ test_that("plot function generates base R plot", {
     seed = 123, treatment_effects = 1
   )
 
-  trt_model <- lm(Z ~ X.1 + X.2 + X.3, data = data)
+  trt_model <- Z ~ X.1 + X.2 + X.3
 
   plot_obj <- plot_causens(
     trt_model,
     data,
-    "Z",
     "Y",
     method = "Li",
     c1_upper = 0.5,

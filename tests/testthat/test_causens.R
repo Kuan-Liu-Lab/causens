@@ -35,9 +35,9 @@ for (params in parameters) {
     # Below, we conduct the data analysis assuming U is unmeasured
     # but we have values of c1, c0 such that our ATE estimate is consistent.
 
-    trt_model <- glm(Z ~ X.1 + X.2 + X.3, family = binomial(), data = data)
+    trt_model <- Z ~ X.1 + X.2 + X.3
 
-    return(causens(trt_model, data, "Z", "Y", method = "Li", c1 = c1, c0 = c0))
+    return(causens(trt_model, data, "Y", method = "Li", c1 = c1, c0 = c0))
   }
 
   # Because alpha_uz > 0 and beta_uy > 0, treated individuals are more likely to
@@ -51,5 +51,20 @@ for (params in parameters) {
 
   test_that("Simulation retrieves ATE with 'correct' c1, c0 values", {
     expect_equal(mean(simulated_ates), trt_effect, tolerance = 0.01)
+  })
+
+  data <- simulate_data(
+    N = 1000, alpha_uz = alpha_uz, beta_uy = beta_uy,
+    seed = 1234, treatment_effects = trt_effect
+  )
+
+  # Testing `trt_model` input types
+  trt_model <- Z ~ X.1 + X.2 + X.3
+
+  est_ate_1 <- causens(trt_model, data, "Y", method = "Li", c1 = 0.25, c0 = 0.25)
+  est_ate_2 <- causens(glm(trt_model, data = data, family = binomial()), data, "Y", method = "Li", c1 = 0.25, c0 = 0.25)
+
+  test_that("trt_model can be a formula or fitted glm model", {
+    expect_equal(est_ate_1, est_ate_2)
   })
 }

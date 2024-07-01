@@ -7,9 +7,8 @@
 #' Arguments in the ellipsis are 'keyword arguments' and are passed
 #' to the sensitivity function `sf`.
 #'
-#' @param trt_model The treatment model object.
+#' @param trt_model The treatment model object as a formula or fitted glm.
 #' @param data A data frame containing the variables of interest.
-#' @param exposure The name of the exposure variable.
 #' @param outcome The name of the outcome variable.
 #' @param method The method to use for sensitivity analysis. Currently, only
 #' "Li" is supported.
@@ -18,11 +17,23 @@
 #' @return A point estimate of the corrected ATE.
 #'
 #' @export
-causens <- function(trt_model, data, exposure, outcome, method, ...) {
-  z <- data[[exposure]]
+causens <- function(trt_model, data, outcome, method, ...) {
   y <- data[[outcome]]
 
-  e <- predict(trt_model, type = "response")
+  if (inherits(trt_model, "formula")) {
+    fitted_model <- glm(trt_model, data = data, family = binomial)
+    trt_formula <- trt_model
+  } else if (inherits(trt_model, "glm")) {
+    fitted_model <- trt_model
+    trt_formula <- formula(trt_model)
+  } else {
+    stop("Treatment model must be a formula or a glm object.")
+  }
+
+  z_index <- attr(terms(trt_formula), "response")
+  z <- data[[all.vars(trt_formula)[[z_index]]]]
+
+  e <- predict(fitted_model, type = "response")
 
   if (method == "Li") {
     c1 <- sf(z = 1, e = e, ...)

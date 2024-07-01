@@ -4,14 +4,12 @@
 \alias{causens}
 \title{Causal Effect Estimation with Sensitivity Analysis}
 \usage{
-causens(trt_model, data, exposure, outcome, method, ...)
+causens(trt_model, data, outcome, method, ...)
 }
 \arguments{
-\item{trt_model}{The treatment model object.}
+\item{trt_model}{The treatment model object as a formula or fitted glm.}
 
 \item{data}{A data frame containing the variables of interest.}
-
-\item{exposure}{The name of the exposure variable.}
 
 \item{outcome}{The name of the outcome variable.}
 
