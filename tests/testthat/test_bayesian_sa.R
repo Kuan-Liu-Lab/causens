@@ -10,7 +10,7 @@ run_simulation <- function(seed) {
     seed = seed, treatment_effects = trt_effect
   )
 
-  return(bayesian_causens(data, "Z", "Y", c("X.1", "X.2", "X.3"), ))
+  return(causens(Z ~ X.1 + X.2 + X.3, "Y", data, method = "Bayesian"))
 }
 
 simulated_ate <- c()
