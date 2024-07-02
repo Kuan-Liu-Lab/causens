@@ -23,7 +23,7 @@ for (params in parameters) {
 
     trt_model <- Z ~ X.1 + X.2 + X.3
 
-    return(causens(trt_model, data, "Y", method = "Li", c1 = 0, c0 = 0))
+    return(causens(trt_model, "Y", data, method = "Li", c1 = 0, c0 = 0))
   }
 
   simulated_ates <- unlist(lapply(1:1000, run_simulation))
