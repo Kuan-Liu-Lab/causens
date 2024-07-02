@@ -1,17 +1,17 @@
 #' @title Bayesian parametric sensitivity analysis for causal inference
 #' @description This function runs a Bayesian sensitivity analysis for causal
 #' inference using JAGS or Stan as a backend.
-#' @param data A data frame containing the exposure, outcome, and confounders.
 #' @param exposure The name of the exposure variable in the data frame.
 #' @param outcome The name of the outcome variable in the data frame.
 #' @param confounders The name of the confounders in the data frame.
+#' @param data A data frame containing the exposure, outcome, and confounder variables.
 #' @param backend The backend to use for the sensitivity analysis. Currently
 #' only "jags" is supported.
 #' @param output_trace Whether to output the full trace of the MCMC sampler.
 #' @param ... Additional arguments to be passed to the backend.
 #' @return A list of posterior samples for the causal effect of the exposure
 #' variable on the outcome, as well as the confounder-adjusted causal effect.
-bayesian_causens <- function(data, exposure, outcome, confounders, backend = "jags", output_trace = FALSE, ...) {
+bayesian_causens <- function(exposure, outcome, confounders, data, backend = "jags", output_trace = FALSE, ...) {
   if (backend == "rjags" || backend == "jags") {
     require(rjags)
   } else if (backend == "stan" || backend == "rstan") {
