@@ -8,17 +8,16 @@
 #' to the sensitivity function `sf`.
 #'
 #' @param trt_model The treatment model object as a formula or fitted glm.
-#' @param data A data frame containing the variables of interest.
 #' @param outcome The name of the outcome variable.
-#' @param method The method to use for sensitivity analysis. Currently, only
-#' "Li" is supported.
+#' @param method The method to use for sensitivity analysis. Currently, "Li" and
+#' "Bayesian" are supported.
+#' @param data A data frame containing the exposure, outcome, and confounder variables.
 #' @param ... Additional arguments to be passed to the sensitivity function.
 #'
 #' @return A point estimate of the corrected ATE.
 #'
 #' @export
-causens <- function(trt_model, data, outcome, method, ...) {
-  y <- data[[outcome]]
+causens <- function(trt_model, outcome, method, data, ...) {
 
   if (inherits(trt_model, "formula")) {
     fitted_model <- glm(trt_model, data = data, family = binomial)
@@ -30,32 +29,19 @@ causens <- function(trt_model, data, outcome, method, ...) {
     stop("Treatment model must be a formula or a glm object.")
   }
 
-  z_index <- attr(terms(trt_formula), "response")
-  z <- data[[all.vars(trt_formula)[[z_index]]]]
+  trt_index <- attr(terms(trt_formula), "response")
+  trt_var_name <- all.vars(trt_formula)[[trt_index]]
 
-  e <- predict(fitted_model, type = "response")
+  method <- tolower(method) # case-insensitive
 
-  if (method == "Li") {
-    c1 <- sf(z = 1, e = e, ...)
-    c0 <- sf(z = 0, e = 1 - e, ...)
+  if (method == "sf" || method == "li") {
+    estimated_ate <- causens_sf(fitted_model, trt_var_name, outcome, data, ...)
+  } else if (method == "bayesian") {
+    confounder_names <- attr(terms(trt_model), "term.labels")
+    estimated_ate <- bayesian_causens(trt_var_name, outcome, confounder_names, data, ...)
   } else {
     stop("Method not recognized or not implemented yet.")
   }
-
-  # Calculate the Average Treatment Effect
-  weights <- 1 / ifelse(z == 1, e, 1 - e)
-
-  if (all(y %in% c(0, 1))) {
-    Y_sf <- y * (abs(1 - z - e) + exp((-1)**(z == 1) * ifelse(z, c1, c0) * abs(z - e)))
-  } else {
-    Y_sf <- y + (-1)**(z == 1) * abs(z - e) * ifelse(z, c1, c0)
-  }
-
-  # Potential outcomes corrected w.r.t. sensitivity function
-  Y1_sf <- sum((Y_sf * weights)[z == 1]) / sum(weights[z == 1])
-  Y0_sf <- sum((Y_sf * weights)[z == 0]) / sum(weights[z == 0])
-
-  estimated_ate <- Y1_sf - Y0_sf
 
   return(estimated_ate)
 }

@@ -4,17 +4,17 @@
 \alias{causens}
 \title{Causal Effect Estimation with Sensitivity Analysis}
 \usage{
-causens(trt_model, data, outcome, method, ...)
+causens(trt_model, outcome, method, data, ...)
 }
 \arguments{
 \item{trt_model}{The treatment model object as a formula or fitted glm.}
 
-\item{data}{A data frame containing the variables of interest.}
-
 \item{outcome}{The name of the outcome variable.}
 
-\item{method}{The method to use for sensitivity analysis. Currently, only
-"Li" is supported.}
+\item{method}{The method to use for sensitivity analysis. Currently, "Li" and
+"Bayesian" are supported.}
+
+\item{data}{A data frame containing the exposure, outcome, and confounder variables.}
 
 \item{...}{Additional arguments to be passed to the sensitivity function.}
 }
