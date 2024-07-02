@@ -8,7 +8,6 @@ when it is constant, i.e. c(1, e) = c1 and c(0, e) = c0.}
 plot_causens(
   trt_model,
   data,
-  exposure,
   outcome,
   method,
   c1_upper = 0.5,
@@ -18,11 +17,9 @@ plot_causens(
 )
 }
 \arguments{
-\item{trt_model}{The treatment model object.}
+\item{trt_model}{The treatment model object as a formula or fitted glm.}
 
 \item{data}{A data frame containing the variables of interest.}
-
-\item{exposure}{The name of the exposure variable.}
 
 \item{outcome}{The name of the outcome variable.}
 

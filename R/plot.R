@@ -5,9 +5,8 @@
 #' interval obtained via bootstrapping, if desired. The latter process can be
 #' take a few seconds to minutes.
 #'
-#' @param trt_model The treatment model object.
+#' @param trt_model The treatment model object as a formula or fitted glm.
 #' @param data A data frame containing the variables of interest.
-#' @param exposure The name of the exposure variable.
 #' @param outcome The name of the outcome variable.
 #' @param method The method to use for sensitivity analysis (see `causens` function).
 #' @param c1_upper The upper bound for the sensitivity function value.
@@ -19,7 +18,7 @@
 #' @return A plot of the ATE as a function of c1 values.
 #'
 #' @export
-plot_causens <- function(trt_model, data, exposure, outcome, method,
+plot_causens <- function(trt_model, data, outcome, method,
                          c1_upper = 0.5, c1_lower = 0, r = 1, bootstrap = TRUE) {
   adjusted_ates <- c()
 
@@ -27,7 +26,6 @@ plot_causens <- function(trt_model, data, exposure, outcome, method,
     ate <- causens(
       trt_model = trt_model,
       data = data,
-      exposure = exposure,
       outcome = outcome,
       method = method,
       c1 = c1,
@@ -56,10 +54,8 @@ plot_causens <- function(trt_model, data, exposure, outcome, method,
         bs_ate <- c(
           bs_ate,
           causens(
-            trt_model = glm(formula(trt_model), data = sampled_data,
-                            family = binomial()),
+            trt_model = trt_model,
             data = sampled_data,
-            exposure = exposure,
             outcome = outcome,
             method = method,
             c1 = c1,
