@@ -1,0 +1,80 @@
+---
+title: "causens: an R package for causal sensitivity analysis methods"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{causens_user_guide}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+
+Methods to estimate causal quantities often rely no unmeasured confounding. However, 
+in practice, this is often not the case. `causens` is an R package that provides
+methods to estimate causal quantities in the presence of unmeasured confounding. In
+particular, `causens` implements methods from the following papers:
+
+- Brumback, B. A., Hernán, M. A., Haneuse, S. J., & Robins, J. M. (2004). Sensitivity analyses for unmeasured confounding assuming a marginal structural model for repeated measures. Statistics in medicine, 23(5), 749-767.
+- Li, L., Shen, C., Wu, A. C., & Li, X. (2011). Propensity score-based sensitivity analysis method for uncontrolled confounding. American journal of epidemiology, 174(3), 345-353.
+
+# Installation
+
+The package can be installed from GitHub via `devtools`.
+
+```{r}
+install.packages("devtools")
+library(devtools)
+devtools::install_github("Kuan-Liu-Lab/causens")
+```
+
+# Implemented Methods
+
+## Frequentist Methods (Brumback et al. 2004, Li et al. 2011)
+
+# Synthetic Data Example
+
+We posit the following data generating process:
+
+\begin{align*}
+  X_1 &\sim \text{Normal}(0, 1) \\
+  X_2 &\sim \text{Normal}(0, 1) \\
+  X_3 &\sim \text{Normal}(0, 1) \\
+  U &\sim \text{Bern}(0.5) \\
+  Z &\sim \text{Bern}(\text{logit}^{-1}(\alpha_{uz} U + 0.25 X_1 + 0.5 X_2 - 0.5 X_3)) \\
+  Y1 &\sim \text{Normal}(\beta_{uy} U + 0.5 X_1 + 0.5 X_2 - 0.5 X_3) \\
+  Y0 &\sim \text{Normal}(0.5 X_1 + 0.5 X_2 - 0.5 X_3) \, .
+\end{align*}
+
+Using consistency, we define $Y = Y_1 Z + Y_0 (1 - Z)$. Note that, 
+in `simData.R`, we provide some options to allow the simulation 
+procedure to be more flexible. Parameters $\alpha_{uz}$ and $\beta_{uy}$
+dictate how the unmeasured confounder $U$ affects the treatment $Z$ and
+the outcome $Y$, respectively; by default, they are set to 0.2 and 0.5. 
+
+```{r}
+data <- simulate_data(N = 10000, seed = 123, alpha_uz = 1,
+                      beta_uy = 1, treatment_effects = 1)
+```
+
+## Using [Frequentist Methods](## Frequentist Methods (Brumback et al. 2004, Li et al. 2011)
+
+For these methods, we require to posit our own sensitivity function $c(z, e)$.
+In practice, we don't know these values and they should be provided by subject
+matter experts. However, for oracle models (or at least the one we posited), we
+are able to retrieve the true sensitivity function, which is given by 
+$c(z, e) \approx 0.24$ for both $z = 0, 1$ and for all $e \in (0, 1)$.
+
+```{r}
+# Posit incorrect treatment model since U is "missing"
+trt_model <- glm(Z ~ X.1 + X.2 + X.3, data = data, family = binomial())
+
+# Frequentist sensitivity analysis
+causens(trt_model, data, "Z", "Y", method = "Li", c1 = 0.25, c0 = 0.25)
+```
