@@ -60,7 +60,6 @@ take a few seconds to minutes.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_causens</span><span class="op">(</span></span>
 <span>  <span class="va">trt_model</span>,</span>
 <span>  <span class="va">data</span>,</span>
-<span>  <span class="va">exposure</span>,</span>
 <span>  <span class="va">outcome</span>,</span>
 <span>  <span class="va">method</span>,</span>
 <span>  c1_upper <span class="op">=</span> <span class="fl">0.5</span>,</span>
@@ -73,15 +72,11 @@ take a few seconds to minutes.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>trt_model</dt>
-<dd><p>The treatment model object.</p></dd>
+<dd><p>The treatment model object as a formula or fitted glm.</p></dd>
 
 
 <dt>data</dt>
 <dd><p>A data frame containing the variables of interest.</p></dd>
-
-
-<dt>exposure</dt>
-<dd><p>The name of the exposure variable.</p></dd>
 
 
 <dt>outcome</dt>
