@@ -12,6 +12,7 @@ License: MIT
 URL: https://kuan-liu-lab.github.io/causens/, https://github.com/Kuan-Liu-Lab/causens
 Collate:
     "causens_bayesian.R"
+    "causens_monte_carlo.R"
     "causens_sf.R"
     "causens.R"
     "plot.R"
@@ -28,6 +29,6 @@ Suggests:
     testthat (>= 3.0.0),
     usethis
 Encoding: UTF-8
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 BugReports: https://github.com/Kuan-Liu-Lab/causens/issues
 Config/testthat/edition: 3
