@@ -9,7 +9,7 @@ _Why is it that more shark attacks occur when more ice cream is sold? The answer
 
 ## Overview
 
-`causens` is an R package that will allow to perform various sensitivity
+`{causens}` is an R package that will allow to perform various sensitivity
 analysis methods to adjust for unmeasured confounding within the context of 
 causal inference. Currently, we provide the following methods:
 
@@ -35,7 +35,7 @@ data <- simulate_data(N = 10000, seed = 123, alpha_uz = 1,
                       beta_uy = 1, treatment_effects = 1)
 
 # Treatment model is incorrect since U is "missing"
-causens(Z ~ X.1 + X.2 + X.3, data, "Z", "Y", method = "Li", c1 = 0.25, c0 = 0.25)
+causens(Z ~ X.1 + X.2 + X.3, "Y", data = data, method = "Li", c1 = 0.25, c0 = 0.25)
 ```
 
 ## Citing
