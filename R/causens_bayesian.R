@@ -28,7 +28,9 @@ bayesian_causens <- function(exposure, outcome, confounders, data, backend = "ja
   Y <- data[[outcome]]
   N <- nrow(C)
 
-  jags_model <- create_jags_model()
+  binary_outcome <- all(Y %in% c(0, 1))
+
+  jags_model <- create_jags_model(binary_outcome)
 
   inits <- list(
     beta_Z = 0,
@@ -94,10 +96,11 @@ parse_args <- function(...) {
 #' @title Create an JAGS model for Bayesian sensitivity analysis
 #' @description Creates a JAGS model available as a string, or .txt file, where
 #' priors are initialized to be uninformative by default.
+#' @param binary_outcome Boolean indicating whether the outcome is binary.
 #'
 #' No inputs are given to this function (for now) since data-related information
 #' is provided in jags.model() during model initialization.
-create_jags_model <- function() {
+create_jags_model <- function(binary_outcome) {
 
   # including modelling of unmeasured binary confounder (`eta` is the linear predictor)
   likelihood <- "
@@ -111,14 +114,25 @@ create_jags_model <- function() {
   }
 
   beta_U ~ dunif(-2, 2)
-
-  tau_Y ~ dgamma(0.1, 0.1)
-
-  for (i in 1:N) {
-    mu_Y[i] <- beta_0 + beta_Z * Z[i] + sum(C[i, 1:p_outcome] * beta_C[1:p_outcome]) + beta_U * U[i]
-    Y[i] ~ dnorm(mu_Y[i], tau_Y)
-  }
   "
+
+  if (binary_outcome) {
+    likelihood <- paste0(likelihood, "
+    for (i in 1:N) {
+      logit(p_Y[i]) <- beta_0 + beta_Z * Z[i] + sum(C[i, 1:p_outcome] * beta_C[1:p_outcome]) + beta_U * U[i]
+      Y[i] ~ dbern(p_Y[i])
+    }
+    ")
+  } else {
+    likelihood <- paste0(likelihood, "
+    tau_Y ~ dgamma(0.1, 0.1)
+
+    for (i in 1:N) {
+      mu_Y[i] <- beta_0 + beta_Z * Z[i] + sum(C[i, 1:p_outcome] * beta_C[1:p_outcome]) + beta_U * U[i]
+      Y[i] ~ dnorm(mu_Y[i], tau_Y)
+    }
+    ")
+  }
 
   unmeasured_confounder <- "
   # Unmeasured Confounder parameters

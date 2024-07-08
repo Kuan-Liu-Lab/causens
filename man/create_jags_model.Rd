@@ -4,12 +4,15 @@
 \alias{create_jags_model}
 \title{Create an JAGS model for Bayesian sensitivity analysis}
 \usage{
-create_jags_model()
+create_jags_model(binary_outcome)
+}
+\arguments{
+\item{binary_outcome}{Boolean indicating whether the outcome is binary.
+
+No inputs are given to this function (for now) since data-related information
+is provided in jags.model() during model initialization.}
 }
 \description{
 Creates a JAGS model available as a string, or .txt file, where
 priors are initialized to be uninformative by default.
-
-No inputs are given to this function (for now) since data-related information
-is provided in jags.model() during model initialization.
 }
