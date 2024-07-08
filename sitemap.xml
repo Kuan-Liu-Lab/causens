@@ -1,51 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://kuan-liu-lab.github.io/causens/404.html</loc>
-  </url>
-  <url>
-    <loc>https://kuan-liu-lab.github.io/causens/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://kuan-liu-lab.github.io/causens/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://kuan-liu-lab.github.io/causens/index.html</loc>
-  </url>
-  <url>
-    <loc>https://kuan-liu-lab.github.io/causens/reference/bayesian_causens.html</loc>
-  </url>
-  <url>
-    <loc>https://kuan-liu-lab.github.io/causens/reference/causens.html</loc>
-  </url>
-  <url>
-    <loc>https://kuan-liu-lab.github.io/causens/reference/causens_sf.html</loc>
-  </url>
-  <url>
-    <loc>https://kuan-liu-lab.github.io/causens/reference/create_jags_model.html</loc>
-  </url>
-  <url>
-    <loc>https://kuan-liu-lab.github.io/causens/reference/gData_U_binary_Y_binary.html</loc>
-  </url>
-  <url>
-    <loc>https://kuan-liu-lab.github.io/causens/reference/gData_U_binary_Y_cont.html</loc>
-  </url>
-  <url>
-    <loc>https://kuan-liu-lab.github.io/causens/reference/gData_U_cont_Y_binary.html</loc>
-  </url>
-  <url>
-    <loc>https://kuan-liu-lab.github.io/causens/reference/gData_U_cont_Y_cont.html</loc>
-  </url>
-  <url>
-    <loc>https://kuan-liu-lab.github.io/causens/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://kuan-liu-lab.github.io/causens/reference/plot_causens.html</loc>
-  </url>
-  <url>
-    <loc>https://kuan-liu-lab.github.io/causens/reference/sf.html</loc>
-  </url>
-  <url>
-    <loc>https://kuan-liu-lab.github.io/causens/reference/simulate_data.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://kuan-liu-lab.github.io/causens/404.html</loc></url>
+<url><loc>https://kuan-liu-lab.github.io/causens/LICENSE-text.html</loc></url>
+<url><loc>https://kuan-liu-lab.github.io/causens/authors.html</loc></url>
+<url><loc>https://kuan-liu-lab.github.io/causens/index.html</loc></url>
+<url><loc>https://kuan-liu-lab.github.io/causens/reference/bayesian_causens.html</loc></url>
+<url><loc>https://kuan-liu-lab.github.io/causens/reference/causens.html</loc></url>
+<url><loc>https://kuan-liu-lab.github.io/causens/reference/causens_sf.html</loc></url>
+<url><loc>https://kuan-liu-lab.github.io/causens/reference/create_jags_model.html</loc></url>
+<url><loc>https://kuan-liu-lab.github.io/causens/reference/gData_U_binary_Y_binary.html</loc></url>
+<url><loc>https://kuan-liu-lab.github.io/causens/reference/gData_U_binary_Y_cont.html</loc></url>
+<url><loc>https://kuan-liu-lab.github.io/causens/reference/gData_U_cont_Y_binary.html</loc></url>
+<url><loc>https://kuan-liu-lab.github.io/causens/reference/gData_U_cont_Y_cont.html</loc></url>
+<url><loc>https://kuan-liu-lab.github.io/causens/reference/index.html</loc></url>
+<url><loc>https://kuan-liu-lab.github.io/causens/reference/plot_causens.html</loc></url>
+<url><loc>https://kuan-liu-lab.github.io/causens/reference/sf.html</loc></url>
+<url><loc>https://kuan-liu-lab.github.io/causens/reference/simulate_data.html</loc></url>
 </urlset>
+
