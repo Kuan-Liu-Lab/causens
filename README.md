@@ -14,7 +14,8 @@ analysis methods to adjust for unmeasured confounding within the context of
 causal inference. Currently, we provide the following methods:
 
 - Sensitivity function + propensity score ([Li et al. (2011)](https://pubmed.ncbi.nlm.nih.gov/21659349/), [Brumback et al. (2004)](https://onlinelibrary.wiley.com/doi/10.1002/sim.1657))
-- Bayesian parametric sensitivity analysis ([McCandless et Gustafson (2017)](https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.7298))
+- Bayesian parametric sensitivity analysis ([McCandless et Gustafson (2017), Section 2.2](https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.7298))
+- Monte Carlo sensitivity analysis ([McCandless et Gustafson (2017), Section 2.3](https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.7298))
 
 ## Installation
 
@@ -35,7 +36,7 @@ data <- simulate_data(N = 10000, seed = 123, alpha_uz = 1,
                       beta_uy = 1, treatment_effects = 1)
 
 # Treatment model is incorrect since U is "missing"
-causens(Z ~ X.1 + X.2 + X.3, "Y", data = data, method = "Li", c1 = 0.25, c0 = 0.25)
+causens(Z ~ X.1 + X.2 + X.3, "Y", data = data, method = "sf", c1 = 0.25, c0 = 0.25)
 ```
 
 ## Citing
