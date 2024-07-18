@@ -61,7 +61,8 @@
 <p><a href="https://kuan-liu-lab.github.io/causens/">causens</a> is an R package that will allow to perform various sensitivity analysis methods to adjust for unmeasured confounding within the context of causal inference. Currently, we provide the following methods:</p>
 <ul>
 <li>Sensitivity function + propensity score (<a href="https://pubmed.ncbi.nlm.nih.gov/21659349/" class="external-link">Li et al. (2011)</a>, <a href="https://onlinelibrary.wiley.com/doi/10.1002/sim.1657" class="external-link">Brumback et al. (2004)</a>)</li>
-<li>Bayesian parametric sensitivity analysis (<a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.7298" class="external-link">McCandless et Gustafson (2017)</a>)</li>
+<li>Bayesian parametric sensitivity analysis (<a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.7298" class="external-link">McCandless et Gustafson (2017), Section 2.2</a>)</li>
+<li>Monte Carlo sensitivity analysis (<a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.7298" class="external-link">McCandless et Gustafson (2017), Section 2.3</a>)</li>
 </ul>
 </div>
 <div class="section level2">
@@ -80,7 +81,7 @@
 <span>                      beta_uy <span class="op">=</span> <span class="fl">1</span>, treatment_effects <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Treatment model is incorrect since U is "missing"</span></span>
-<span><span class="fu"><a href="reference/causens.html">causens</a></span><span class="op">(</span><span class="va">Z</span> <span class="op">~</span> <span class="va">X.1</span> <span class="op">+</span> <span class="va">X.2</span> <span class="op">+</span> <span class="va">X.3</span>, <span class="st">"Y"</span>, data <span class="op">=</span> <span class="va">data</span>, method <span class="op">=</span> <span class="st">"Li"</span>, c1 <span class="op">=</span> <span class="fl">0.25</span>, c0 <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="reference/causens.html">causens</a></span><span class="op">(</span><span class="va">Z</span> <span class="op">~</span> <span class="va">X.1</span> <span class="op">+</span> <span class="va">X.2</span> <span class="op">+</span> <span class="va">X.3</span>, <span class="st">"Y"</span>, data <span class="op">=</span> <span class="va">data</span>, method <span class="op">=</span> <span class="st">"sf"</span>, c1 <span class="op">=</span> <span class="fl">0.25</span>, c0 <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="citing">Citing<a class="anchor" aria-label="anchor" href="#citing"></a>
