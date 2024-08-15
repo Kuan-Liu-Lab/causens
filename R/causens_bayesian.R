@@ -101,7 +101,6 @@ parse_args <- function(...) {
 #' No inputs are given to this function (for now) since data-related information
 #' is provided in jags.model() during model initialization.
 create_jags_model <- function(binary_outcome) {
-
   # including modelling of unmeasured binary confounder (`eta` is the linear predictor)
   likelihood <- "
   # Outcome model parameters

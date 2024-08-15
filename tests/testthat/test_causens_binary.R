@@ -3,7 +3,6 @@ parameters <- list(
 )
 
 for (params in parameters) {
-
   data <- simulate_data(
     N = 1e6, y_type = "binary", alpha_uz = params$alpha_uz, beta_uy = params$beta_uy,
     seed = 1234, treatment_effects = params$trt_effect, informative_u = FALSE

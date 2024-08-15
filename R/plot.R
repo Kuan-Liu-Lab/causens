@@ -38,13 +38,14 @@ plot_causens <- function(trt_model, data, outcome, method,
 
   plot_df <- data.frame(c1 = seq(c1_lower, c1_upper, by = 0.01), ate = adjusted_ates)
 
-  plot(plot_df$c1, plot_df$ate, type = "l", pch = 20, col = "black",
-       xlab = "Sensitivity Function Value (c1)",
-       ylab = "Adjusted Treatment Effect (ATE)",
-       main = "ATE vs. Sensitivity Function Value (c1)")
+  plot(plot_df$c1, plot_df$ate,
+    type = "l", pch = 20, col = "black",
+    xlab = "Sensitivity Function Value (c1)",
+    ylab = "Adjusted Treatment Effect (ATE)",
+    main = "ATE vs. Sensitivity Function Value (c1)"
+  )
 
   if (bootstrap) {
-
     lower_ci <- c()
     upper_ci <- c()
 
@@ -73,7 +74,9 @@ plot_causens <- function(trt_model, data, outcome, method,
     lines(plot_df$c1, lower_ci, col = "black", lty = 2)
     lines(plot_df$c1, upper_ci, col = "black", lty = 2)
 
-    legend("topright", legend = c("ATE", "95% CI"),
-           col = c("black", "black"), lty = c(1, 2), cex = 0.8)
+    legend("topright",
+      legend = c("ATE", "95% CI"),
+      col = c("black", "black"), lty = c(1, 2), cex = 0.8
+    )
   }
 }
