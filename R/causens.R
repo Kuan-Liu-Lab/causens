@@ -13,12 +13,12 @@
 #' "Bayesian" are supported.
 #' @param data A data frame containing the exposure, outcome, and confounder variables.
 #' @param ... Additional arguments to be passed to the sensitivity function.
+#' @importFrom stats binomial formula glm terms
 #'
 #' @return A point estimate of the corrected ATE.
 #'
 #' @export
 causens <- function(trt_model, outcome, method, data, ...) {
-
   if (inherits(trt_model, "formula")) {
     fitted_model <- glm(trt_model, data = data, family = binomial)
     trt_formula <- trt_model
