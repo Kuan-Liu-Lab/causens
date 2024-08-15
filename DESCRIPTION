@@ -8,7 +8,7 @@ Authors@R:
     person("Kuan", "Liu", NULL, "kuan.liu@utoronto.ca", role = c("aut"), comment = c(ORCID = "0000-0002-5017-1276")))
 Description: This package provides functionality to perform causal
     sensitivity analyses using recently developed statistical methods.
-License: MIT
+License: MIT + file LICENSE
 URL: https://kuan-liu-lab.github.io/causens/, https://github.com/Kuan-Liu-Lab/causens
 Collate:
     "causens_bayesian.R"
