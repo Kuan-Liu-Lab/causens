@@ -56,7 +56,7 @@ bayesian_causens <- function(exposure, outcome, confounders, data, backend = "ja
       inits = inits
     )
 
-    rjags::update(model, sampler_args$burn_in)
+    update(model, sampler_args$burn_in)
 
     # Extract the posterior samples
     samples <- rjags::coda.samples(
