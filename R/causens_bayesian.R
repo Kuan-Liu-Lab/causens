@@ -13,6 +13,9 @@
 #' variable on the outcome, as well as the confounder-adjusted causal effect.
 bayesian_causens <- function(exposure, outcome, confounders, data, backend = "jags", output_trace = FALSE, ...) {
   if (backend == "rjags" || backend == "jags") {
+    if (!requireNamespace("rjags", quietly = TRUE)) {
+      stop("The 'rjags' package is required for the JAGS backend but is not installed. Please install it using install.packages('rjags').")
+    }
     require(rjags)
   } else if (backend == "stan" || backend == "rstan") {
     stop("Stan backend will be implemented soon.")
