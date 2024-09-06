@@ -12,17 +12,6 @@
 #' @return A list of posterior samples for the causal effect of the exposure
 #' variable on the outcome, as well as the confounder-adjusted causal effect.
 bayesian_causens <- function(exposure, outcome, confounders, data, backend = "jags", output_trace = FALSE, ...) {
-  if (backend == "rjags" || backend == "jags") {
-    if (!requireNamespace("rjags", quietly = TRUE)) {
-      stop("The 'rjags' package is required for the JAGS backend but is not installed. Please install it using install.packages('rjags').")
-    }
-    require(rjags)
-  } else if (backend == "stan" || backend == "rstan") {
-    stop("Stan backend will be implemented soon.")
-  } else {
-    stop("Backend not recognized or not implemented yet.")
-  }
-
   sampler_args <- parse_args(...)
 
   # Notation from Bayesian SA paper
@@ -46,36 +35,48 @@ bayesian_causens <- function(exposure, outcome, confounders, data, backend = "ja
     alpha_0 = 0
   )
 
-  # Run the Bayesian sensitivity analysis
-  model <- rjags::jags.model(
-    textConnection(jags_model),
-    data = list(
-      Z = Z,
-      C = C,
-      Y = Y,
-      N = N,
-      p_outcome = ncol(C),
-      p_treatment = ncol(C),
-      p_unmeasured_confounder = ncol(C)
-    ),
-    inits = inits
-  )
+  if (backend == "rjags" || backend == "jags") {
+    if (!requireNamespace("rjags", quietly = TRUE)) {
+      stop("The 'rjags' package is required for the JAGS backend but is not
+           installed. Please install it using install.packages('rjags').")
+    }
+    require(rjags)
 
-  rjags::update(model, sampler_args$burn_in)
+    # Run the Bayesian sensitivity analysis using RJAGS
+    model <- rjags::jags.model(
+      textConnection(jags_model),
+      data = list(
+        Z = Z,
+        C = C,
+        Y = Y,
+        N = N,
+        p_outcome = ncol(C),
+        p_treatment = ncol(C),
+        p_unmeasured_confounder = ncol(C)
+      ),
+      inits = inits
+    )
 
-  # Extract the posterior samples
-  samples <- rjags::coda.samples(
-    model,
-    variable.names = c("beta_Z", "beta_C", "beta_0", "gamma_C", "gamma_0", "alpha_C", "alpha_U", "alpha_0"),
-    n.iter = sampler_args$n_samples,
-    thin = 1
-  )
+    rjags::update(model, sampler_args$burn_in)
 
-  if (output_trace) {
-    return(samples[[1]])
+    # Extract the posterior samples
+    samples <- rjags::coda.samples(
+      model,
+      variable.names = c("beta_Z", "beta_C", "beta_0", "gamma_C", "gamma_0", "alpha_C", "alpha_U", "alpha_0"),
+      n.iter = sampler_args$n_samples,
+      thin = 1
+    )
+
+    if (output_trace) {
+      return(samples[[1]])
+    }
+
+    return(mean(samples[[1]][, "beta_Z"]))
+  } else if (backend == "stan" || backend == "rstan") {
+    stop("Stan backend will be implemented soon.")
+  } else {
+    stop("Backend not recognized or not implemented yet.")
   }
-
-  return(mean(samples[[1]][, "beta_Z"]))
 }
 
 parse_args <- function(...) {
