@@ -8,6 +8,7 @@
 #' @param data A data frame containing the exposure, outcome, and confounder variables.
 #' @param ... Additional arguments to be passed to the function.
 #' @return The estimated causal effect.
+#' @importFrom stats as.formula rnorm runif
 #' @export
 causens_monte_carlo <- function(exposure, outcome, confounders, data, ...) {
   formula <- as.formula(paste(outcome, "~", exposure, "+", paste(confounders, collapse = "+")))
