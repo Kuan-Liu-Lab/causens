@@ -14,8 +14,6 @@
 #' @param r The ratio between c1 and c0.
 #' @param bootstrap Bootstrap or not current estimate process and plot
 #' the estimated confidence interval.
-#' @importFrom stats quantile
-#' @importFrom graphics plot lines legend
 #'
 #' @return A plot of the ATE as a function of c1 values.
 #'
