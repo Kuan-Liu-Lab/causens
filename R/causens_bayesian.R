@@ -30,7 +30,6 @@ bayesian_causens <- function(exposure, outcome, confounders, data, backend = "ja
     beta_0 = 0,
     beta_U = 0,
     gamma_C = rep(0, ncol(C)),
-    gamma_0 = 0,
     alpha_C = rep(0, ncol(C)),
     alpha_0 = 0
   )
@@ -61,7 +60,7 @@ bayesian_causens <- function(exposure, outcome, confounders, data, backend = "ja
     # Extract the posterior samples
     samples <- rjags::coda.samples(
       model,
-      variable.names = c("beta_Z", "beta_C", "beta_0", "gamma_C", "gamma_0", "alpha_C", "alpha_U", "alpha_0"),
+      variable.names = c("beta_Z", "beta_C", "beta_0", "gamma_C", "alpha_C", "alpha_U", "alpha_0"),
       n.iter = sampler_args$n_samples,
       thin = 1
     )
@@ -139,14 +138,12 @@ create_jags_model <- function(binary_outcome) {
   unmeasured_confounder <- "
   # Unmeasured Confounder parameters
 
-  gamma_0 ~ dunif(-5, 5)
-
   for (u in 1:p_unmeasured_confounder) {
     gamma_C[u] ~ dunif(-2, 2)
   }
 
   for (i in 1:N) {
-    logit(p_U[i]) <- gamma_0 + sum(C[i, 1:p_unmeasured_confounder] * gamma_C[1:p_unmeasured_confounder])
+    logit(p_U[i]) <- sum(C[i, 1:p_unmeasured_confounder] * gamma_C[1:p_unmeasured_confounder])
     U[i] ~ dbern(p_U[i])
   }
   "

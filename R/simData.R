@@ -35,9 +35,13 @@ simulate_data <- function(ymodel = "linear",
   eta_u <- X %*% gamma_uz
 
   if (u_type == "binary") {
-    U <- rbinom(N, 1, ifelse(informative_u, plogis(eta_u), .5)) # unmeasured confounder;
+    if (informative_u) {
+      U <- rbinom(N, 1, plogis(eta_u))
+    } else {
+      U <- rbinom(N, 1, .5)
+    }
   } else if (u_type == "cont" || u_type == "continuous") {
-    U <- rnorm(N, ifelse(informative_u, eta_u, 0), 1) # unmeasured confounder;
+    U <- rnorm(N, informative_u * eta_u, 1)
   } else {
     stop("Invalid unmeasured confounder type.")
   }
