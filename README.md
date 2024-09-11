@@ -53,9 +53,10 @@ Please cite our software using:
 }
 ```
 
-## Getting help
+## Getting help or contributing
 
 Please report bugs by opening an
 [issue](https://github.com/Kuan-Liu-Lab/causens/issues/new). If you have
-a question regarding the usage of `causens`, start a
-[discussion](https://github.com/Kuan-Liu-Lab/causens/discussions/new/choose).
+a question regarding the usage of `causens`, please open a
+[discussion](https://github.com/Kuan-Liu-Lab/causens/discussions/new/choose). 
+If you would like to contribute to the package, please open a pull request.
