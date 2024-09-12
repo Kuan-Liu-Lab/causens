@@ -8,7 +8,7 @@ run_simulation <- function(seed, y_type) {
   data <- simulate_data(
     N = 1000, alpha_uz = 0.5, beta_uy = 0.2,
     seed = seed, treatment_effects = trt_effect,
-    y_type = y_type
+    y_type = y_type, informative_u = TRUE
   )
 
   return(causens(Z ~ X.1 + X.2 + X.3, "Y", data, method = "Bayesian"))

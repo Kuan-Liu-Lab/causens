@@ -22,7 +22,7 @@ simulate_data <- function(ymodel = "linear",
                           alpha_uz = 0.2,
                           beta_uy = 0.5,
                           treatment_effects = 1,
-                          informative_u = TRUE) {
+                          informative_u = FALSE) {
   set.seed(seed)
 
   alpha_xz <- c(.1, -.5, .2) # coefficients of X in the treatment model;
