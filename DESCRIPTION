@@ -10,14 +10,6 @@ Description: This package provides functionality to perform causal
     sensitivity analyses using recently developed statistical methods.
 License: MIT + file LICENSE
 URL: https://kuan-liu-lab.github.io/causens/, https://github.com/Kuan-Liu-Lab/causens
-Collate:
-    "causens_bayesian.R"
-    "causens_monte_carlo.R"
-    "causens_sf.R"
-    "causens.R"
-    "plot.R"
-    "sensitivity_function.R"
-    "simData.R"
 Suggests:
     devtools,
     knitr,
@@ -32,3 +24,4 @@ Encoding: UTF-8
 RoxygenNote: 7.3.2
 BugReports: https://github.com/Kuan-Liu-Lab/causens/issues
 Config/testthat/edition: 3
+VignetteBuilder: knitr

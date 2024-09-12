@@ -37,7 +37,7 @@ bayesian_causens <- function(exposure, outcome, confounders, data, backend = "ja
   if (backend == "rjags" || backend == "jags") {
     if (!requireNamespace("rjags", quietly = TRUE)) {
       stop("The 'rjags' package is required for the JAGS backend but is not
-           installed. Please install it using install.packages('rjags').")
+      installed. Please install it using install.packages('rjags').")
     }
 
     # Run the Bayesian sensitivity analysis using RJAGS

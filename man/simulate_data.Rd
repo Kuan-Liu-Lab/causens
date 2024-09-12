@@ -13,7 +13,7 @@ simulate_data(
   alpha_uz = 0.2,
   beta_uy = 0.5,
   treatment_effects = 1,
-  informative_u = TRUE
+  informative_u = FALSE
 )
 }
 \arguments{
