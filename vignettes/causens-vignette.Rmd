@@ -136,11 +136,7 @@ effect by then marginalizing over $U$. We assume the following data-generating m
   Y \mid U, X, Z &\sim \text{Normal}(\beta_{uy} U + \beta_{xy} X + \tau Z) \\
 \end{align*}
 
-``` {r}
-if (!requireNamespace("rjags", quietly = TRUE)) {
-  install.packages("rjags")
-}
-
+``` {r, eval = FALSE}
 data <- simulate_data(
   N = 1000, alpha_uz = 0.5, beta_uy = 0.2,
   seed = 123, treatment_effects = 1,
