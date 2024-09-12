@@ -19,7 +19,7 @@ causal inference. Currently, we provide the following methods:
 
 ## Installation
 
-```{r}
+``` r
 install.packages("devtools")
 library(devtools)
 devtools::install_github("Kuan-Liu-Lab/causens")
