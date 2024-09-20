@@ -27,17 +27,8 @@ jobs:
       with:
         upload-snapshots: true
 
-    - uses: dorny/paths-filte@v3
-      id: changes
-      with:
-        filters: |
-          src:
-            - "R/bayesian_causens.R"
-            - "R/simData.R"
-            - "tests/testthat/test_bayesian_sa.R"
-
     - name: Install dependencies and run tests
-      if: steps.filter.outputs.src == "true"
+      if: ${{ steps.filter.outputs.src == 'true' }}
       run: |
         Rscript -e "install.packages('remotes')"
         Rscript -e "remotes::install_deps()"
