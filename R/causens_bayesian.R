@@ -1,9 +1,9 @@
 #' @title Bayesian parametric sensitivity analysis for causal inference
 #' @description This function runs a Bayesian sensitivity analysis for causal
 #' inference using JAGS or Stan as a backend.
-#' @param exposure The name of the exposure variable in the data frame.
-#' @param outcome The name of the outcome variable in the data frame.
-#' @param confounders The name of the confounders in the data frame.
+#' @param exposure Exposure variable name in the data frame.
+#' @param outcome Outcome variable name in the data frame.
+#' @param confounders Confounders' names in the data frame.
 #' @param data A data frame containing the exposure, outcome, and confounder variables.
 #' @param backend The backend to use for the sensitivity analysis. Currently
 #' only "jags" is supported.
@@ -11,6 +11,7 @@
 #' @param ... Additional arguments to be passed to the backend.
 #' @return A list of posterior samples for the causal effect of the exposure
 #' variable on the outcome, as well as the confounder-adjusted causal effect.
+#' @export
 bayesian_causens <- function(exposure, outcome, confounders, data, backend = "jags", output_trace = FALSE, ...) {
   sampler_args <- parse_args(...)
 
@@ -31,7 +32,9 @@ bayesian_causens <- function(exposure, outcome, confounders, data, backend = "ja
     beta_U = 0,
     gamma_C = rep(0, ncol(C)),
     alpha_C = rep(0, ncol(C)),
-    alpha_0 = 0
+    alpha_0 = 0,
+    .RNG.name = "base::Wichmann-Hill",
+    .RNG.seed = 123
   )
 
   if (backend == "rjags" || backend == "jags") {
@@ -65,16 +68,23 @@ bayesian_causens <- function(exposure, outcome, confounders, data, backend = "ja
       thin = 1
     )
 
-    if (output_trace) {
-      return(samples[[1]])
-    }
+    causens_obj <- list()
+    class(causens_obj) <- "bayesian_causens"
+    causens_obj$call <- paste(exposure, "~", paste(confounders, collapse = " + "))
+    causens_obj$estimated_ate <- mean(samples[[1]][, "beta_Z"])
+    causens_obj$std_error <- sd(samples[[1]][, "beta_Z"])
+    causens_obj$ci <- quantile(samples[[1]][, "beta_Z"], c(0.025, 0.975))
 
-    return(mean(samples[[1]][, "beta_Z"]))
+    if (output_trace) {
+      causens_obj$trace <- samples
+    }
   } else if (backend == "stan" || backend == "rstan") {
     stop("Stan backend will be implemented soon.")
   } else {
     stop("Backend not recognized or not implemented yet.")
   }
+
+  return(causens_obj)
 }
 
 parse_args <- function(...) {
