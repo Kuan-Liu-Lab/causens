@@ -7,11 +7,13 @@
 #' @param exposure The name of the exposure variable.
 #' @param outcome The name of the outcome variable.
 #' @param data A data frame containing the exposure, outcome, and confounder variables.
+#' @param bootstrap A logical indicating whether to perform bootstrap estimation
+#' of the 95% confidence interval.
 #' @param ... Additional arguments to be passed to the sensitivity function.
 #'
 #' @return A point estimate of the corrected ATE.
 #' @export
-causens_sf <- function(fitted_model, exposure, outcome, data, ...) {
+causens_sf <- function(fitted_model, exposure, outcome, data, bootstrap = FALSE, ...) {
   y <- data[[outcome]]
   z <- data[[exposure]]
 
@@ -32,6 +34,10 @@ causens_sf <- function(fitted_model, exposure, outcome, data, ...) {
   causens_obj <- list()
   class(causens_obj) <- "causens_sf"
   causens_obj$estimated_ate <- Y1_sf - Y0_sf
+
+  if (!bootstrap) {
+    return(causens_obj)
+  }
 
   # Implement bootstrap estimation of 95% confidence interval
 

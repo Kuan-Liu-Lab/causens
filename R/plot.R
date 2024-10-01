@@ -31,7 +31,8 @@ plot_causens <- function(trt_model, data, outcome, method,
       outcome = outcome,
       method = method,
       c1 = c1,
-      c0 = r * c1
+      c0 = r * c1,
+      bootstrap = FALSE
     )
     adjusted_ates <- c(adjusted_ates, ate)
   }
