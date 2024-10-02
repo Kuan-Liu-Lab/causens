@@ -5,7 +5,7 @@ data_sf <- simulate_data(
 
 result_sf <- causens(Z ~ X.1 + X.2 + X.3, "Y",
   data = data_sf, method = "sf",
-  c1 = 0.25, c0 = 0.25
+  c1 = 0.25, c0 = 0.25, bootstrap = TRUE
 )
 
 summary_table <- capture_output(summary(result_sf))

@@ -8,7 +8,7 @@
 #' @param outcome The name of the outcome variable.
 #' @param data A data frame containing the exposure, outcome, and confounder variables.
 #' @param bootstrap A logical indicating whether to perform bootstrap estimation
-#' of the 95% confidence interval.
+#' of the 95\% confidence interval.
 #' @param ... Additional arguments to be passed to the sensitivity function.
 #'
 #' @return A point estimate of the corrected ATE.

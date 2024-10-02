@@ -8,20 +8,19 @@
 #' @param trt_model The treatment model object as a formula or fitted glm.
 #' @param data A data frame containing the variables of interest.
 #' @param outcome The name of the outcome variable.
-#' @param method The method to use for sensitivity analysis (see `causens` function).
 #' @param c1_upper The upper bound for the sensitivity function value.
 #' @param c1_lower The lower bound for the sensitivity function value.
 #' @param r The ratio between c1 and c0.
 #' @param bootstrap Bootstrap or not current estimate process and plot
 #' the estimated confidence interval.
-#' @importFrom stats quantile
+#' @importFrom stats quantile sd update
 #' @importFrom graphics plot lines legend
 #'
 #' @return A plot of the ATE as a function of c1 values.
 #'
 #' @export
-plot_causens <- function(trt_model, data, outcome, method,
-                         c1_upper = 0.5, c1_lower = 0, r = 1, bootstrap = TRUE) {
+plot_causens <- function(trt_model, data, outcome, c1_upper = 0.5,
+                         c1_lower = 0, r = 1, bootstrap = TRUE) {
   adjusted_ates <- c()
 
   for (c1 in seq(c1_lower, c1_upper, by = 0.01)) {
@@ -29,11 +28,11 @@ plot_causens <- function(trt_model, data, outcome, method,
       trt_model = trt_model,
       data = data,
       outcome = outcome,
-      method = method,
+      method = "sf",
       c1 = c1,
       c0 = r * c1,
       bootstrap = FALSE
-    )
+    )$estimated_ate
     adjusted_ates <- c(adjusted_ates, ate)
   }
 
@@ -61,10 +60,10 @@ plot_causens <- function(trt_model, data, outcome, method,
             trt_model = trt_model,
             data = sampled_data,
             outcome = outcome,
-            method = method,
+            method = "sf",
             c1 = c1,
             c0 = r * c1
-          )
+          )$estimated_ate
         )
       }
 

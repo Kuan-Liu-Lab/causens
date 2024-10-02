@@ -89,7 +89,7 @@ for (params in parameters) {
 
   # Testing R-equivalent of "parent/abstract base" class
   test_that("Object class properly initialized", {
-    startsWith(class(est_ate_1), "causens_")
+    expect_true(startsWith(class(est_ate_1), "causens_"))
   })
 
   test_that("trt_model can be a formula or fitted glm model", {
