@@ -10,6 +10,7 @@
 #' @param bootstrap A logical indicating whether to perform bootstrap estimation
 #' of the 95\% confidence interval.
 #' @param ... Additional arguments to be passed to the sensitivity function.
+#' @importFrom stats predict
 #'
 #' @return A point estimate of the corrected ATE.
 #' @export

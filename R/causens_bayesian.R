@@ -11,6 +11,7 @@
 #' @param ... Additional arguments to be passed to the backend.
 #' @return A list of posterior samples for the causal effect of the exposure
 #' variable on the outcome, as well as the confounder-adjusted causal effect.
+#' @importFrom stats sd update
 #' @export
 bayesian_causens <- function(exposure, outcome, confounders, data, backend = "jags", output_trace = FALSE, ...) {
   sampler_args <- parse_args(...)
