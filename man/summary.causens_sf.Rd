@@ -5,10 +5,12 @@
 \title{Summarize the results of a causal sensitivity analysis via
 sensitivity function.}
 \usage{
-\method{summary}{causens_sf}(causens_obj)
+\method{summary}{causens_sf}(object, ...)
 }
 \arguments{
-\item{causens_obj}{An object of class \code{causens_sf}.}
+\item{object}{An object of class \code{causens_sf}.}
+
+\item{...}{Additional arguments to be passed to \code{summary}.}
 }
 \value{
 A summary of the results of the causal sensitivity analysis.

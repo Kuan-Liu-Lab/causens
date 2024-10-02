@@ -1,14 +1,15 @@
 #' Summarize the results of a causal sensitivity analysis via
 #' sensitivity function.
 #'
-#' @param causens_obj An object of class \code{causens_sf}.
+#' @param object An object of class \code{causens_sf}.
+#' @param ... Additional arguments to be passed to \code{summary}.
 #'
 #' @return A summary of the results of the causal sensitivity analysis.
 #' @export
-summary.causens_sf <- function(causens_obj) {
+summary.causens_sf <- function(object, ...) {
   # 1) Showing treatment model call
   cat("Treatment Model:\n")
-  cat(deparse(causens_obj$call), "\n\n")
+  cat(deparse(object$call), "\n\n")
 
   # 2) Printing table (estimate, std.error, 95% CI)
   header <- sprintf(
@@ -20,8 +21,8 @@ summary.causens_sf <- function(causens_obj) {
     "Estimate", "Std.Error", "95% C.I."
   )
 
-  ci_lower <- format(causens_obj$ci[1], digits = 3)
-  ci_upper <- format(causens_obj$ci[2], digits = 3)
+  ci_lower <- format(object$ci[1], digits = 3)
+  ci_upper <- format(object$ci[2], digits = 3)
 
   data_line <- sprintf(
     paste0(
@@ -29,8 +30,8 @@ summary.causens_sf <- function(causens_obj) {
       "%-", 12, "s ",
       "%-", 30, "s"
     ),
-    format(causens_obj$estimated_ate, digits = 3),
-    format(causens_obj$std_error, digits = 3),
+    format(object$estimated_ate, digits = 3),
+    format(object$std_error, digits = 3),
     paste0("(", ci_lower, ", ", ci_upper, ")")
   )
 
@@ -41,13 +42,14 @@ summary.causens_sf <- function(causens_obj) {
 #' Summarize the results of a causal sensitivity analysis via
 #' Bayesian modelling of an unmeasured confounder.
 #'
-#' @param causens_obj An object of class \code{causens_bayesian}.
+#' @param object An object of class \code{causens_bayesian}.
+#' @param ... Additional arguments to be passed to \code{summary}.
 #'
 #' @export
-summary.bayesian_causens <- function(causens_obj) {
+summary.bayesian_causens <- function(object, ...) {
   # 1) Showing treatment model call
   cat("Treatment Model:\n")
-  cat(deparse(causens_obj$call), "\n\n")
+  cat(deparse(object$call), "\n\n")
 
   # 2) Printing table (estimate, std.error, 95% CI)
   header <- sprintf(
@@ -59,8 +61,8 @@ summary.bayesian_causens <- function(causens_obj) {
     "Estimate", "Std.Error", "95% Credible Interval"
   )
 
-  ci_lower <- format(causens_obj$ci[1], digits = 3)
-  ci_upper <- format(causens_obj$ci[2], digits = 3)
+  ci_lower <- format(object$ci[1], digits = 3)
+  ci_upper <- format(object$ci[2], digits = 3)
 
   data_line <- sprintf(
     paste0(
@@ -68,8 +70,8 @@ summary.bayesian_causens <- function(causens_obj) {
       "%-", 12, "s ",
       "%-", 30, "s"
     ),
-    format(causens_obj$estimated_ate, digits = 3),
-    format(causens_obj$std_error, digits = 3),
+    format(object$estimated_ate, digits = 3),
+    format(object$std_error, digits = 3),
     paste0("(", ci_lower, ", ", ci_upper, ")")
   )
 

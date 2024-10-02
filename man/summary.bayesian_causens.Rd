@@ -5,10 +5,12 @@
 \title{Summarize the results of a causal sensitivity analysis via
 Bayesian modelling of an unmeasured confounder.}
 \usage{
-\method{summary}{bayesian_causens}(causens_obj)
+\method{summary}{bayesian_causens}(object, ...)
 }
 \arguments{
-\item{causens_obj}{An object of class \code{causens_bayesian}.}
+\item{object}{An object of class \code{causens_bayesian}.}
+
+\item{...}{Additional arguments to be passed to \code{summary}.}
 }
 \description{
 Summarize the results of a causal sensitivity analysis via
