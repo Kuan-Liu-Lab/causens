@@ -79,6 +79,17 @@ summary.bayesian_causens <- function(object, ...) {
   cat(data_line, "\n")
 }
 
+#' Summarize the results of a causal sensitivity analysis via the
+#' Monte Carlo method.
+#'
+#' @param object An object of class \code{causens_monte_carlo}.
+#' @param ... Additional arguments to be passed to \code{summary}.
+#'
+#' @export
+summary.monte_carlo_causens <- function(object, ...) {
+  return(summary.causens_sf(object, ...))
+}
+
 # Helper function for displaying small numbers
 format_number <- function(x, digits = 3, threshold = 1e-3) {
   if (abs(x) < threshold) {
