@@ -9,7 +9,6 @@ plot_causens(
   trt_model,
   data,
   outcome,
-  method,
   c1_upper = 0.5,
   c1_lower = 0,
   r = 1,
@@ -22,8 +21,6 @@ plot_causens(
 \item{data}{A data frame containing the variables of interest.}
 
 \item{outcome}{The name of the outcome variable.}
-
-\item{method}{The method to use for sensitivity analysis (see `causens` function).}
 
 \item{c1_upper}{The upper bound for the sensitivity function value.}
 

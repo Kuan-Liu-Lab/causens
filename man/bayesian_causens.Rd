@@ -15,11 +15,11 @@ bayesian_causens(
 )
 }
 \arguments{
-\item{exposure}{The name of the exposure variable in the data frame.}
+\item{exposure}{Exposure variable name in the data frame.}
 
-\item{outcome}{The name of the outcome variable in the data frame.}
+\item{outcome}{Outcome variable name in the data frame.}
 
-\item{confounders}{The name of the confounders in the data frame.}
+\item{confounders}{Confounders' names in the data frame.}
 
 \item{data}{A data frame containing the exposure, outcome, and confounder variables.}
 

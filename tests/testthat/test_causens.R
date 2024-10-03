@@ -38,7 +38,9 @@ for (params in parameters) {
 
       trt_model <- Z ~ X.1 + X.2 + X.3
 
-      return(causens(trt_model, "Y", method = "Li", data = data, c1 = c1, c0 = c0))
+      result <- causens(trt_model, "Y", method = "Li", data = data, c1 = c1, c0 = c0)
+
+      return(result$estimated_ate)
     }
 
 
@@ -84,6 +86,11 @@ for (params in parameters) {
     c1 = 0.25,
     c0 = 0.25
   )
+
+  # Testing R-equivalent of "parent/abstract base" class
+  test_that("Object class properly initialized", {
+    expect_true(startsWith(class(est_ate_1), "causens_"))
+  })
 
   test_that("trt_model can be a formula or fitted glm model", {
     expect_equal(est_ate_1, est_ate_2)

@@ -7,11 +7,14 @@
 #' @param exposure The name of the exposure variable.
 #' @param outcome The name of the outcome variable.
 #' @param data A data frame containing the exposure, outcome, and confounder variables.
+#' @param bootstrap A logical indicating whether to perform bootstrap estimation
+#' of the 95\% confidence interval.
 #' @param ... Additional arguments to be passed to the sensitivity function.
+#' @importFrom stats predict
 #'
 #' @return A point estimate of the corrected ATE.
 #' @export
-causens_sf <- function(fitted_model, exposure, outcome, data, ...) {
+causens_sf <- function(fitted_model, exposure, outcome, data, bootstrap = FALSE, ...) {
   y <- data[[outcome]]
   z <- data[[exposure]]
 
@@ -29,7 +32,44 @@ causens_sf <- function(fitted_model, exposure, outcome, data, ...) {
   Y1_sf <- sum((Y_sf * weights)[z == 1]) / sum(weights[z == 1])
   Y0_sf <- sum((Y_sf * weights)[z == 0]) / sum(weights[z == 0])
 
-  estimated_ate <- Y1_sf - Y0_sf
+  causens_obj <- list()
+  class(causens_obj) <- "causens_sf"
+  causens_obj$estimated_ate <- Y1_sf - Y0_sf
 
-  return(estimated_ate)
+  if (!bootstrap) {
+    return(causens_obj)
+  }
+
+  # Implement bootstrap estimation of 95% confidence interval
+
+  # Number of bootstrap samples
+
+  B <- 1000
+  ate_bs <- numeric(B)
+  set.seed(123) # for bootstrap replications
+
+  for (b in 1:B) {
+    data_b <- data[sample(nrow(data), replace = TRUE), ]
+    y_b <- data_b[[outcome]]
+    z_b <- data_b[[exposure]]
+
+    e_b <- predict(fitted_model, newdata = data_b, type = "response")
+
+    c1_b <- sf(z = 1, e = e_b, ...)
+    c0_b <- sf(z = 0, e = 1 - e_b, ...)
+
+    weights_b <- 1 / ifelse(z_b == 1, e_b, 1 - e_b)
+
+    Y_sf_b <- y_b + (-1)**(z_b == 1) * abs(z_b - e_b) * ifelse(z_b, c1_b, c0_b)
+
+    Y1_sf_b <- sum((Y_sf_b * weights_b)[z_b == 1]) / sum(weights_b[z_b == 1])
+    Y0_sf_b <- sum((Y_sf_b * weights_b)[z_b == 0]) / sum(weights_b[z_b == 0])
+
+    ate_bs[b] <- Y1_sf_b - Y0_sf_b
+  }
+
+  causens_obj$ci <- quantile(ate_bs, c(0.025, 0.975))
+  causens_obj$std_error <- sd(ate_bs)
+
+  return(causens_obj)
 }
