@@ -11,7 +11,9 @@ run_simulation <- function(seed, y_type) {
     y_type = y_type, informative_u = TRUE
   )
 
-  return(causens(Z ~ X.1 + X.2 + X.3, "Y", data, method = "Bayesian"))
+  result <- causens(Z ~ X.1 + X.2 + X.3, "Y", data, method = "Bayesian")
+
+  return(result$estimated_ate)
 }
 
 simulated_ate <- list("binary" = c(), "continuous" = c())
@@ -24,3 +26,23 @@ for (y_type in c("continuous", "binary")) {
 
 expect_equal(trt_effect, mean(simulated_ate$`binary`), tolerance = 0.1)
 expect_equal(trt_effect, mean(simulated_ate$`continuous`), tolerance = 0.1)
+
+# Testing summary function
+data <- simulate_data(
+  N = 1000, alpha_uz = 0.5, beta_uy = 0.2,
+  seed = 123, treatment_effects = 1,
+  y_type = "continuous", informative_u = TRUE
+)
+
+result <- causens(Z ~ X.1 + X.2 + X.3, "Y", data = data, method = "bayesian")
+
+test_that("summary.causens_bayesian produces correct output", {
+  expect_equal(capture_output(summary(result)), paste(
+    "Treatment Model:",
+    "Z ~ X.1 + X.2 + X.3 ",
+    "",
+    "Estimate     Std.Error    95% Credible Interval     ",
+    "1.1          0.127        (0.836, 1.36)                  ",
+    sep = "\n"
+  ))
+})

@@ -35,15 +35,19 @@ causens <- function(trt_model, outcome, method, data, ...) {
   method <- tolower(method) # case-insensitive
   confounder_names <- attr(terms(trt_model), "term.labels")
 
+  causens_obj <- list(data = data)
+
   if (method == "sf" || method == "li") {
-    estimated_ate <- causens_sf(fitted_model, trt_var_name, outcome, data, ...)
+    causens_obj <- causens_sf(fitted_model, trt_var_name, outcome, data, ...)
   } else if (method == "bayesian") {
-    estimated_ate <- bayesian_causens(trt_var_name, outcome, confounder_names, data, ...)
+    causens_obj <- bayesian_causens(trt_var_name, outcome, confounder_names, data, ...)
   } else if (method == "mc" || method == "monte carlo") {
-    estimated_ate <- causens_monte_carlo(trt_var_name, outcome, confounder_names, data, ...)
+    causens_obj <- causens_monte_carlo(trt_var_name, outcome, confounder_names, data, ...)
   } else {
     stop("Method not recognized or not implemented yet.")
   }
 
-  return(estimated_ate)
+  causens_obj$call <- trt_formula
+
+  return(causens_obj)
 }

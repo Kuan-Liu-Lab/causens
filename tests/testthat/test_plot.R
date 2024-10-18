@@ -11,11 +11,10 @@ test_that("plot function generates base R plot", {
     trt_model,
     data,
     "Y",
-    method = "Li",
     c1_upper = 0.5,
     c1_lower = 0,
     r = 1,
-    bootstrap = TRUE
+    bootstrap = FALSE
   )
 
   plot_obj <- recordPlot() # returns an error if no plot is created

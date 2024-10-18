@@ -4,7 +4,7 @@
 \alias{causens_sf}
 \title{Bayesian Estimation of ATE Subject to Unmeasured Confounding}
 \usage{
-causens_sf(fitted_model, exposure, outcome, data, ...)
+causens_sf(fitted_model, exposure, outcome, data, bootstrap = FALSE, ...)
 }
 \arguments{
 \item{fitted_model}{The treatment model object as a glm.}
@@ -14,6 +14,9 @@ causens_sf(fitted_model, exposure, outcome, data, ...)
 \item{outcome}{The name of the outcome variable.}
 
 \item{data}{A data frame containing the exposure, outcome, and confounder variables.}
+
+\item{bootstrap}{A logical indicating whether to perform bootstrap estimation
+of the 95\% confidence interval.}
 
 \item{...}{Additional arguments to be passed to the sensitivity function.}
 }
