@@ -6,6 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>causens: an R package for causal sensitivity analysis methods • causens</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
@@ -94,7 +100,7 @@ data on which to test the methods.</p>
 <span><span class="co">#&gt; Using github PAT from envvar GITHUB_PAT. Use `gitcreds::gitcreds_set()` and unset GITHUB_PAT in .Renviron (or elsewhere) if you want to use the more secure git credential store instead.</span></span>
 <span><span class="co">#&gt; Downloading GitHub repo Kuan-Liu-Lab/causens@HEAD</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="color: #00BBBB;">R CMD build</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────────────────────</span></span></span>
-<span><span class="co">#&gt; * checking for file ‘/tmp/Rtmp1ePCrv/remotes187e1961ac14/Kuan-Liu-Lab-causens-3e8f98e/DESCRIPTION’ ... OK</span></span>
+<span><span class="co">#&gt; * checking for file ‘/tmp/RtmpUMPWq6/remotes1a5d5c998db0/Kuan-Liu-Lab-causens-d5727cf/DESCRIPTION’ ... OK</span></span>
 <span><span class="co">#&gt; * preparing ‘causens’:</span></span>
 <span><span class="co">#&gt; * checking DESCRIPTION meta-information ... OK</span></span>
 <span><span class="co">#&gt; * checking for LF line-endings in source and make files and shell scripts</span></span>
@@ -213,12 +219,21 @@ functions, but we eventually will allow any valid user-defined
 sensitivity function.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Simulate data</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simulate_data.html">simulate_data</a></span><span class="op">(</span>N <span class="op">=</span> <span class="fl">10000</span>, seed <span class="op">=</span> <span class="fl">123</span>, alpha_uz <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>                      beta_uy <span class="op">=</span> <span class="fl">1</span>, treatment_effects <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simulate_data.html">simulate_data</a></span><span class="op">(</span></span>
+<span>  N <span class="op">=</span> <span class="fl">10000</span>, seed <span class="op">=</span> <span class="fl">123</span>, alpha_uz <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  beta_uy <span class="op">=</span> <span class="fl">1</span>, treatment_effects <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Treatment model is incorrect since U is "missing"</span></span>
 <span><span class="fu"><a href="../reference/causens.html">causens</a></span><span class="op">(</span><span class="va">Z</span> <span class="op">~</span> <span class="va">X.1</span> <span class="op">+</span> <span class="va">X.2</span> <span class="op">+</span> <span class="va">X.3</span>, <span class="st">"Y"</span>, data <span class="op">=</span> <span class="va">data</span>, method <span class="op">=</span> <span class="st">"Li"</span>, c1 <span class="op">=</span> <span class="fl">0.25</span>, c0 <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 1.005025</span></span></code></pre></div>
+<span><span class="co">#&gt; $estimated_ate</span></span>
+<span><span class="co">#&gt; [1] 1.005025</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $call</span></span>
+<span><span class="co">#&gt; Z ~ X.1 + X.2 + X.3</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; attr(,"class")</span></span>
+<span><span class="co">#&gt; [1] "causens_sf"</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="bayesian-methods">Bayesian Methods<a class="anchor" aria-label="anchor" href="#bayesian-methods"></a>
@@ -302,7 +317,21 @@ by taking their average.</li>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/causens.html">causens</a></span><span class="op">(</span><span class="va">Z</span> <span class="op">~</span> <span class="va">X.1</span> <span class="op">+</span> <span class="va">X.2</span> <span class="op">+</span> <span class="va">X.3</span>, <span class="st">"Y"</span>, <span class="va">data</span>, method <span class="op">=</span> <span class="st">"Monte Carlo"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.9929688</span></span></code></pre></div>
+<span><span class="co">#&gt; $call</span></span>
+<span><span class="co">#&gt; Z ~ X.1 + X.2 + X.3</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $estimated_ate</span></span>
+<span><span class="co">#&gt; [1] 0.9929688</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $std_error</span></span>
+<span><span class="co">#&gt; [1] 0.3198489</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $ci</span></span>
+<span><span class="co">#&gt;      2.5%     97.5% </span></span>
+<span><span class="co">#&gt; 0.3060208 1.6760731 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; attr(,"class")</span></span>
+<span><span class="co">#&gt; [1] "monte_carlo_causens"</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
