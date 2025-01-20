@@ -21,7 +21,7 @@ affiliations:
    index: 2
  - name: Institute of Health Policy, Management and Evaluation, University of Toronto, Toronto, Canada
    index: 3
-date: October 1, 2024
+date: January 20, 2025
 bibliography: paper.bib
 ---
 
@@ -75,9 +75,24 @@ data <- simulate_data(N = 10000, seed = 123, alpha_uz = 0.5,
                       beta_uy = 0.2, treatment_effects = 1)
 
 # Sensitivity function method
-result <- causens(Z ~ X.1 + X.2 + X.3, "Y", data = data, method = "sf", c1 = 0.25, c0 = 0.25)
+result <- causens(Z ~ X.1 + X.2 + X.3, "Y", data = data, method = "sf",
+                  c1 = 0.25, c0 = 0.25)
 result$estimated_ate
 # 1.005025
+```
+
+From [@brumback2004sensitivity], their general guideline in specifying $c(z, e)$ considers sub-populations and their potential outcomes under treatment $z$. The assumption $c(z, e) > 0$ implies that individuals with an observed $Z = z$ have better $Y(1)$ than those under $Z = 1 - z$. Conversely, $c(z, e) < 0$ implies the opposite. To visually assess the influence of $c(z, e)$, one can plot the sensitivity function using the `plot_causens` function.
+
+```{r, fig.show='hold', echo=TRUE}
+plot_causens(
+    trt_model,
+    data,
+    "Y",
+    c1_upper = 0.5,
+    c1_lower = 0,
+    r = 1,
+    bootstrap = TRUE
+  )
 ```
 
 ## Bayesian Parametric Modelling
@@ -96,12 +111,11 @@ library(causens)
 data <- simulate_data(N = 1000, seed = 123, alpha_uz = 0.5, beta_uy = 0.2, 
                       treatment_effects = 1, informative_u = TRUE)
 
-result <- causens(Z ~ X.1 + X.2 + X.3, "Y", data = data, method = "Bayesian", c1 = 0.25, c0 = 0.25)
+result <- causens(Z ~ X.1 + X.2 + X.3, "Y", data = data, method = "Bayesian")
 result$estimated_ate
 ```
 
-Notice the `informative_u = TRUE` argument in the `simulate_data` function that simulates $U$ based
-on observable confounding variables $X$, which is a necessary condition in modelling unmeasured variables in a cross-sectional setting.
+Notice the `informative_u = TRUE` argument in the `simulate_data` function that simulates $U$ based on observable confounding variables $X$, which is a necessary condition in modelling unmeasured variables in a cross-sectional setting.
 
 ## The Monte Carlo Approach
 
