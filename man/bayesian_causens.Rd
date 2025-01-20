@@ -5,23 +5,33 @@
 \title{Bayesian parametric sensitivity analysis for causal inference}
 \usage{
 bayesian_causens(
-  exposure,
-  outcome,
-  confounders,
+  trt_model,
+  outcome_model,
+  unmeasured_confounder_model,
   data,
+  beta_uy = ~dunif(-2, 2),
+  alpha_uz = ~dunif(-2, 2),
   backend = "jags",
   output_trace = FALSE,
   ...
 )
 }
 \arguments{
-\item{exposure}{Exposure variable name in the data frame.}
+\item{trt_model}{The treatment model object as a formula.}
 
-\item{outcome}{Outcome variable name in the data frame.}
+\item{outcome_model}{The outcome model object as a formula.}
 
-\item{confounders}{Confounders' names in the data frame.}
+\item{unmeasured_confounder_model}{The unmeasured confounder model object as
+a formula.}
 
-\item{data}{A data frame containing the exposure, outcome, and confounder variables.}
+\item{data}{A data frame containing the exposure, outcome, and confounder
+variables.}
+
+\item{beta_uy}{Prior distribution for the effect of the missing confounder U
+on the outcome Y.}
+
+\item{alpha_uz}{Prior distribution for the effect of the missing confounder U
+on the treatment assignment mechanism Z.}
 
 \item{backend}{The backend to use for the sensitivity analysis. Currently
 only "jags" is supported.}
@@ -36,5 +46,5 @@ variable on the outcome, as well as the confounder-adjusted causal effect.
 }
 \description{
 This function runs a Bayesian sensitivity analysis for causal
-inference using JAGS or Stan as a backend.
+inference using JAGS or Stan as a backend. For now, only JAGS is supported.
 }

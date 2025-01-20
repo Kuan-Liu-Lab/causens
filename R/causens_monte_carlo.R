@@ -11,6 +11,8 @@
 #' @importFrom stats as.formula rnorm runif sd
 #' @export
 causens_monte_carlo <- function(exposure, outcome, confounders, data, ...) {
+  # rather than taking a general model formula, the model formulation here
+  # is more restrictive and has to be additive without interactions (for now)
   formula <- as.formula(paste(outcome, "~", exposure, "+", paste(confounders, collapse = "+")))
 
   if (all(data[[outcome]] %in% c(0, 1))) {

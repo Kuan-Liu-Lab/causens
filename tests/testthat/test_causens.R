@@ -38,7 +38,7 @@ for (params in parameters) {
 
       trt_model <- Z ~ X.1 + X.2 + X.3
 
-      result <- causens(trt_model, "Y", method = "Li", data = data, c1 = c1, c0 = c0)
+      result <- causens_fg(trt_model, "Y", data = data, c1 = c1, c0 = c0)
 
       return(result$estimated_ate)
     }
@@ -77,11 +77,10 @@ for (params in parameters) {
   # Testing `trt_model` input types
   trt_model <- Z ~ X.1 + X.2 + X.3
 
-  est_ate_1 <- causens(trt_model, "Y", method = "Li", data = data, c1 = 0.25, c0 = 0.25)
-  est_ate_2 <- causens(
+  est_ate_1 <- causens_sf(trt_model, "Y", data = data, c1 = 0.25, c0 = 0.25)
+  est_ate_2 <- causens_sf(
     glm(trt_model, data = data, family = binomial()),
     "Y",
-    method = "Li",
     data = data,
     c1 = 0.25,
     c0 = 0.25
@@ -102,14 +101,7 @@ test_that("causens throws an error if `trt_model` input is invalid", {
   trt_model <- "Z ~ X.1 + X.2 + X.3"
 
   expect_error(
-    object = causens(trt_model, "Y", method = "Li", data = data, c1 = 0.25, c0 = 0.25),
+    object = causens_sf(trt_model, "Y", data = data, c1 = 0.25, c0 = 0.25),
     regexp = "Treatment model must be a formula or a glm object."
-  )
-})
-
-test_that("causens throws an error if `method` input is invalid", {
-  expect_error(
-    object = causens(Z ~ 1, "Y", method = "???", data = data, c1 = 0.25, c0 = 0.25),
-    regexp = "Method not recognized or not implemented yet."
   )
 })

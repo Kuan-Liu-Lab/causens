@@ -11,7 +11,10 @@ run_simulation <- function(seed, y_type) {
     y_type = y_type, informative_u = TRUE
   )
 
-  result <- causens(Z ~ X.1 + X.2 + X.3, "Y", data, method = "Bayesian")
+  result <- bayesian_causens(Z ~ X.1 + X.2 + X.3,
+                             Y ~ X.1 + X.2 + X.3,
+                             U ~ X.1 + X.2 + X.3,
+                             data = data)
 
   return(result$estimated_ate)
 }
@@ -34,7 +37,10 @@ data <- simulate_data(
   y_type = "continuous", informative_u = TRUE
 )
 
-result <- causens(Z ~ X.1 + X.2 + X.3, "Y", data = data, method = "bayesian")
+result <- bayesian_causens(Z ~ X.1 + X.2 + X.3,
+                           Y ~ X.1 + X.2 + X.3,
+                           U ~ X.1 + X.2 + X.3,
+                           data = data)
 
 test_that("summary.bayesian_causens produces correct output", {
   expect_equal(capture_output(summary(result)), paste(

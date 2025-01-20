@@ -38,7 +38,7 @@ causens <- function(trt_model, outcome, method, data, ...) {
   causens_obj <- list(data = data)
 
   if (method == "sf" || method == "li") {
-    causens_obj <- causens_sf(fitted_model, trt_var_name, outcome, data, ...)
+    causens_obj <- causens_sf(fitted_model, outcome, data, ...)
   } else if (method == "bayesian") {
     causens_obj <- bayesian_causens(trt_var_name, outcome, confounder_names, data, ...)
   } else if (method == "mc" || method == "monte carlo") {

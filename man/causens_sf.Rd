@@ -4,13 +4,9 @@
 \alias{causens_sf}
 \title{Bayesian Estimation of ATE Subject to Unmeasured Confounding}
 \usage{
-causens_sf(fitted_model, exposure, outcome, data, bootstrap = FALSE, ...)
+causens_sf(trt_model, outcome, data, bootstrap = FALSE, B = 1000, ...)
 }
 \arguments{
-\item{fitted_model}{The treatment model object as a glm.}
-
-\item{exposure}{The name of the exposure variable.}
-
 \item{outcome}{The name of the outcome variable.}
 
 \item{data}{A data frame containing the exposure, outcome, and confounder variables.}
@@ -18,7 +14,14 @@ causens_sf(fitted_model, exposure, outcome, data, bootstrap = FALSE, ...)
 \item{bootstrap}{A logical indicating whether to perform bootstrap estimation
 of the 95\% confidence interval.}
 
+\item{B}{If the bootstrap argument is TRUE, the number of bootstrap samples to
+generate.}
+
 \item{...}{Additional arguments to be passed to the sensitivity function.}
+
+\item{fitted_model}{The treatment model object as a glm.}
+
+\item{exposure}{The name of the exposure variable.}
 }
 \value{
 A point estimate of the corrected ATE.

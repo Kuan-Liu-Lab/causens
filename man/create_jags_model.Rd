@@ -4,7 +4,7 @@
 \alias{create_jags_model}
 \title{Create an JAGS model for Bayesian sensitivity analysis}
 \usage{
-create_jags_model(binary_outcome)
+create_jags_model(binary_outcome, beta_uy, alpha_uz)
 }
 \arguments{
 \item{binary_outcome}{Boolean indicating whether the outcome is binary.

@@ -3,9 +3,8 @@ data_sf <- simulate_data(
   beta_uy = 1, treatment_effects = 1
 )
 
-result_sf <- causens(Z ~ X.1 + X.2 + X.3, "Y",
-  data = data_sf, method = "sf",
-  c1 = 0.25, c0 = 0.25, bootstrap = TRUE
+result_sf <- causens_sf(Z ~ X.1 + X.2 + X.3, "Y",
+  data = data_sf, c1 = 0.25, c0 = 0.25, bootstrap = TRUE
 )
 
 summary_table_sf <- capture_output(summary(result_sf))

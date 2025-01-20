@@ -31,7 +31,6 @@ plot_causens <- function(trt_model, data, outcome, c1_upper = 0.5,
       trt_model = trt_model,
       data = data,
       outcome = outcome,
-      method = "sf",
       c1 = c1,
       c0 = r * c1,
       bootstrap = TRUE

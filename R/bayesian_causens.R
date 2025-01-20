@@ -1,15 +1,16 @@
 #' @title Bayesian parametric sensitivity analysis for causal inference
 #' @description This function runs a Bayesian sensitivity analysis for causal
 #' inference using JAGS or Stan as a backend. For now, only JAGS is supported.
-#' @param exposure Exposure variable name in the data frame.
-#' @param outcome Outcome variable name in the data frame.
-#' @param confounders Confounders' names in the data frame.
+#' @param trt_model The treatment model object as a formula.
+#' @param outcome_model The outcome model object as a formula.
+#' @param unmeasured_confounder_model The unmeasured confounder model object as
+#' a formula.
 #' @param data A data frame containing the exposure, outcome, and confounder
 #' variables.
 #' @param beta_uy Prior distribution for the effect of the missing confounder U
 #' on the outcome Y.
 #' @param alpha_uz Prior distribution for the effect of the missing confounder U
-#'  on the treatment assignment mechanism Z.
+#' on the treatment assignment mechanism Z.
 #' @param backend The backend to use for the sensitivity analysis. Currently
 #' only "jags" is supported.
 #' @param output_trace Whether to output the full trace of the MCMC sampler.
@@ -18,26 +19,38 @@
 #' variable on the outcome, as well as the confounder-adjusted causal effect.
 #' @importFrom stats sd update
 #' @export
-bayesian_causens <- function(exposure, outcome, confounders, data, beta_uy = ~ dunif(-2, 2), alpha_uz = ~ dunif(-2, 2), backend = "jags", output_trace = FALSE, ...) {
+bayesian_causens <- function(trt_model, outcome_model,
+                             unmeasured_confounder_model, data,
+                             beta_uy = ~ dunif(-2, 2),
+                             alpha_uz = ~ dunif(-2, 2),
+                             backend = "jags", output_trace = FALSE, ...) {
   sampler_args <- parse_args(...)
 
-  # Notation from Bayesian SA paper
-  Z <- data[[exposure]]
-  C <- data[confounders]
-  Y <- data[[outcome]]
-  N <- nrow(C)
+  trt_model_info <- process_model_formula(trt_model, data)
+  Z <- data[[trt_model_info$response_var_name]]
+  trt_C <- data[trt_model_info$confounder_names]
+
+  outcome_model_info <- process_model_formula(outcome_model, data)
+  Y <- data[[outcome_model_info$response_var_name]]
+  outcome_C <- data[outcome_model_info$confounder_names]
+
+  unmeasured_confounder_model_info <- process_model_formula(unmeasured_confounder_model, data)
+  unmeasured_confounder_C <- data[unmeasured_confounder_model_info$confounder_names]
+  # no U variable since it's the missing confounder!
+
+  N <- nrow(data)
 
   binary_outcome <- all(Y %in% c(0, 1))
 
-  jags_model <- create_jags_model(binary_outcome)
+  jags_model <- create_jags_model(binary_outcome, beta_uy, alpha_uz)
 
   inits <- list(
     beta_Z = 0,
-    beta_C = rep(0, ncol(C)),
+    beta_C = rep(0, ncol(outcome_C)),
     beta_0 = 0,
     beta_U = 0,
-    gamma_C = rep(0, ncol(C)),
-    alpha_C = rep(0, ncol(C)),
+    gamma_C = rep(0, ncol(unmeasured_confounder_C)),
+    alpha_C = rep(0, ncol(trt_C)),
     alpha_0 = 0,
     .RNG.name = "base::Wichmann-Hill",
     .RNG.seed = 123
@@ -54,12 +67,14 @@ bayesian_causens <- function(exposure, outcome, confounders, data, beta_uy = ~ d
       textConnection(jags_model),
       data = list(
         Z = Z,
-        C = C,
+        trt_C = trt_C,
+        outcome_C = outcome_C,
+        unmeasured_confounder_C = unmeasured_confounder_C,
         Y = Y,
         N = N,
-        p_outcome = ncol(C),
-        p_treatment = ncol(C),
-        p_unmeasured_confounder = ncol(C)
+        p_outcome = ncol(outcome_C),
+        p_treatment = ncol(trt_C),
+        p_unmeasured_confounder = ncol(unmeasured_confounder_C)
       ),
       inits = inits
     )
@@ -118,7 +133,7 @@ parse_args <- function(...) {
 #'
 #' No inputs are given to this function (for now) since data-related information
 #' is provided in jags.model() during model initialization.
-create_jags_model <- function(binary_outcome) {
+create_jags_model <- function(binary_outcome, beta_uy, alpha_uz) {
   # including modelling of unmeasured binary confounder (`eta` is the linear predictor)
   likelihood <- paste0("
   # Outcome model parameters
@@ -135,7 +150,7 @@ create_jags_model <- function(binary_outcome) {
   if (binary_outcome) {
     likelihood <- paste0(likelihood, "
     for (i in 1:N) {
-      logit(p_Y[i]) <- beta_0 + beta_Z * Z[i] + sum(C[i, 1:p_outcome] * beta_C[1:p_outcome]) + beta_U * U[i]
+      logit(p_Y[i]) <- beta_0 + beta_Z * Z[i] + sum(outcome_C[i, 1:p_outcome] * beta_C[1:p_outcome]) + beta_U * U[i]
       Y[i] ~ dbern(p_Y[i])
     }
     ")
@@ -144,7 +159,7 @@ create_jags_model <- function(binary_outcome) {
     tau_Y ~ dgamma(0.1, 0.1)
 
     for (i in 1:N) {
-      mu_Y[i] <- beta_0 + beta_Z * Z[i] + sum(C[i, 1:p_outcome] * beta_C[1:p_outcome]) + beta_uy * U[i]
+      mu_Y[i] <- beta_0 + beta_Z * Z[i] + sum(outcome_C[i, 1:p_outcome] * beta_C[1:p_outcome]) + beta_uy * U[i]
       Y[i] ~ dnorm(mu_Y[i], tau_Y)
     }
     ")
@@ -158,7 +173,7 @@ create_jags_model <- function(binary_outcome) {
   }
 
   for (i in 1:N) {
-    logit(p_U[i]) <- sum(C[i, 1:p_unmeasured_confounder] * gamma_C[1:p_unmeasured_confounder])
+    logit(p_U[i]) <- sum(unmeasured_confounder_C[i, 1:p_unmeasured_confounder] * gamma_C[1:p_unmeasured_confounder])
     U[i] ~ dbern(p_U[i])
   }
   "
@@ -173,7 +188,7 @@ create_jags_model <- function(binary_outcome) {
   }
 
   for (i in 1:N) {
-    logit(p_Z[i]) <- alpha_0 + sum(C[i, 1:p_treatment] * alpha_C[1:p_treatment]) + alpha_uz * U[i]
+    logit(p_Z[i]) <- alpha_0 + sum(trt_C[i, 1:p_treatment] * alpha_C[1:p_treatment]) + alpha_uz * U[i]
     Z[i] ~ dbern(p_Z[i])
   }
 
