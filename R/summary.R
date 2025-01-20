@@ -42,7 +42,7 @@ summary.causens_sf <- function(object, ...) {
 #' Summarize the results of a causal sensitivity analysis via
 #' Bayesian modelling of an unmeasured confounder.
 #'
-#' @param object An object of class \code{causens_bayesian}.
+#' @param object An object of class \code{bayesian_causens}.
 #' @param ... Additional arguments to be passed to \code{summary}.
 #'
 #' @export

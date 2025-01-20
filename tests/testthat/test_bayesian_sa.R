@@ -36,7 +36,7 @@ data <- simulate_data(
 
 result <- causens(Z ~ X.1 + X.2 + X.3, "Y", data = data, method = "bayesian")
 
-test_that("summary.causens_bayesian produces correct output", {
+test_that("summary.bayesian_causens produces correct output", {
   expect_equal(capture_output(summary(result)), paste(
     "Treatment Model:",
     "Z ~ X.1 + X.2 + X.3 ",

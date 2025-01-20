@@ -8,7 +8,7 @@ Bayesian modelling of an unmeasured confounder.}
 \method{summary}{bayesian_causens}(object, ...)
 }
 \arguments{
-\item{object}{An object of class \code{causens_bayesian}.}
+\item{object}{An object of class \code{bayesian_causens}.}
 
 \item{...}{Additional arguments to be passed to \code{summary}.}
 }

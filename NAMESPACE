@@ -2,6 +2,7 @@
 
 S3method(summary,bayesian_causens)
 S3method(summary,causens_sf)
+S3method(summary,monte_carlo_causens)
 export(bayesian_causens)
 export(causens)
 export(causens_monte_carlo)
