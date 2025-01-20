@@ -1,10 +1,15 @@
 #' @title Bayesian parametric sensitivity analysis for causal inference
 #' @description This function runs a Bayesian sensitivity analysis for causal
-#' inference using JAGS or Stan as a backend.
+#' inference using JAGS or Stan as a backend. For now, only JAGS is supported.
 #' @param exposure Exposure variable name in the data frame.
 #' @param outcome Outcome variable name in the data frame.
 #' @param confounders Confounders' names in the data frame.
-#' @param data A data frame containing the exposure, outcome, and confounder variables.
+#' @param data A data frame containing the exposure, outcome, and confounder
+#' variables.
+#' @param beta_uy Prior distribution for the effect of the missing confounder U
+#' on the outcome Y.
+#' @param alpha_uz Prior distribution for the effect of the missing confounder U
+#'  on the treatment assignment mechanism Z.
 #' @param backend The backend to use for the sensitivity analysis. Currently
 #' only "jags" is supported.
 #' @param output_trace Whether to output the full trace of the MCMC sampler.
@@ -13,7 +18,7 @@
 #' variable on the outcome, as well as the confounder-adjusted causal effect.
 #' @importFrom stats sd update
 #' @export
-bayesian_causens <- function(exposure, outcome, confounders, data, backend = "jags", output_trace = FALSE, ...) {
+bayesian_causens <- function(exposure, outcome, confounders, data, beta_uy = ~ dunif(-2, 2), alpha_uz = ~ dunif(-2, 2), backend = "jags", output_trace = FALSE, ...) {
   sampler_args <- parse_args(...)
 
   # Notation from Bayesian SA paper
@@ -64,7 +69,7 @@ bayesian_causens <- function(exposure, outcome, confounders, data, backend = "ja
     # Extract the posterior samples
     samples <- rjags::coda.samples(
       model,
-      variable.names = c("beta_Z", "beta_C", "beta_0", "gamma_C", "alpha_C", "alpha_U", "alpha_0"),
+      variable.names = c("beta_Z", "beta_C", "beta_uy", "beta_0", "gamma_C", "alpha_C", "alpha_uz", "alpha_0"),
       n.iter = sampler_args$n_samples,
       thin = 1
     )
@@ -115,7 +120,7 @@ parse_args <- function(...) {
 #' is provided in jags.model() during model initialization.
 create_jags_model <- function(binary_outcome) {
   # including modelling of unmeasured binary confounder (`eta` is the linear predictor)
-  likelihood <- "
+  likelihood <- paste0("
   # Outcome model parameters
 
   beta_0 ~ dunif(-2, 2)
@@ -125,8 +130,7 @@ create_jags_model <- function(binary_outcome) {
     beta_C[c] ~ dunif(-2, 2)
   }
 
-  beta_U ~ dunif(-2, 2)
-  "
+  beta_uy", deparse(beta_uy))
 
   if (binary_outcome) {
     likelihood <- paste0(likelihood, "
@@ -140,7 +144,7 @@ create_jags_model <- function(binary_outcome) {
     tau_Y ~ dgamma(0.1, 0.1)
 
     for (i in 1:N) {
-      mu_Y[i] <- beta_0 + beta_Z * Z[i] + sum(C[i, 1:p_outcome] * beta_C[1:p_outcome]) + beta_U * U[i]
+      mu_Y[i] <- beta_0 + beta_Z * Z[i] + sum(C[i, 1:p_outcome] * beta_C[1:p_outcome]) + beta_uy * U[i]
       Y[i] ~ dnorm(mu_Y[i], tau_Y)
     }
     ")
@@ -159,7 +163,7 @@ create_jags_model <- function(binary_outcome) {
   }
   "
 
-  treatment_model <- "
+  treatment_model <- paste0("
   # Treatment model parameters
 
   alpha_0 ~ dunif(-2, 2)
@@ -168,13 +172,12 @@ create_jags_model <- function(binary_outcome) {
     alpha_C[z] ~ dunif(-2, 2)
   }
 
-  alpha_U ~ dunif(-2, 2)
-
   for (i in 1:N) {
-    logit(p_Z[i]) <- alpha_0 + sum(C[i, 1:p_treatment] * alpha_C[1:p_treatment]) + alpha_U * U[i]
+    logit(p_Z[i]) <- alpha_0 + sum(C[i, 1:p_treatment] * alpha_C[1:p_treatment]) + alpha_uz * U[i]
     Z[i] ~ dbern(p_Z[i])
   }
-  "
+
+  alpha_uz", deparse(alpha_uz))
 
   return(paste0(
     "model{\n",
