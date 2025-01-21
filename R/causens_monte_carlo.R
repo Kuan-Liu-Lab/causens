@@ -1,24 +1,27 @@
 #' @title Monte Carlo sensitivity analysis for causal effects
 #'
-#' @description This function performs a Monte Carlo sensitivity analysis for causal effects.
+#' @description This function performs a Monte Carlo sensitivity analysis for
+#' causal effects.
 #'
 #' @param exposure The name of the exposure variable in the data frame.
 #' @param outcome The name of the outcome variable in the data frame.
 #' @param confounders The name of the confounders in the data frame.
-#' @param data A data frame containing the exposure, outcome, and confounder variables.
+#' @param data A data frame containing the exposure, outcome, and confounder
+#' variables.
 #' @param ... Additional arguments to be passed to the function.
 #' @return The estimated causal effect.
 #' @importFrom stats as.formula rnorm runif sd
 #' @export
-causens_monte_carlo <- function(exposure, outcome, confounders, data, ...) {
+causens_monte_carlo <- function(outcome, exposure, confounders, data, ...) {
   # rather than taking a general model formula, the model formulation here
   # is more restrictive and has to be additive without interactions (for now)
-  formula <- as.formula(paste(outcome, "~", exposure, "+", paste(confounders, collapse = "+")))
+  formula <- as.formula(paste(outcome, "~", exposure, "+",
+                              paste(confounders, collapse = "+")))
 
   if (all(data[[outcome]] %in% c(0, 1))) {
     naive_model <- glm(formula, data = data, family = binomial)
   } else {
-    stop("Monte Carlo sensitivity analysis only supports binary outcomes, for now")
+    stop("Monte Carlo sensitivity analysis only supports binary outcomes")
   }
 
   trt_effect_hat <- summary(naive_model)$coefficients["Z", "Estimate"]
@@ -33,7 +36,8 @@ causens_monte_carlo <- function(exposure, outcome, confounders, data, ...) {
     g0 <- runif(1, -5, 5)
     gX <- runif(1, -2, 2)
 
-    return(trt_effect - log((1 + exp(bU + g0 + gX)) * (1 + exp(g0))) + log((1 + exp(bU + g0)) * (1 + exp(g0 + gX))))
+    return(trt_effect - log((1 + exp(bU + g0 + gX)) * (1 + exp(g0))) +
+             log((1 + exp(bU + g0)) * (1 + exp(g0 + gX))))
   }
 
   args <- list(...)

@@ -3,7 +3,7 @@
 #' inference using JAGS or Stan as a backend. For now, only JAGS is supported.
 #' @param trt_model The treatment model object as a formula.
 #' @param outcome_model The outcome model object as a formula.
-#' @param unmeasured_confounder_model The unmeasured confounder model object as
+#' @param U_model The unmeasured confounder model object as
 #' a formula.
 #' @param data A data frame containing the exposure, outcome, and confounder
 #' variables.
@@ -20,7 +20,7 @@
 #' @importFrom stats sd update
 #' @export
 bayesian_causens <- function(trt_model, outcome_model,
-                             unmeasured_confounder_model, data,
+                             U_model, data,
                              beta_uy = ~ dunif(-2, 2),
                              alpha_uz = ~ dunif(-2, 2),
                              backend = "jags", output_trace = FALSE, ...) {
@@ -34,8 +34,8 @@ bayesian_causens <- function(trt_model, outcome_model,
   Y <- data[[outcome_model_info$response_var_name]]
   outcome_C <- data[outcome_model_info$confounder_names]
 
-  unmeasured_confounder_model_info <- process_model_formula(unmeasured_confounder_model, data)
-  unmeasured_confounder_C <- data[unmeasured_confounder_model_info$confounder_names]
+  U_model_info <- process_model_formula(U_model, data)
+  unmeasured_confounder_C <- data[U_model_info$confounder_names]
   # no U variable since it's the missing confounder!
 
   N <- nrow(data)
@@ -74,7 +74,7 @@ bayesian_causens <- function(trt_model, outcome_model,
         N = N,
         p_outcome = ncol(outcome_C),
         p_treatment = ncol(trt_C),
-        p_unmeasured_confounder = ncol(unmeasured_confounder_C)
+        p_U = ncol(unmeasured_confounder_C)
       ),
       inits = inits
     )
@@ -84,14 +84,15 @@ bayesian_causens <- function(trt_model, outcome_model,
     # Extract the posterior samples
     samples <- rjags::coda.samples(
       model,
-      variable.names = c("beta_Z", "beta_C", "beta_uy", "beta_0", "gamma_C", "alpha_C", "alpha_uz", "alpha_0"),
+      variable.names = c("beta_Z", "beta_C", "beta_uy", "beta_0", "gamma_C",
+                         "alpha_C", "alpha_uz", "alpha_0"),
       n.iter = sampler_args$n_samples,
       thin = 1
     )
 
     causens_obj <- list()
     class(causens_obj) <- "bayesian_causens"
-    causens_obj$call <- paste(exposure, "~", paste(confounders, collapse = " + "))
+    causens_obj$call <- trt_model
     causens_obj$estimated_ate <- mean(samples[[1]][, "beta_Z"])
     causens_obj$std_error <- sd(samples[[1]][, "beta_Z"])
     causens_obj$ci <- quantile(samples[[1]][, "beta_Z"], c(0.025, 0.975))
@@ -134,7 +135,7 @@ parse_args <- function(...) {
 #' No inputs are given to this function (for now) since data-related information
 #' is provided in jags.model() during model initialization.
 create_jags_model <- function(binary_outcome, beta_uy, alpha_uz) {
-  # including modelling of unmeasured binary confounder (`eta` is the linear predictor)
+  # including modelling of unmeasured binary confounder
   likelihood <- paste0("
   # Outcome model parameters
 
@@ -150,7 +151,9 @@ create_jags_model <- function(binary_outcome, beta_uy, alpha_uz) {
   if (binary_outcome) {
     likelihood <- paste0(likelihood, "
     for (i in 1:N) {
-      logit(p_Y[i]) <- beta_0 + beta_Z * Z[i] + sum(outcome_C[i, 1:p_outcome] * beta_C[1:p_outcome]) + beta_U * U[i]
+      logit(p_Y[i]) <- beta_0 + beta_Z * Z[i] +
+                       sum(outcome_C[i, 1:p_outcome] * beta_C[1:p_outcome]) +
+                       beta_U * U[i]
       Y[i] ~ dbern(p_Y[i])
     }
     ")
@@ -159,7 +162,9 @@ create_jags_model <- function(binary_outcome, beta_uy, alpha_uz) {
     tau_Y ~ dgamma(0.1, 0.1)
 
     for (i in 1:N) {
-      mu_Y[i] <- beta_0 + beta_Z * Z[i] + sum(outcome_C[i, 1:p_outcome] * beta_C[1:p_outcome]) + beta_uy * U[i]
+      mu_Y[i] <- beta_0 + beta_Z * Z[i] +
+                 sum(outcome_C[i, 1:p_outcome] * beta_C[1:p_outcome]) +
+                 beta_uy * U[i]
       Y[i] ~ dnorm(mu_Y[i], tau_Y)
     }
     ")
@@ -168,12 +173,12 @@ create_jags_model <- function(binary_outcome, beta_uy, alpha_uz) {
   unmeasured_confounder <- "
   # Unmeasured Confounder parameters
 
-  for (u in 1:p_unmeasured_confounder) {
+  for (u in 1:p_U) {
     gamma_C[u] ~ dunif(-2, 2)
   }
 
   for (i in 1:N) {
-    logit(p_U[i]) <- sum(unmeasured_confounder_C[i, 1:p_unmeasured_confounder] * gamma_C[1:p_unmeasured_confounder])
+    logit(p_U[i]) <- sum(unmeasured_confounder_C[i, 1:p_U] * gamma_C[1:p_U])
     U[i] ~ dbern(p_U[i])
   }
   "
@@ -188,7 +193,9 @@ create_jags_model <- function(binary_outcome, beta_uy, alpha_uz) {
   }
 
   for (i in 1:N) {
-    logit(p_Z[i]) <- alpha_0 + sum(trt_C[i, 1:p_treatment] * alpha_C[1:p_treatment]) + alpha_uz * U[i]
+    logit(p_Z[i]) <- alpha_0 +
+                     sum(trt_C[i, 1:p_treatment] * alpha_C[1:p_treatment]) +
+                     alpha_uz * U[i]
     Z[i] ~ dbern(p_Z[i])
   }
 

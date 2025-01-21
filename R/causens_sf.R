@@ -6,17 +6,19 @@
 #' @param fitted_model The treatment model object as a glm.
 #' @param exposure The name of the exposure variable.
 #' @param outcome The name of the outcome variable.
-#' @param data A data frame containing the exposure, outcome, and confounder variables.
+#' @param data A data frame containing the exposure, outcome, and confounder
+#' variables.
 #' @param bootstrap A logical indicating whether to perform bootstrap estimation
 #' of the 95\% confidence interval.
-#' @param B If the bootstrap argument is TRUE, the number of bootstrap samples to
-#' generate.
+#' @param B If the bootstrap argument is TRUE, the number of bootstrap samples
+#' to generate.
 #' @param ... Additional arguments to be passed to the sensitivity function.
 #' @importFrom stats predict
 #'
 #' @return A point estimate of the corrected ATE.
 #' @export
-causens_sf <- function(trt_model, outcome, data, bootstrap = FALSE, B = 1000, ...) {
+causens_sf <- function(trt_model, outcome, data, bootstrap = FALSE,
+                       B = 1000, ...) {
   processed_info <- process_model_formula(trt_model, data)
   y <- data[[outcome]]
   z <- data[[processed_info$response_var_name]]

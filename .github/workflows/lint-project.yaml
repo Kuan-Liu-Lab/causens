@@ -28,7 +28,7 @@ jobs:
         run: |
           devtools::load_all()
           library(lintr)
-          lint_dir(linters = linters_with_defaults(line_length_linter(120), commented_code_linter=NULL, object_name_linter=NULL))
+          lint_dir(linters = linters_with_defaults(commented_code_linter=NULL, object_name_linter=NULL))
         shell: Rscript {0}
         env:
           LINTR_ERROR_ON_LINT: true

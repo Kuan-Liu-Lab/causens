@@ -7,7 +7,7 @@
 bayesian_causens(
   trt_model,
   outcome_model,
-  unmeasured_confounder_model,
+  U_model,
   data,
   beta_uy = ~dunif(-2, 2),
   alpha_uz = ~dunif(-2, 2),
@@ -21,7 +21,7 @@ bayesian_causens(
 
 \item{outcome_model}{The outcome model object as a formula.}
 
-\item{unmeasured_confounder_model}{The unmeasured confounder model object as
+\item{U_model}{The unmeasured confounder model object as
 a formula.}
 
 \item{data}{A data frame containing the exposure, outcome, and confounder

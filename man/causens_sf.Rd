@@ -9,13 +9,14 @@ causens_sf(trt_model, outcome, data, bootstrap = FALSE, B = 1000, ...)
 \arguments{
 \item{outcome}{The name of the outcome variable.}
 
-\item{data}{A data frame containing the exposure, outcome, and confounder variables.}
+\item{data}{A data frame containing the exposure, outcome, and confounder
+variables.}
 
 \item{bootstrap}{A logical indicating whether to perform bootstrap estimation
 of the 95\% confidence interval.}
 
-\item{B}{If the bootstrap argument is TRUE, the number of bootstrap samples to
-generate.}
+\item{B}{If the bootstrap argument is TRUE, the number of bootstrap samples
+to generate.}
 
 \item{...}{Additional arguments to be passed to the sensitivity function.}
 
