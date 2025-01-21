@@ -11,7 +11,7 @@ summary_table_sf <- capture_output(summary(result_sf))
 
 test_that("summary.causens_sf produces correct output", {
   expect_equal(summary_table_sf, paste(
-    "Treatment Model:",
+    "Model:",
     "Z ~ X.1 + X.2 + X.3 ",
     "",
     "Estimate     Std.Error    95% C.I.             ",
@@ -33,8 +33,8 @@ summary_table_mc <- capture_output(summary(result_mc))
 
 test_that("summary.monte_carlo_causens produces correct output", {
   expect_equal(summary_table_mc, paste(
-    "Treatment Model:",
-    "Z ~ X.1 + X.2 + X.3 ",
+    "Model:",
+    "Y ~ Z + X.1 + X.2 + X.3 ",
     "",
     "Estimate     Std.Error    95% C.I.             ",
     "1.22         0.29         (0.573, 1.87)                  ",
