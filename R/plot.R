@@ -11,8 +11,7 @@
 #' @param c1_upper The upper bound for the sensitivity function value.
 #' @param c1_lower The lower bound for the sensitivity function value.
 #' @param r The ratio between c1 and c0.
-#' @param bootstrap Bootstrap or not current estimate process and plot
-#' the estimated confidence interval.
+#' @param by The increment for the sensitivity function value.
 #' @importFrom stats quantile sd update
 #' @importFrom graphics plot lines legend
 #'
@@ -20,23 +19,30 @@
 #'
 #' @export
 plot_causens <- function(trt_model, data, outcome, c1_upper = 0.5,
-                         c1_lower = 0, r = 1, bootstrap = TRUE) {
+                         c1_lower = 0, r = 1, by = 0.01) {
   adjusted_ates <- c()
+  lower_ci <- c()
+  upper_ci <- c()
 
-  for (c1 in seq(c1_lower, c1_upper, by = 0.01)) {
-    ate <- causens(
+  c1_values <- seq(c1_lower, c1_upper, by = by)
+
+  for (c1 in c1_values) {
+    causens_obj_c1 <- causens(
       trt_model = trt_model,
       data = data,
       outcome = outcome,
       method = "sf",
       c1 = c1,
       c0 = r * c1,
-      bootstrap = FALSE
-    )$estimated_ate
-    adjusted_ates <- c(adjusted_ates, ate)
+      bootstrap = TRUE
+    )
+
+    adjusted_ates <- c(adjusted_ates, causens_obj_c1$estimated_ate)
+    lower_ci <- c(lower_ci, causens_obj_c1$ci[1])
+    upper_ci <- c(upper_ci, causens_obj_c1$ci[2])
   }
 
-  plot_df <- data.frame(c1 = seq(c1_lower, c1_upper, by = 0.01), ate = adjusted_ates)
+  plot_df <- data.frame(c1 = c1_values, ate = adjusted_ates)
 
   plot(plot_df$c1, plot_df$ate,
     type = "l", pch = 20, col = "black",
@@ -45,38 +51,11 @@ plot_causens <- function(trt_model, data, outcome, c1_upper = 0.5,
     main = "ATE vs. Sensitivity Function Value (c1)"
   )
 
-  if (bootstrap) {
-    lower_ci <- c()
-    upper_ci <- c()
+  lines(plot_df$c1, lower_ci, col = "black", lty = 2)
+  lines(plot_df$c1, upper_ci, col = "black", lty = 2)
 
-    for (c1 in seq(c1_lower, c1_upper, by = 0.01)) {
-      bs_ate <- c()
-
-      for (bs_iter in 1:1000) {
-        sampled_data <- data[sample(seq_len(nrow(data)), replace = TRUE), ]
-        bs_ate <- c(
-          bs_ate,
-          causens(
-            trt_model = trt_model,
-            data = sampled_data,
-            outcome = outcome,
-            method = "sf",
-            c1 = c1,
-            c0 = r * c1
-          )$estimated_ate
-        )
-      }
-
-      lower_ci <- c(lower_ci, quantile(bs_ate, 0.025))
-      upper_ci <- c(upper_ci, quantile(bs_ate, 0.975))
-    }
-
-    lines(plot_df$c1, lower_ci, col = "black", lty = 2)
-    lines(plot_df$c1, upper_ci, col = "black", lty = 2)
-
-    legend("topright",
-      legend = c("ATE", "95% CI"),
-      col = c("black", "black"), lty = c(1, 2), cex = 0.8
-    )
-  }
+  legend("topright",
+    legend = c("ATE", "95% CI"),
+    col = c("black", "black"), lty = c(1, 2), cex = 0.8
+  )
 }

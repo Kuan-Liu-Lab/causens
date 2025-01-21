@@ -12,7 +12,7 @@ plot_causens(
   c1_upper = 0.5,
   c1_lower = 0,
   r = 1,
-  bootstrap = TRUE
+  by = 0.01
 )
 }
 \arguments{
@@ -28,8 +28,7 @@ plot_causens(
 
 \item{r}{The ratio between c1 and c0.}
 
-\item{bootstrap}{Bootstrap or not current estimate process and plot
-the estimated confidence interval.}
+\item{by}{The increment for the sensitivity function value.}
 }
 \value{
 A plot of the ATE as a function of c1 values.
