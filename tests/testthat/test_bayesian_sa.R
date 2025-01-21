@@ -23,7 +23,8 @@ simulated_ate <- list("binary" = c(), "continuous" = c())
 
 for (y_type in c("continuous", "binary")) {
   for (seed in 1:5) {
-    simulated_ate[[y_type]] <- c(simulated_ate[[y_type]], run_simulation(seed, y_type))
+    simulated_ate[[y_type]] <- c(simulated_ate[[y_type]],
+                                 run_simulation(seed, y_type))
   }
 }
 

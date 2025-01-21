@@ -27,7 +27,7 @@ plot_causens <- function(trt_model, data, outcome, c1_upper = 0.5,
   c1_values <- seq(c1_lower, c1_upper, by = by)
 
   for (c1 in c1_values) {
-    causens_obj_c1 <- causens(
+    causens_obj_c1 <- causens_sf(
       trt_model = trt_model,
       data = data,
       outcome = outcome,

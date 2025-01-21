@@ -145,7 +145,8 @@ data <- simulate_data(
   y_type = "continuous"
 )
 
-bayesian_causens(Z ~ X.1 + X.2 + X.3, Y ~ X.1 + X.2 + X.3, U ~ X.1 + X.2 + X.3, "Y", data)
+bayesian_causens(Z ~ X.1 + X.2 + X.3, Y ~ X.1 + X.2 + X.3, 
+                 U ~ X.1 + X.2 + X.3, "Y", data)
 ```
 
 ## Monte Carlo Approach to Causal Sensitivity Analysis
@@ -174,5 +175,5 @@ data <- simulate_data(
   informative_u = FALSE
 )
 
-causens_monte_carlo("Y", "Z", c("X.1", "X.2", "X.3"), data, method = "Monte Carlo")
+causens_monte_carlo("Y", "Z", c("X.1", "X.2", "X.3"), data)
 ```

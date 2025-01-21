@@ -1,6 +1,6 @@
 # This file checks that our functionality aligns well with the well-established
-# PSweight package. We also show that conventional causal inference methods yield
-# incorrect estimates when unmeasured confounding is present.
+# PSweight package. We also show that conventional causal inference methods
+# yield incorrect estimates when unmeasured confounding is present.
 
 trt_effect <- 1
 data <- simulate_data(
