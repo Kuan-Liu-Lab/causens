@@ -55,9 +55,9 @@ causens_sf <- function(trt_model, outcome, data, bootstrap = FALSE,
   for (b in 1:B) {
     data_b <- data[sample(nrow(data), replace = TRUE), ]
     y_b <- data_b[[outcome]]
-    z_b <- data_b[[exposure]]
+    z_b <- data_b[[processed_info$response_var_name]]
 
-    e_b <- predict(fitted_model, newdata = data_b, type = "response")
+    e_b <- predict(processed_info$fitted_model, newdata = data_b, type = "response")
 
     c1_b <- sf(z = 1, e = e_b, ...)
     c0_b <- sf(z = 0, e = 1 - e_b, ...)

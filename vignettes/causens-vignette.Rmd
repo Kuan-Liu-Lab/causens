@@ -174,5 +174,5 @@ data <- simulate_data(
   informative_u = FALSE
 )
 
-causens(Z ~ X.1 + X.2 + X.3, "Y", data, method = "Monte Carlo")
+causens_monte_carlo("Y", "Z", c("X.1", "X.2", "X.3"), data, method = "Monte Carlo")
 ```
