@@ -85,8 +85,10 @@ bayesian_causens <- function(trt_model, outcome_model,
     # Extract the posterior samples
     samples <- rjags::coda.samples(
       model,
-      variable.names = c("beta_Z", "beta_C", "beta_uy", "beta_0", "gamma_C",
-                         "alpha_C", "alpha_uz", "alpha_0"),
+      variable.names = c(
+        "beta_Z", "beta_C", "beta_uy", "beta_0", "gamma_C",
+        "alpha_C", "alpha_uz", "alpha_0"
+      ),
       n.iter = sampler_args$n_samples,
       thin = 1
     )

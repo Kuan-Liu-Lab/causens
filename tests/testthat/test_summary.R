@@ -27,7 +27,8 @@ data_mc <- simulate_data(
 
 
 result_mc <- causens_monte_carlo("Y", "Z", c("X.1", "X.2", "X.3"),
-                                 data = data_mc, method = "Monte Carlo")
+  data = data_mc, method = "Monte Carlo"
+)
 
 summary_table_mc <- capture_output(summary(result_mc))
 
