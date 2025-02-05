@@ -48,10 +48,11 @@ bayesian_causens <- function(trt_model, outcome_model,
     beta_Z = 0,
     beta_C = rep(0, ncol(outcome_C)),
     beta_0 = 0,
-    beta_U = 0,
+    beta_uy = 0,
     gamma_C = rep(0, ncol(unmeasured_confounder_C)),
     alpha_C = rep(0, ncol(trt_C)),
     alpha_0 = 0,
+    alpha_uz = 0,
     .RNG.name = "base::Wichmann-Hill",
     .RNG.seed = 123
   )
@@ -153,7 +154,7 @@ create_jags_model <- function(binary_outcome, beta_uy, alpha_uz) {
     for (i in 1:N) {
       logit(p_Y[i]) <- beta_0 + beta_Z * Z[i] +
                        sum(outcome_C[i, 1:p_outcome] * beta_C[1:p_outcome]) +
-                       beta_U * U[i]
+                       beta_uy * U[i]
       Y[i] ~ dbern(p_Y[i])
     }
     ")
@@ -178,8 +179,8 @@ create_jags_model <- function(binary_outcome, beta_uy, alpha_uz) {
   }
 
   for (i in 1:N) {
-    logit(p_U[i]) <- sum(unmeasured_confounder_C[i, 1:p_U] * gamma_C[1:p_U])
-    U[i] ~ dbern(p_U[i])
+    logit(prob_U[i]) <- sum(unmeasured_confounder_C[i, 1:p_U] * gamma_C[1:p_U])
+    U[i] ~ dbern(prob_U[i])
   }
   "
 

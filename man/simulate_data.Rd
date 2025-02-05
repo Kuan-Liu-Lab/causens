@@ -21,19 +21,23 @@ simulate_data(
 
 \item{N}{The number of observations to be generated.}
 
-\item{u_type}{A string indicating the type of the unmeasured confounder: "binary" or "continuous".}
+\item{u_type}{A string indicating the type of the unmeasured confounder:
+"binary" or "continuous".}
 
-\item{y_type}{A string indicating the type of the outcome: "binary" or "continuous".}
+\item{y_type}{A string indicating the type of the outcome: "binary" or
+"continuous".}
 
 \item{seed}{The seed for the random number generator.}
 
-\item{alpha_uz}{The coefficient of the unmeasured confounder in the propensity score model.}
+\item{alpha_uz}{Unmeasured confounder coefficient in the propensity score
+model.}
 
-\item{beta_uy}{The coefficient of the unmeasured confounder in the outcome model.}
+\item{beta_uy}{Unmeasured confounder coefficient in the outcome model.}
 
 \item{treatment_effects}{The treatment effect.}
 
-\item{informative_u}{A boolean indicating whether the unmeasured confounder is driven by covariates.}
+\item{informative_u}{A boolean indicating whether the unmeasured confounder
+is driven by covariates.}
 }
 \value{
 A data frame with the simulated dataset.

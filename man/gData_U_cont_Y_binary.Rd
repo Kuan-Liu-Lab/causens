@@ -2,7 +2,8 @@
 % Please edit documentation in R/simData.R
 \name{gData_U_cont_Y_binary}
 \alias{gData_U_cont_Y_binary}
-\title{Generate data with a continuous unmeasured confounder and a binary outcome}
+\title{Generate data with a continuous unmeasured confounder and a binary
+outcome}
 \usage{
 gData_U_cont_Y_binary(
   ymodel = "linear",
@@ -18,14 +19,16 @@ gData_U_cont_Y_binary(
 
 \item{N}{The number of observations to be generated.}
 
-\item{alpha_uz}{The coefficient of the unmeasured confounder in the propensity score model.}
+\item{alpha_uz}{Unmeasured confounder coefficient in the propensity score
+model.}
 
-\item{beta_uy}{The coefficient of the unmeasured confounder in the outcome model.}
+\item{beta_uy}{Unmeasured confounder coefficient in the outcome model.}
 
 \item{treatment_effects}{The treatment effect.}
 
 \item{seed}{The seed for the random number generator.}
 }
 \description{
-Generate data with a continuous unmeasured confounder and a binary outcome
+Generate data with a continuous unmeasured confounder and a binary
+outcome
 }

@@ -18,9 +18,10 @@ gData_U_binary_Y_binary(
 
 \item{N}{The number of observations to be generated.}
 
-\item{alpha_uz}{The coefficient of the unmeasured confounder in the propensity score model.}
+\item{alpha_uz}{Unmeasured confounder coefficient in the propensity score
+model.}
 
-\item{beta_uy}{The coefficient of the unmeasured confounder in the outcome model.}
+\item{beta_uy}{Unmeasured confounder coefficient in the outcome model.}
 
 \item{treatment_effects}{The treatment effect.}
 
