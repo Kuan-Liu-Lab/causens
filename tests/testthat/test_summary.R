@@ -3,16 +3,15 @@ data_sf <- simulate_data(
   beta_uy = 1, treatment_effects = 1
 )
 
-result_sf <- causens(Z ~ X.1 + X.2 + X.3, "Y",
-  data = data_sf, method = "sf",
-  c1 = 0.25, c0 = 0.25, bootstrap = TRUE
+result_sf <- causens_sf(Z ~ X.1 + X.2 + X.3, "Y",
+  data = data_sf, c1 = 0.25, c0 = 0.25, bootstrap = TRUE
 )
 
 summary_table_sf <- capture_output(summary(result_sf))
 
 test_that("summary.causens_sf produces correct output", {
   expect_equal(summary_table_sf, paste(
-    "Treatment Model:",
+    "Model:",
     "Z ~ X.1 + X.2 + X.3 ",
     "",
     "Estimate     Std.Error    95% C.I.             ",
@@ -27,15 +26,16 @@ data_mc <- simulate_data(
 )
 
 
-result_mc <- causens(Z ~ X.1 + X.2 + X.3, "Y",
-                     data = data_mc, method = "Monte Carlo")
+result_mc <- causens_monte_carlo("Y", "Z", c("X.1", "X.2", "X.3"),
+  data = data_mc, method = "Monte Carlo"
+)
 
 summary_table_mc <- capture_output(summary(result_mc))
 
 test_that("summary.monte_carlo_causens produces correct output", {
   expect_equal(summary_table_mc, paste(
-    "Treatment Model:",
-    "Z ~ X.1 + X.2 + X.3 ",
+    "Model:",
+    "Y ~ Z + X.1 + X.2 + X.3 ",
     "",
     "Estimate     Std.Error    95% C.I.             ",
     "1.22         0.29         (0.573, 1.87)                  ",

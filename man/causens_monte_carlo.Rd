@@ -4,16 +4,17 @@
 \alias{causens_monte_carlo}
 \title{Monte Carlo sensitivity analysis for causal effects}
 \usage{
-causens_monte_carlo(exposure, outcome, confounders, data, ...)
+causens_monte_carlo(outcome, exposure, confounders, data, ...)
 }
 \arguments{
-\item{exposure}{The name of the exposure variable in the data frame.}
-
 \item{outcome}{The name of the outcome variable in the data frame.}
+
+\item{exposure}{The name of the exposure variable in the data frame.}
 
 \item{confounders}{The name of the confounders in the data frame.}
 
-\item{data}{A data frame containing the exposure, outcome, and confounder variables.}
+\item{data}{A data frame containing the exposure, outcome, and confounder
+variables.}
 
 \item{...}{Additional arguments to be passed to the function.}
 }
@@ -21,5 +22,6 @@ causens_monte_carlo(exposure, outcome, confounders, data, ...)
 The estimated causal effect.
 }
 \description{
-This function performs a Monte Carlo sensitivity analysis for causal effects.
+This function performs a Monte Carlo sensitivity analysis for
+causal effects.
 }

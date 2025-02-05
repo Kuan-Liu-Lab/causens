@@ -24,13 +24,21 @@ for (params in parameters) {
       X <- data[, c("X.1", "X.2", "X.3")] # measured confounders
 
       y1_model <- lm(Y1 ~ U + X.1 + X.2 + X.3, data = subset(data, data$Z == 1))
-      Y1_Z1 <- predict(u_model, newdata = data.frame(subset(X, data$Z == 1), Z = 1))
-      Y1_Z0 <- predict(u_model, newdata = data.frame(subset(X, data$Z == 1), Z = 0))
+      Y1_Z1 <- predict(u_model,
+        newdata = data.frame(subset(X, data$Z == 1), Z = 1)
+      )
+      Y1_Z0 <- predict(u_model,
+        newdata = data.frame(subset(X, data$Z == 1), Z = 0)
+      )
       c1 <- y1_model$coefficients["U"] * (mean(Y1_Z1) - mean(Y1_Z0))
 
       y0_model <- lm(Y0 ~ U + X.1 + X.2 + X.3, data = subset(data, data$Z == 1))
-      Y0_Z1 <- predict(u_model, newdata = data.frame(subset(X, data$Z == 0), Z = 1))
-      Y0_Z0 <- predict(u_model, newdata = data.frame(subset(X, data$Z == 0), Z = 0))
+      Y0_Z1 <- predict(u_model,
+        newdata = data.frame(subset(X, data$Z == 0), Z = 1)
+      )
+      Y0_Z0 <- predict(u_model,
+        newdata = data.frame(subset(X, data$Z == 0), Z = 0)
+      )
       c0 <- y0_model$coefficients["U"] * (mean(Y0_Z1) - mean(Y0_Z0))
 
       # Below, we conduct the data analysis assuming U is unmeasured
@@ -38,18 +46,18 @@ for (params in parameters) {
 
       trt_model <- Z ~ X.1 + X.2 + X.3
 
-      result <- causens(trt_model, "Y", method = "Li", data = data, c1 = c1, c0 = c0)
+      result <- causens_fg(trt_model, "Y", data = data, c1 = c1, c0 = c0)
 
       return(result$estimated_ate)
     }
 
 
-    # Because alpha_uz > 0 and beta_uy > 0, treated individuals are more likely to
-    # have a better outcome, i.e. both potential outcomes Y(1) and Y(0). Hence, we
-    # need c1 > 0 and c0 > 0.
+    # Because alpha_uz > 0 and beta_uy > 0, treated individuals are more likely
+    # to have a better outcome, i.e. both potential outcomes Y(1) and Y(0).
+    # Hence, we need c1 > 0 and c0 > 0.
     # Here, c1 = 0.25 and c0 = 0.25 seem to be most valid choices. It is hard to
-    # determine the exact numerical value of c1 and c0, but their magnitude can be.
-    # Run the simulation for each iteration and get the results as a list
+    # determine the exact numerical value of c1 and c0, but their magnitude can
+    # be. Run the simulation for each iteration and get the results as a list.
 
     simulated_ates <- unlist(lapply(1:1000, run_simulation))
 
@@ -77,11 +85,10 @@ for (params in parameters) {
   # Testing `trt_model` input types
   trt_model <- Z ~ X.1 + X.2 + X.3
 
-  est_ate_1 <- causens(trt_model, "Y", method = "Li", data = data, c1 = 0.25, c0 = 0.25)
-  est_ate_2 <- causens(
+  est_ate_1 <- causens_sf(trt_model, "Y", data = data, c1 = 0.25, c0 = 0.25)
+  est_ate_2 <- causens_sf(
     glm(trt_model, data = data, family = binomial()),
     "Y",
-    method = "Li",
     data = data,
     c1 = 0.25,
     c0 = 0.25
@@ -102,14 +109,7 @@ test_that("causens throws an error if `trt_model` input is invalid", {
   trt_model <- "Z ~ X.1 + X.2 + X.3"
 
   expect_error(
-    object = causens(trt_model, "Y", method = "Li", data = data, c1 = 0.25, c0 = 0.25),
+    object = causens_sf(trt_model, "Y", data = data, c1 = 0.25, c0 = 0.25),
     regexp = "Treatment model must be a formula or a glm object."
-  )
-})
-
-test_that("causens throws an error if `method` input is invalid", {
-  expect_error(
-    object = causens(Z ~ 1, "Y", method = "???", data = data, c1 = 0.25, c0 = 0.25),
-    regexp = "Method not recognized or not implemented yet."
   )
 })

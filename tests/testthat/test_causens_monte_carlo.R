@@ -18,7 +18,7 @@ for (params in parameters) {
       informative_u = FALSE
     )
 
-    result <- causens(Z ~ X.1 + X.2 + X.3, "Y", data, method = "Monte Carlo")
+    result <- causens_monte_carlo("Y", "Z", c("X.1", "X.2", "X.3"), data)
 
     return(result$estimated_ate)
   }

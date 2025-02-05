@@ -122,7 +122,8 @@ data <- simulate_data(
 )
 
 # Treatment model is incorrect since U is "missing"
-causens(Z ~ X.1 + X.2 + X.3, "Y", data = data, method = "Li", c1 = 0.25, c0 = 0.25)
+causens_sf(Z ~ X.1 + X.2 + X.3, "Y", data = data,
+           c1 = 0.25, c0 = 0.25)$estimated_ate
 ```
 
 ## Bayesian Methods
@@ -145,7 +146,10 @@ data <- simulate_data(
   y_type = "continuous"
 )
 
-causens(Z ~ X.1 + X.2 + X.3, "Y", data, method = "Bayesian")
+bayesian_causens(
+  Z ~ X.1 + X.2 + X.3, Y ~ X.1 + X.2 + X.3,
+  U ~ X.1 + X.2 + X.3, data
+)
 ```
 
 ## Monte Carlo Approach to Causal Sensitivity Analysis
@@ -174,5 +178,5 @@ data <- simulate_data(
   informative_u = FALSE
 )
 
-causens(Z ~ X.1 + X.2 + X.3, "Y", data, method = "Monte Carlo")
+causens_monte_carlo("Y", "Z", c("X.1", "X.2", "X.3"), data)$estimated_ate
 ```

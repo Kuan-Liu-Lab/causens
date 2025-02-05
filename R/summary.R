@@ -8,7 +8,7 @@
 #' @export
 summary.causens_sf <- function(object, ...) {
   # 1) Showing treatment model call
-  cat("Treatment Model:\n")
+  cat("Model:\n")
   cat(deparse(object$call), "\n\n")
 
   # 2) Printing table (estimate, std.error, 95% CI)

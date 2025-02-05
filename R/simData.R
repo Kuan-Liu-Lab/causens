@@ -2,13 +2,17 @@
 #'
 #' @param ymodel A string indicating the functional form of the outcome model.
 #' @param N The number of observations to be generated.
-#' @param u_type A string indicating the type of the unmeasured confounder: "binary" or "continuous".
-#' @param y_type A string indicating the type of the outcome: "binary" or "continuous".
+#' @param u_type A string indicating the type of the unmeasured confounder:
+#' "binary" or "continuous".
+#' @param y_type A string indicating the type of the outcome: "binary" or
+#' "continuous".
 #' @param seed The seed for the random number generator.
-#' @param alpha_uz The coefficient of the unmeasured confounder in the propensity score model.
-#' @param beta_uy The coefficient of the unmeasured confounder in the outcome model.
+#' @param alpha_uz Unmeasured confounder coefficient in the propensity score
+#' model.
+#' @param beta_uy Unmeasured confounder coefficient in the outcome model.
 #' @param treatment_effects The treatment effect.
-#' @param informative_u A boolean indicating whether the unmeasured confounder is driven by covariates.
+#' @param informative_u A boolean indicating whether the unmeasured confounder
+#' is driven by covariates.
 #'
 #' @return A data frame with the simulated dataset.
 #'
@@ -73,12 +77,13 @@ simulate_data <- function(ymodel = "linear",
   return(as.data.frame(list(X = X, Z = Z, Y = Y, Y0 = Y0, Y1 = Y1, U = U)))
 }
 
-#' @title Generate data with a binary unmeasured confounder and continuous outcome
-#'
+#' @title Generate data with a binary unmeasured confounder and continuous
+#' outcome
 #' @param ymodel A string indicating the functional form of the outcome model.
 #' @param N The number of observations to be generated.
-#' @param alpha_uz The coefficient of the unmeasured confounder in the propensity score model.
-#' @param beta_uy The coefficient of the unmeasured confounder in the outcome model.
+#' @param alpha_uz Unmeasured confounder coefficient in the propensity score
+#' model.
+#' @param beta_uy Unmeasured confounder coefficient in the outcome model.
 #' @param treatment_effects The treatment effect.
 #' @param seed The seed for the random number generator.
 #'
@@ -111,12 +116,13 @@ gData_U_binary_Y_cont <- function(ymodel = "linear",
   ))
 }
 
-#' @title Generate data with a continuous unmeasured confounder and continuous outcome
-#'
+#' @title Generate data with a continuous unmeasured confounder and continuous
+#' outcome
 #' @param ymodel A string indicating the functional form of the outcome model.
 #' @param N The number of observations to be generated.
-#' @param alpha_uz The coefficient of the unmeasured confounder in the propensity score model.
-#' @param beta_uy The coefficient of the unmeasured confounder in the outcome model.
+#' @param alpha_uz Unmeasured confounder coefficient in the propensity score
+#' model.
+#' @param beta_uy Unmeasured confounder coefficient in the outcome model.
 #' @param treatment_effects The treatment effect.
 #' @param seed The seed for the random number generator.
 #'
@@ -139,12 +145,14 @@ gData_U_cont_Y_cont <- function(ymodel = "linear",
   ))
 }
 
-#' @title Generate data with a continuous unmeasured confounder and a binary outcome
+#' @title Generate data with a continuous unmeasured confounder and a binary
+#' outcome
 #'
 #' @param ymodel A string indicating the functional form of the outcome model.
 #' @param N The number of observations to be generated.
-#' @param alpha_uz The coefficient of the unmeasured confounder in the propensity score model.
-#' @param beta_uy The coefficient of the unmeasured confounder in the outcome model.
+#' @param alpha_uz Unmeasured confounder coefficient in the propensity score
+#' model.
+#' @param beta_uy Unmeasured confounder coefficient in the outcome model.
 #' @param treatment_effects The treatment effect.
 #' @param seed The seed for the random number generator.
 #'
@@ -171,8 +179,9 @@ gData_U_cont_Y_binary <- function(ymodel = "linear",
 #'
 #' @param ymodel A string indicating the functional form of the outcome model.
 #' @param N The number of observations to be generated.
-#' @param alpha_uz The coefficient of the unmeasured confounder in the propensity score model.
-#' @param beta_uy The coefficient of the unmeasured confounder in the outcome model.
+#' @param alpha_uz Unmeasured confounder coefficient in the propensity score
+#' model.
+#' @param beta_uy Unmeasured confounder coefficient in the outcome model.
 #' @param treatment_effects The treatment effect.
 #' @param seed The seed for the random number generator.
 #'

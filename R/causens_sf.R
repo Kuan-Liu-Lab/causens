@@ -6,21 +6,26 @@
 #' @param fitted_model The treatment model object as a glm.
 #' @param exposure The name of the exposure variable.
 #' @param outcome The name of the outcome variable.
-#' @param data A data frame containing the exposure, outcome, and confounder variables.
+#' @param data A data frame containing the exposure, outcome, and confounder
+#' variables.
 #' @param bootstrap A logical indicating whether to perform bootstrap estimation
 #' of the 95\% confidence interval.
+#' @param B If the bootstrap argument is TRUE, the number of bootstrap samples
+#' to generate.
 #' @param ... Additional arguments to be passed to the sensitivity function.
 #' @importFrom stats predict
 #'
 #' @return A point estimate of the corrected ATE.
 #' @export
-causens_sf <- function(fitted_model, exposure, outcome, data, bootstrap = FALSE, ...) {
+causens_sf <- function(trt_model, outcome, data, bootstrap = FALSE,
+                       B = 1000, ...) {
+  processed_info <- process_model_formula(trt_model, data)
   y <- data[[outcome]]
-  z <- data[[exposure]]
+  z <- data[[processed_info$response_var_name]]
 
-  e <- predict(fitted_model, type = "response")
+  e <- predict(processed_info$fitted_model, type = "response")
 
-  c1 <- sf(z = 1, e = e, ...)
+  c1 <- sf(z = 1, e = e, ...) # c1, c0, s1, s0 may be passed as kwargs
   c0 <- sf(z = 0, e = 1 - e, ...)
 
   # Calculate the Average Treatment Effect
@@ -34,6 +39,7 @@ causens_sf <- function(fitted_model, exposure, outcome, data, bootstrap = FALSE,
 
   causens_obj <- list()
   class(causens_obj) <- "causens_sf"
+  causens_obj$call <- formula(trt_model)
   causens_obj$estimated_ate <- Y1_sf - Y0_sf
 
   if (!bootstrap) {
@@ -44,16 +50,18 @@ causens_sf <- function(fitted_model, exposure, outcome, data, bootstrap = FALSE,
 
   # Number of bootstrap samples
 
-  B <- 1000
   ate_bs <- numeric(B)
   set.seed(123) # for bootstrap replications
 
   for (b in 1:B) {
     data_b <- data[sample(nrow(data), replace = TRUE), ]
     y_b <- data_b[[outcome]]
-    z_b <- data_b[[exposure]]
+    z_b <- data_b[[processed_info$response_var_name]]
 
-    e_b <- predict(fitted_model, newdata = data_b, type = "response")
+    e_b <- predict(processed_info$fitted_model,
+      newdata = data_b,
+      type = "response"
+    )
 
     c1_b <- sf(z = 1, e = e_b, ...)
     c0_b <- sf(z = 0, e = 1 - e_b, ...)
