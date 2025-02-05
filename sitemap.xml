@@ -6,7 +6,6 @@
 <url><loc>https://kuan-liu-lab.github.io/causens/authors.html</loc></url>
 <url><loc>https://kuan-liu-lab.github.io/causens/index.html</loc></url>
 <url><loc>https://kuan-liu-lab.github.io/causens/reference/bayesian_causens.html</loc></url>
-<url><loc>https://kuan-liu-lab.github.io/causens/reference/causens.html</loc></url>
 <url><loc>https://kuan-liu-lab.github.io/causens/reference/causens_monte_carlo.html</loc></url>
 <url><loc>https://kuan-liu-lab.github.io/causens/reference/causens_sf.html</loc></url>
 <url><loc>https://kuan-liu-lab.github.io/causens/reference/create_jags_model.html</loc></url>
@@ -16,6 +15,7 @@
 <url><loc>https://kuan-liu-lab.github.io/causens/reference/gData_U_cont_Y_cont.html</loc></url>
 <url><loc>https://kuan-liu-lab.github.io/causens/reference/index.html</loc></url>
 <url><loc>https://kuan-liu-lab.github.io/causens/reference/plot_causens.html</loc></url>
+<url><loc>https://kuan-liu-lab.github.io/causens/reference/process_model_formula.html</loc></url>
 <url><loc>https://kuan-liu-lab.github.io/causens/reference/sf.html</loc></url>
 <url><loc>https://kuan-liu-lab.github.io/causens/reference/simulate_data.html</loc></url>
 <url><loc>https://kuan-liu-lab.github.io/causens/reference/summary.bayesian_causens.html</loc></url>
