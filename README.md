@@ -48,7 +48,7 @@ Please cite our software using:
   title = {causens: Perform causal sensitivity analyses using various statistical methods},
   author = {Larry Dong and Yushu Zou and Kuan Liu},
   year = {2024},
-  note = {R package version 0.0.2-9000, https://github.com/Kuan-Liu-Lab/causens},
+  note = {R package version 0.0.3, https://github.com/Kuan-Liu-Lab/causens},
   url = {https://kuan-liu-lab.github.io/causens/},
 }
 ```
