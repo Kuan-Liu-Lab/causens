@@ -36,7 +36,7 @@ data <- simulate_data(N = 10000, seed = 123, alpha_uz = 1,
                       beta_uy = 1, treatment_effects = 1)
 
 # Treatment model is incorrect since U is "missing"
-causens_sf(Z ~ X.1 + X.2 + X.3, "Y", data = data, c1 = 0.25, c0 = 0.25)
+causens_sf(Z ~ X.1 + X.2 + X.3, "Y", data = data, c1 = 0.25, c0 = 0.25)$estimated_ate
 ```
 
 ## Citing

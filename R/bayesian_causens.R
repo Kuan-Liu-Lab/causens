@@ -134,6 +134,10 @@ parse_args <- function(...) {
 #' @description Creates a JAGS model available as a string, or .txt file, where
 #' priors are initialized to be uninformative by default.
 #' @param binary_outcome Boolean indicating whether the outcome is binary.
+#' @param beta_uy Prior distribution for the effect of the missing confounder U
+#' on the outcome Y.
+#' @param alpha_uz Prior distribution for the effect of the missing confounder U
+#' on the treatment assignment mechanism Z.
 #'
 #' No inputs are given to this function (for now) since data-related information
 #' is provided in jags.model() during model initialization.
