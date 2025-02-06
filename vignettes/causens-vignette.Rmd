@@ -23,7 +23,7 @@ particular, `causens` implements methods from the three following school of thou
 
 - Frequentist methods based on sensitivity functions
 - Bayesianism via parametric modelling
-- Monte Carlo sensitivity analysis (TBA)
+- Monte Carlo sensitivity analysis
 
 All implemented methods are accessible via the `causens` function with the `method`
 parameter. The package also provides a `simulate_data` function to generate synthetic data on which to test the methods.
