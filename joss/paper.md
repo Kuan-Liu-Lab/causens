@@ -21,7 +21,7 @@ affiliations:
    index: 2
  - name: Institute of Health Policy, Management and Evaluation, University of Toronto, Toronto, Canada
    index: 3
-date: January 20, 2025
+date: February 6, 2025
 bibliography: paper.bib
 ---
 
@@ -83,7 +83,7 @@ result$estimated_ate
 
 From [@brumback2004sensitivity], their general guideline in specifying $c(z, e)$ considers sub-populations and their potential outcomes under treatment $z$. The assumption $c(z, e) > 0$ implies that individuals with an observed $Z = z$ have better $Y(1)$ than those under $Z = 1 - z$. Conversely, $c(z, e) < 0$ implies the opposite. To visually assess the influence of $c(z, e)$, one can plot the sensitivity function using the `plot_causens` function.
 
-```{r, fig.show='hold', echo=TRUE}
+```r
 plot_causens(
     trt_model,
     data,
@@ -94,6 +94,7 @@ plot_causens(
     bootstrap = TRUE
   )
 ```
+![Plot of average treatment effect estimates and 95% confidence interval estimates vs. sensitivity function value as a constant (c1)](plot.png)
 
 ## Bayesian Parametric Modelling
 
