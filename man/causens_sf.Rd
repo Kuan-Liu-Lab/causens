@@ -7,6 +7,8 @@
 causens_sf(trt_model, outcome, data, bootstrap = FALSE, B = 1000, ...)
 }
 \arguments{
+\item{trt_model}{A model formula specifying the treatment model.}
+
 \item{outcome}{The name of the outcome variable.}
 
 \item{data}{A data frame containing the exposure, outcome, and confounder
@@ -19,10 +21,6 @@ of the 95\% confidence interval.}
 to generate.}
 
 \item{...}{Additional arguments to be passed to the sensitivity function.}
-
-\item{fitted_model}{The treatment model object as a glm.}
-
-\item{exposure}{The name of the exposure variable.}
 }
 \value{
 A point estimate of the corrected ATE.

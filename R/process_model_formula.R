@@ -6,7 +6,7 @@
 #'
 #' @param model The model object as a formula or fitted glm.
 #' @param data A data frame used for fitting the model.
-#' @importFrom stats binomial formula glm terms
+#' @importFrom stats binomial formula glm terms lm
 #' @return A list containing the fitted model, model formula, response variable
 #' name, and confounder names.
 #' @export
