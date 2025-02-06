@@ -126,6 +126,11 @@ causens_sf(Z ~ X.1 + X.2 + X.3, "Y", data = data,
            c1 = 0.25, c0 = 0.25)$estimated_ate
 ```
 
+``` {r}
+plot_causens(Z ~ X.1 + X.2 + X.3, data, "Y",
+             c1_upper = 0.5, c1_lower = 0, r = 1, by = 0.01)
+```
+
 ## Bayesian Methods
 
 In Bayesianism, we can adjust for unmeasured confounding by explicitly modelling $U$ and its relationship

@@ -14,7 +14,7 @@ test_that("plot function generates base R plot", {
     c1_upper = 0.5,
     c1_lower = 0,
     r = 1,
-    by = 0.005 # default is 0.01
+    by = 0.01 # default is 0.01
   )
 
   plot_obj <- recordPlot() # returns an error if no plot is created
