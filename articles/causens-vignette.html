@@ -63,7 +63,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>causens: an R package for causal sensitivity analysis methods</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/Kuan-Liu-Lab/causens/blob/0.0.3/vignettes/causens-vignette.Rmd" class="external-link"><code>vignettes/causens-vignette.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Kuan-Liu-Lab/causens/blob/main/vignettes/causens-vignette.Rmd" class="external-link"><code>vignettes/causens-vignette.Rmd</code></a></small>
       <div class="d-none name"><code>causens-vignette.Rmd</code></div>
     </div>
 
@@ -100,7 +100,7 @@ data on which to test the methods.</p>
 <span><span class="co">#&gt; Using github PAT from envvar GITHUB_PAT. Use `gitcreds::gitcreds_set()` and unset GITHUB_PAT in .Renviron (or elsewhere) if you want to use the more secure git credential store instead.</span></span>
 <span><span class="co">#&gt; Downloading GitHub repo Kuan-Liu-Lab/causens@HEAD</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="color: #00BBBB;">R CMD build</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────────────────────</span></span></span>
-<span><span class="co">#&gt; * checking for file ‘/tmp/RtmpPgW90w/remotes205242d16e9d/Kuan-Liu-Lab-causens-405e0f2/DESCRIPTION’ ... OK</span></span>
+<span><span class="co">#&gt; * checking for file ‘/tmp/RtmpJ3csJN/remotes2015e0a30a6/Kuan-Liu-Lab-causens-97f1f62/DESCRIPTION’ ... OK</span></span>
 <span><span class="co">#&gt; * preparing ‘causens’:</span></span>
 <span><span class="co">#&gt; * checking DESCRIPTION meta-information ... OK</span></span>
 <span><span class="co">#&gt; * checking for LF line-endings in source and make files and shell scripts</span></span>
@@ -228,6 +228,10 @@ sensitivity function.</p>
 <span><span class="fu"><a href="../reference/causens_sf.html">causens_sf</a></span><span class="op">(</span><span class="va">Z</span> <span class="op">~</span> <span class="va">X.1</span> <span class="op">+</span> <span class="va">X.2</span> <span class="op">+</span> <span class="va">X.3</span>, <span class="st">"Y"</span>, data <span class="op">=</span> <span class="va">data</span>,</span>
 <span>           c1 <span class="op">=</span> <span class="fl">0.25</span>, c0 <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span><span class="op">$</span><span class="va">estimated_ate</span></span>
 <span><span class="co">#&gt; [1] 1.005025</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_causens.html">plot_causens</a></span><span class="op">(</span><span class="va">Z</span> <span class="op">~</span> <span class="va">X.1</span> <span class="op">+</span> <span class="va">X.2</span> <span class="op">+</span> <span class="va">X.3</span>, <span class="va">data</span>, <span class="st">"Y"</span>,</span>
+<span>             c1_upper <span class="op">=</span> <span class="fl">0.5</span>, c1_lower <span class="op">=</span> <span class="fl">0</span>, r <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<p><img src="causens-vignette_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="bayesian-methods">Bayesian Methods<a class="anchor" aria-label="anchor" href="#bayesian-methods"></a>
@@ -250,7 +254,7 @@ We assume the following data-generating mechanism and Bayesian model in
   Z \mid U, X &amp;\sim \text{Bern}\left(\text{logit}^{-1}(\alpha_{uz} U + \alpha_{xz} X)\right) \\
   Y \mid U, X, Z &amp;\sim \text{Normal}(\beta_{uy} U + \beta_{xy} X + \tau Z) \\
 \end{align*}</annotation></semantics></math></p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simulate_data.html">simulate_data</a></span><span class="op">(</span></span>
 <span>  N <span class="op">=</span> <span class="fl">1000</span>, alpha_uz <span class="op">=</span> <span class="fl">0.5</span>, beta_uy <span class="op">=</span> <span class="fl">0.2</span>,</span>
 <span>  seed <span class="op">=</span> <span class="fl">123</span>, treatment_effects <span class="op">=</span> <span class="fl">1</span>,</span>
@@ -306,7 +310,7 @@ to account for errors incurred in previous steps. With
 we can compute the Monte Carlo estimate of the average treatment effect
 by taking their average.</li>
 </ul>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simulate_data.html">simulate_data</a></span><span class="op">(</span></span>
 <span>  N <span class="op">=</span> <span class="fl">1000</span>, alpha_uz <span class="op">=</span> <span class="fl">0.2</span>, beta_uy <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  seed <span class="op">=</span> <span class="fl">123</span>, treatment_effects <span class="op">=</span> <span class="fl">1</span>, y_type <span class="op">=</span> <span class="st">"binary"</span>,</span>
