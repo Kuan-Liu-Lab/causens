@@ -3,7 +3,7 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   causens-vignette: causens-vignette.html
-last_built: 2025-02-06T03:16Z
+last_built: 2025-02-06T17:29Z
 urls:
   reference: https://kuan-liu-lab.github.io/causens/reference
   article: https://kuan-liu-lab.github.io/causens/articles
