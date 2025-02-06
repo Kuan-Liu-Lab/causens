@@ -96,6 +96,8 @@ bayesian_causens <- function(trt_model, outcome_model,
     causens_obj <- list()
     class(causens_obj) <- "bayesian_causens"
     causens_obj$call <- trt_model
+    causens_obj$outcome <- outcome_model_info$response_var_name
+    causens_obj$data <- data
     causens_obj$estimated_ate <- mean(samples[[1]][, "beta_Z"])
     causens_obj$std_error <- sd(samples[[1]][, "beta_Z"])
     causens_obj$ci <- quantile(samples[[1]][, "beta_Z"], c(0.025, 0.975))

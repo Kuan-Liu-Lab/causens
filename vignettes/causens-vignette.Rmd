@@ -122,8 +122,13 @@ data <- simulate_data(
 )
 
 # Treatment model is incorrect since U is "missing"
-causens_sf(Z ~ X.1 + X.2 + X.3, "Y", data = data,
-           c1 = 0.25, c0 = 0.25)$estimated_ate
+causens_obj <- causens_sf(Z ~ X.1 + X.2 + X.3, "Y", data = data,
+           c1 = 0.25, c0 = 0.25)
+causens_obj$estimated_ate
+```
+
+``` {r}
+plot(causens_obj)
 ```
 
 ## Bayesian Methods

@@ -40,6 +40,8 @@ causens_sf <- function(trt_model, outcome, data, bootstrap = FALSE,
   class(causens_obj) <- "causens_sf"
   causens_obj$call <- formula(trt_model)
   causens_obj$estimated_ate <- Y1_sf - Y0_sf
+  causens_obj$outcome <- outcome
+  causens_obj$data <- data
 
   if (!bootstrap) {
     return(causens_obj)

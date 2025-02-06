@@ -64,6 +64,8 @@ causens_monte_carlo <- function(outcome, exposure, confounders, data, ...) {
   causens_obj <- list()
   class(causens_obj) <- "monte_carlo_causens"
   causens_obj$call <- formula
+  causens_obj$outcome <- outcome
+  causens_obj$data <- data
   causens_obj$estimated_ate <- mean(mc_trt_effects)
   causens_obj$std_error <- sd(mc_trt_effects)
   causens_obj$ci <- quantile(mc_trt_effects, c(0.025, 0.975))

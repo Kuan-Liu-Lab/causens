@@ -58,3 +58,20 @@ plot_causens <- function(trt_model, data, outcome, c1_upper = 0.5,
     col = c("black", "black"), lty = c(1, 2), cex = 0.8
   )
 }
+
+
+#' @title Causens plot through S3 method
+#' @description This function is an S3 method for the plot function where
+#' plot can be called on a causens_sf instance object.
+#'
+#' @param x The causens_sf object.
+#' @return A plot of the ATE as a function of c1 values (from plot_causens).
+#'
+#' @export
+plot.causens_sf <- function(causens_obj, ...) {
+  plot_causens(
+    trt_model = causens_obj$call,
+    data = causens_obj$data,
+    outcome = causens_obj$outcome
+  )
+}
