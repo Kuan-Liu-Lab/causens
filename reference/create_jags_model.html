@@ -52,7 +52,17 @@ priors are initialized to be uninformative by default.</p>
 
 
 <dl><dt id="arg-binary-outcome">binary_outcome<a class="anchor" aria-label="anchor" href="#arg-binary-outcome"></a></dt>
-<dd><p>Boolean indicating whether the outcome is binary.</p>
+<dd><p>Boolean indicating whether the outcome is binary.</p></dd>
+
+
+<dt id="arg-beta-uy">beta_uy<a class="anchor" aria-label="anchor" href="#arg-beta-uy"></a></dt>
+<dd><p>Prior distribution for the effect of the missing confounder U
+on the outcome Y.</p></dd>
+
+
+<dt id="arg-alpha-uz">alpha_uz<a class="anchor" aria-label="anchor" href="#arg-alpha-uz"></a></dt>
+<dd><p>Prior distribution for the effect of the missing confounder U
+on the treatment assignment mechanism Z.</p>
 <p>No inputs are given to this function (for now) since data-related information
 is provided in jags.model() during model initialization.</p></dd>
 
