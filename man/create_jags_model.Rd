@@ -7,7 +7,13 @@
 create_jags_model(binary_outcome, beta_uy, alpha_uz)
 }
 \arguments{
-\item{binary_outcome}{Boolean indicating whether the outcome is binary.
+\item{binary_outcome}{Boolean indicating whether the outcome is binary.}
+
+\item{beta_uy}{Prior distribution for the effect of the missing confounder U
+on the outcome Y.}
+
+\item{alpha_uz}{Prior distribution for the effect of the missing confounder U
+on the treatment assignment mechanism Z.
 
 No inputs are given to this function (for now) since data-related information
 is provided in jags.model() during model initialization.}

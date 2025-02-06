@@ -3,8 +3,7 @@
 #' @description This function provides an estimate of the Average Treatment
 #' Effect (ATE) using Bayesian modelling.
 #'
-#' @param fitted_model The treatment model object as a glm.
-#' @param exposure The name of the exposure variable.
+#' @param trt_model A model formula specifying the treatment model.
 #' @param outcome The name of the outcome variable.
 #' @param data A data frame containing the exposure, outcome, and confounder
 #' variables.
