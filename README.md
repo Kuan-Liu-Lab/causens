@@ -2,7 +2,6 @@
 
 <!-- badges: start -->
   [![R-CMD-check](https://github.com/Kuan-Liu-Lab/causens/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Kuan-Liu-Lab/causens/actions/workflows/R-CMD-check.yaml)
-  [![codecov](https://codecov.io/gh/Kuan-Liu-Lab/causens/graph/badge.svg?token=XITT1410G8)](https://codecov.io/gh/Kuan-Liu-Lab/causens)
 <!-- badges: end -->
 
 _Why is it that more shark attacks occur when more ice cream is sold? The answer: both are related to the weather, here an unmeasured confounder._
