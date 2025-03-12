@@ -2,6 +2,8 @@ if (Sys.getenv("SKIP_BAYESIAN_SA_TESTS") == "true") {
   testthat::skip("Skipping Bayesian SA tests due to environment setting")
 }
 
+testthat::skip_on_cran()
+
 trt_effect <- 1
 
 run_simulation <- function(seed, y_type) {
