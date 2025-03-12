@@ -143,6 +143,4 @@ A limitation in the Monte Carlo approach is that it is restricted to binary outc
 
 We developed the `causens` R package to provide implementations of causal sensitivity analysis methods. The package is designed to be user-friendly, encapsulating some complexity under the hood while necessiting user-specification of important ingredients in adjustment methods. The package is also designed to be extensible, allowing for the addition of new methods in the future.
 
-# Acknowledgements
-
 # References
