@@ -1,3 +1,5 @@
+testthat::skip_on_cran()
+
 parameters <- list(
   list(trt_effect = 1, alpha_uz = 0.5, beta_uy = 0.2),
   list(trt_effect = 1, alpha_uz = -0.5, beta_uy = 0.2),

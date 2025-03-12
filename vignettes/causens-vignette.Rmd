@@ -37,7 +37,7 @@ options(repos = c(CRAN = "https://cloud.r-project.org/"))
 install.packages("devtools")
 ```
 
-```{r}
+```{r, eval=FALSE}
 library(devtools)
 devtools::install_github("Kuan-Liu-Lab/causens")
 ```
