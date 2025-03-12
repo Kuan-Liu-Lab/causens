@@ -2,7 +2,7 @@
 
 <!-- badges: start -->
   [![R-CMD-check](https://github.com/Kuan-Liu-Lab/causens/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Kuan-Liu-Lab/causens/actions/workflows/R-CMD-check.yaml)
-  [![codecov](https://codecov.io/gh/Kuan-Liu-Lab/causens/branch/main/graph/badge.svg)](https://codecov.io/gh/Kuan-Liu-Lab/causens?branch=main)
+  [![codecov](https://codecov.io/gh/Kuan-Liu-Lab/causens/graph/badge.svg?token=XITT1410G8)](https://codecov.io/gh/Kuan-Liu-Lab/causens)
 <!-- badges: end -->
 
 _Why is it that more shark attacks occur when more ice cream is sold? The answer: both are related to the weather, here an unmeasured confounder._
@@ -45,7 +45,7 @@ Please cite our software using:
 
 ```
 @Manual{,
-  title = {causens: Perform causal sensitivity analyses using various statistical methods},
+  title = {causens: Perform Causal Sensitivity Analyses Using Various Statistical Methods},
   author = {Larry Dong and Yushu Zou and Kuan Liu},
   year = {2024},
   note = {R package version 0.0.3, https://github.com/Kuan-Liu-Lab/causens},
