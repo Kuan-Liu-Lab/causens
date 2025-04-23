@@ -62,7 +62,7 @@ given the treatment status and the observed covariates:
 \begin{align*}
   c(z, e) = E[Y(z) | Z = 1, e(X) = e] - E[Y(z) | Z = 0, e(X) = e]
 \end{align*}
-where $Y(z)$ is the potential outcome under treatment status $z \in \{0, 1\}$ and $e(X)$ is the probability of observing the observed treatment. Under the assumption of no unmeasured confounding, potential outcomes are independent of the treatment status given the observed covariates and
+where $Y(z)$ is the potential outcome under treatment status $z \in \{0, 1\}$ and $e(X)$ is the probability of observing the observed treatment [@brumback2004sensitivity; @li2011propensity]. Under the assumption of no unmeasured confounding, potential outcomes are independent of the treatment status given the observed covariates and
 $c(z, e) = 0$ for all $z, e$.
 
 Here is a quickstart that uses this method:
@@ -71,12 +71,12 @@ Here is a quickstart that uses this method:
 library(causens)
 
 # Simulate data
-data <- simulate_data(N = 10000, seed = 123, alpha_uz = 0.5,
-                      beta_uy = 0.2, treatment_effects = 1)
+data <- simulate_data(N = 10000, seed = 123, alpha_uz = 1,
+                      beta_uy = 1, treatment_effects = 1)
 
 # Sensitivity function method
-result <- causens(Z ~ X.1 + X.2 + X.3, "Y", data = data, method = "sf",
-                  c1 = 0.25, c0 = 0.25)
+result <- causens_sf(Z ~ X.1 + X.2 + X.3, "Y", data = data, 
+                     c1 = 0.25, c0 = 0.25)
 result$estimated_ate
 # 1.005025
 ```
@@ -102,7 +102,7 @@ plot_causens(
 
 In the Bayesian framework, the unmeasured confounder can be explicitly modelled. An important
 distinguishing factor to the previous method based on sensitivity functions is that the problem
-setting must allow $U$ to be feasibly modelled by $X$. In turn, this method can useful when
+setting must allow $U$ to be feasibly modelled by $X$ [@mccandless2017comparison]. In turn, this method can useful when
 it is more sensible to model $U$ rather than posit a sensitivity function.
 
 ```r
@@ -112,35 +112,43 @@ library(causens)
 data <- simulate_data(N = 1000, seed = 123, alpha_uz = 0.5, beta_uy = 0.2, 
                       treatment_effects = 1, informative_u = TRUE)
 
-result <- causens(Z ~ X.1 + X.2 + X.3, "Y", data = data, method = "Bayesian")
+result <- bayesian_causens(Z ~ X.1 + X.2 + X.3,
+  Y ~ X.1 + X.2 + X.3,
+  U ~ X.1 + X.2 + X.3,
+  data = data
+)
 result$estimated_ate
 ```
 
 Notice the `informative_u = TRUE` argument in the `simulate_data` function that simulates $U$ based on observable confounding variables $X$, which is a necessary condition in modelling unmeasured variables in a cross-sectional setting.
+Using $\alpha_{\mathrm{UZ}}$ and $\beta_{\mathrm{UY}}$ to denote the strength of
+the association between $U$ and the treatment and outcome respectively, prior for
+such parameters are both defaulted to $\sim \text{Unif}(-2, 2)$  [@mccandless2019bayesian].
+
 
 ## The Monte Carlo Approach
 
 The Monte Carlo approach is a simulation-based method that can be used to estimate the causal effect
-of a treatment in the presence of unmeasured confounding. The method iteratively simulates via
+of a treatment in the presence of unmeasured confounding [@mccandless2017comparison]. The method iteratively simulates via
 repetitive sampling of the effect of the unmeasured confounder on the outcome and the treatment.
 
 ```r
 library(causens)
 
 # Simulate data
-data <- simulate_data(N = 1000, seed = 123, alpha_uz = 1, beta_uy = 1, 
-                      treatment_effects = 1)
+data <- simulate_data(N = 1000, alpha_uz = 0.2, beta_uy = 0.5, seed = 123,
+                      treatment_effects = 1, y_type = "binary")
 
 # Sensitivity function method
-result <- causens(Z ~ X.1 + X.2 + X.3, "Y", data = data, method = "Monte Carlo")
+result <- causens_monte_carlo("Y", "Z", c("X.1", "X.2", "X.3"), data)
 result$estimated_ate
 # 0.9929688
 ```
 
-A limitation in the Monte Carlo approach is that it is restricted to binary outcomes.
+A limitation in the Monte Carlo approach is that it is restricted to binary outcomes, where the target estimand is the absolute risk difference.
 
 # Conclusion
 
-We developed the `causens` R package to provide implementations of causal sensitivity analysis methods. The package is designed to be user-friendly, encapsulating some complexity under the hood while necessiting user-specification of important ingredients in adjustment methods. The package is also designed to be extensible, allowing for the addition of new methods in the future.
+We developed the `causens` R package to provide implementations of causal sensitivity analysis methods. The package is designed to be user-friendly, encapsulating some complexity under the hood while necessitating user-specification of important ingredients in adjustment methods. The package is also designed to be extensible, allowing for the addition of new methods in the future.
 
 # References
