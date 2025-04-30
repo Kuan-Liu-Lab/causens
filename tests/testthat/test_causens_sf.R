@@ -46,7 +46,7 @@ for (params in parameters) {
 
       trt_model <- Z ~ X.1 + X.2 + X.3
 
-      result <- causens_fg(trt_model, "Y", data = data, c1 = c1, c0 = c0)
+      result <- causens_sf(trt_model, "Y", data = data, c1 = c1, c0 = c0)
 
       return(result$estimated_ate)
     }
