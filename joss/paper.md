@@ -123,8 +123,9 @@ result$estimated_ate
 Notice the `informative_u = TRUE` argument in the `simulate_data` function that simulates $U$ based on observable confounding variables $X$, which is a necessary condition in modelling unmeasured variables in a cross-sectional setting.
 Using $\alpha_{\mathrm{UZ}}$ and $\beta_{\mathrm{UY}}$ to denote the strength of
 the association between $U$ and the treatment and outcome respectively, prior for
-such parameters are both defaulted to $\sim \text{Unif}(-2, 2)$  [@mccandless2019bayesian].
-
+such parameters are both defaulted to $\sim \text{Unif}(-2, 2)$ [@mccandless2019bayesian]. However,
+the user can specify their own priors in a way that RJags can understand, i.e. with a `~`
+argument followed by a distribution. For example, `alpha_uz = ~ dnorm(0, 1)` specifies a normal distribution with mean 0 and standard deviation 1.
 
 ## The Monte Carlo Approach
 
