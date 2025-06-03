@@ -86,6 +86,7 @@ simulate_data <- function(ymodel = "linear",
 #' @param beta_uy Unmeasured confounder coefficient in the outcome model.
 #' @param treatment_effects The treatment effect.
 #' @param seed The seed for the random number generator.
+#' @return A data frame with the simulated dataset with U binary, Y continuous.
 #'
 #' @examples
 #' fulldata <- gData_U_binary_Y_cont(
@@ -125,6 +126,8 @@ gData_U_binary_Y_cont <- function(ymodel = "linear",
 #' @param beta_uy Unmeasured confounder coefficient in the outcome model.
 #' @param treatment_effects The treatment effect.
 #' @param seed The seed for the random number generator.
+#' @return A data frame with the simulated dataset with U continuous, Y
+#' continuous.
 #'
 #' @export
 gData_U_cont_Y_cont <- function(ymodel = "linear",
@@ -155,6 +158,7 @@ gData_U_cont_Y_cont <- function(ymodel = "linear",
 #' @param beta_uy Unmeasured confounder coefficient in the outcome model.
 #' @param treatment_effects The treatment effect.
 #' @param seed The seed for the random number generator.
+#' @return A data frame with the simulated dataset with U continuous, Y binary.
 #'
 #' @export
 gData_U_cont_Y_binary <- function(ymodel = "linear",
@@ -184,6 +188,7 @@ gData_U_cont_Y_binary <- function(ymodel = "linear",
 #' @param beta_uy Unmeasured confounder coefficient in the outcome model.
 #' @param treatment_effects The treatment effect.
 #' @param seed The seed for the random number generator.
+#' @return A data frame with the simulated dataset with U binary, Y binary.
 #'
 #' @export
 gData_U_binary_Y_binary <- function(ymodel = "linear",

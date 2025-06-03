@@ -50,7 +50,6 @@ causens_sf <- function(trt_model, outcome, data, bootstrap = FALSE,
   # Number of bootstrap samples
 
   ate_bs <- numeric(B)
-  set.seed(123) # for bootstrap replications
 
   for (b in 1:B) {
     data_b <- data[sample(nrow(data), replace = TRUE), ]
