@@ -12,6 +12,9 @@ Monte Carlo method.}
 
 \item{...}{Additional arguments to be passed to \code{summary}.}
 }
+\value{
+A summary of results from a Monte Carlo causal sensitivity analysis.
+}
 \description{
 Summarize the results of a causal sensitivity analysis via the
 Monte Carlo method.

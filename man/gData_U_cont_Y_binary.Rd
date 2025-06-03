@@ -28,6 +28,9 @@ model.}
 
 \item{seed}{The seed for the random number generator.}
 }
+\value{
+A data frame with the simulated dataset with U continuous, Y binary.
+}
 \description{
 Generate data with a continuous unmeasured confounder and a binary
 outcome

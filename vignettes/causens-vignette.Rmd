@@ -32,11 +32,6 @@ parameter. The package also provides a `simulate_data` function to generate synt
 
 The package can be installed from GitHub via `devtools`.
 
-```{r, include=FALSE, message=FALSE, warning=FALSE}
-options(repos = c(CRAN = "https://cloud.r-project.org/"))
-install.packages("devtools")
-```
-
 ```{r, eval=FALSE}
 library(devtools)
 devtools::install_github("Kuan-Liu-Lab/causens")

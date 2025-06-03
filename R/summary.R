@@ -44,6 +44,7 @@ summary.causens_sf <- function(object, ...) {
 #'
 #' @param object An object of class \code{bayesian_causens}.
 #' @param ... Additional arguments to be passed to \code{summary}.
+#' @return A summary of results from a Bayesian causal sensitivity analysis.
 #'
 #' @export
 summary.bayesian_causens <- function(object, ...) {
@@ -84,6 +85,7 @@ summary.bayesian_causens <- function(object, ...) {
 #'
 #' @param object An object of class \code{causens_monte_carlo}.
 #' @param ... Additional arguments to be passed to \code{summary}.
+#' @return A summary of results from a Monte Carlo causal sensitivity analysis.
 #'
 #' @export
 summary.monte_carlo_causens <- function(object, ...) {

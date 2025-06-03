@@ -11,13 +11,14 @@
 #' of the 95\% confidence interval.
 #' @param B If the bootstrap argument is TRUE, the number of bootstrap samples
 #' to generate.
+#' @param seed An integer to set the random seed for reproducibility.
 #' @param ... Additional arguments to be passed to the sensitivity function.
 #' @importFrom stats predict
 #'
 #' @return A point estimate of the corrected ATE.
 #' @export
 causens_sf <- function(trt_model, outcome, data, bootstrap = FALSE,
-                       B = 1000, ...) {
+                       B = 1000, seed = 123, ...) {
   processed_info <- process_model_formula(trt_model, data)
   y <- data[[outcome]]
   z <- data[[processed_info$response_var_name]]
@@ -50,7 +51,7 @@ causens_sf <- function(trt_model, outcome, data, bootstrap = FALSE,
   # Number of bootstrap samples
 
   ate_bs <- numeric(B)
-  set.seed(123) # for bootstrap replications
+  set.seed(seed)
 
   for (b in 1:B) {
     data_b <- data[sample(nrow(data), replace = TRUE), ]

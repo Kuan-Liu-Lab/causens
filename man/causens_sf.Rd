@@ -4,7 +4,15 @@
 \alias{causens_sf}
 \title{Bayesian Estimation of ATE Subject to Unmeasured Confounding}
 \usage{
-causens_sf(trt_model, outcome, data, bootstrap = FALSE, B = 1000, ...)
+causens_sf(
+  trt_model,
+  outcome,
+  data,
+  bootstrap = FALSE,
+  B = 1000,
+  seed = 123,
+  ...
+)
 }
 \arguments{
 \item{trt_model}{A model formula specifying the treatment model.}
@@ -19,6 +27,8 @@ of the 95\% confidence interval.}
 
 \item{B}{If the bootstrap argument is TRUE, the number of bootstrap samples
 to generate.}
+
+\item{seed}{An integer to set the random seed for reproducibility.}
 
 \item{...}{Additional arguments to be passed to the sensitivity function.}
 }

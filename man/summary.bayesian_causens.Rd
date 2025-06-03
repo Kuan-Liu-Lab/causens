@@ -12,6 +12,9 @@ Bayesian modelling of an unmeasured confounder.}
 
 \item{...}{Additional arguments to be passed to \code{summary}.}
 }
+\value{
+A summary of results from a Bayesian causal sensitivity analysis.
+}
 \description{
 Summarize the results of a causal sensitivity analysis via
 Bayesian modelling of an unmeasured confounder.
