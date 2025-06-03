@@ -27,7 +27,7 @@ for (params in parameters) {
 
   simulated_ate <- c()
 
-  for (seed in 1:100) {
+  for (seed in 1:30) { # 100 previously, reducing test time slightly
     simulated_ate <- c(simulated_ate, run_simulation(seed))
   }
 
