@@ -30,7 +30,7 @@ bibliography: paper.bib
 While data from randomized experiments remain the gold standard for causal inference,
 estimation of causal estimands from observational data is possible through various
 confounding adjustment methods. However, the challenge of unmeasured confounding remains 
-a concern in causal inference, where failure to account for unmeasured confounderes can 
+a concern in causal inference, where failure to account for unmeasured confounders can 
 lead to biased estimates of causal estimands. Sensitivity analysis within the framework of causal inference can help adjust for possible unmeasured confounding. Depending on the adjustment method, different modelling techniques or implicit assumptions can be necessary. 
 
 To this end, we introduce `causens`, an R package for causal sensitivity analyses methods.
